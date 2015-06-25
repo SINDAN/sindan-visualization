@@ -1,0 +1,47 @@
+# create database
+- name: create database(production)
+  mysql_db:
+    name: "{{ mysql.dbname_production }}"
+    collation: 'utf8_general_ci'
+    encoding: 'utf8'
+    login_user: root
+    login_password: "{{ mysql.password.root }}"
+  when: stage == "production"
+  tags:
+    - mysql-server
+
+- name: create database(staging)
+  mysql_db:
+    name: "{{ mysql.dbname_staging }}"
+    collation: 'utf8_general_ci'
+    encoding: 'utf8'
+    login_user: root
+    login_password: "{{ mysql.password.root }}"
+  when: stage == "staging"
+  tags:
+    - mysql-server
+
+# db user
+- name: create db user(production)
+  mysql_user:
+    name: sindan
+    password: "{{ mysql.password.sindan }}"
+    priv: '{{ mysql.dbname_production }}.*:ALL,GRANT'
+    host: "%"
+    login_user: root
+    login_password: "{{ mysql.password.root }}"
+  when: stage == "production"
+  tags:
+    - mysql-server
+
+- name: create db user(staging)
+  mysql_user:
+    name: sindan
+    password: "{{ mysql.password.sindan }}"
+    priv: '{{ mysql.dbname_staging }}.*:ALL,GRANT'
+    host: "%"
+    login_user: root
+    login_password: "{{ mysql.password.root }}"
+  when: stage == "staging"
+  tags:
+    - mysql-server

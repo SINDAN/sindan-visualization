@@ -1,0 +1,7 @@
+---
+mysql:
+  dbname_production: sindan_production
+  dbname_staging: sindan_development
+  password:
+    root: 'open sesame'
+    sindan: 'open sesame'

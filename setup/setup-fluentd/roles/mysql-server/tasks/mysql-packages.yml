@@ -1,0 +1,8 @@
+- name: install mysql server
+  apt: name={{item}} state=installed
+  with_items:
+    - mysql-server
+    - libmysqlclient-dev
+    - python-mysqldb
+  tags:
+    - mysql-server

@@ -1,0 +1,44 @@
+# ref. http://injustfiveminutes.com/2014/08/25/ansible-mysql_secure_installation-playbook/
+
+- name: delete anonymous MySQL server user for {{ ansible_hostname }}
+  mysql_user:
+    user: ""
+    host: "localhost"
+    state: "absent"
+  ignore_errors: true
+  tags:
+    - mysql-server
+
+- name: delete anonymous MySQL server user for localhost
+  mysql_user:
+    user: ""
+    state: absent
+  ignore_errors: true
+  tags:
+    - mysql-server
+
+- name: remove the MySQL test database
+  mysql_db:
+    db: test
+    state: absent
+  ignore_errors: true
+  tags:
+    - mysql-server
+
+# 'localhost' needs to be the last item for idempotency, see
+# http://ansible.cc/docs/modules.html#mysql-user
+- name: Change root user password on first run
+  mysql_user:
+    login_user: root
+    login_password: ''
+    name: root
+    password: "{{ mysql.password.root }}"
+    priv: '*.*:ALL,GRANT'
+    host: "{{ item }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  ignore_errors: true
+  tags:
+    - mysql-server

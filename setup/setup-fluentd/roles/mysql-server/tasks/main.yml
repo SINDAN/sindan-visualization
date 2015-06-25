@@ -1,0 +1,5 @@
+---
+- include: mysql-packages.yml
+- include: secure-installation.yml
+- include: mysql-setup.yml
+- include: mysql-databases.yml
