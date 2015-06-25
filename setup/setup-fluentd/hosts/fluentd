@@ -1,0 +1,11 @@
+[fluentd]
+fluentd.c.u-tokyo.ac.jp
+#157.82.35.135
+
+[web]
+fluentd.c.u-tokyo.ac.jp
+#157.82.35.135
+
+[production:children]
+fluentd
+web

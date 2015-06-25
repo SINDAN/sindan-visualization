@@ -1,0 +1,16 @@
+---
+- name: install common packages
+  apt: name={{item}} state=latest
+  with_items:
+#    - libselinux-python
+    - iptables-persistent
+    - ntp
+    - git
+    - wget
+    - netpbm
+    - imagemagick
+    - screen
+    - emacs
+  tags:
+    - common
+    - common-packages

@@ -1,0 +1,33 @@
+- name: check ruby {{ rbenv.ruby_version }} installed for system
+  shell: $SHELL -lc "rbenv versions | grep {{ rbenv.ruby_version }}"
+  register: ruby_installed
+  changed_when: false
+  failed_when: ruby_installed.rc not in [0, 1]
+  always_run: yes
+  tags:
+    - rbenv
+    - ruby
+
+- name: install ruby {{ rbenv.ruby_version }} for system
+  shell: bash -lc "rbenv install {{ rbenv.ruby_version }}"
+  when:
+    - ruby_installed.rc != 0
+  tags:
+    - rbenv
+    - ruby
+
+- name: set ruby {{ rbenv.ruby_version }} for system
+  shell: bash -lc "rbenv global {{ rbenv.ruby_version }} && rbenv rehash"
+  when:
+    - ruby_installed.rc != 0
+  tags:
+    - rbenv
+    - ruby
+
+- name: gem install bundler
+  shell: bash -lc "gem install bundler"
+  when:
+    - ruby_installed.rc != 0
+  tags:
+    - rbenv
+    - ruby

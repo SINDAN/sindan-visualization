@@ -1,0 +1,6 @@
+---
+- include: common-packages.yml
+#- include: selinux.yml
+#- include: sshd.yml
+- include: ntp.yml
+- include: iptables.yml

@@ -1,0 +1,10 @@
+- name: install build depends
+  apt: name="{{item}}" state=latest
+  with_items:
+    - git
+    - build-essential
+    - libssl-dev
+    - libreadline-dev
+#    - libffi-dev
+  tags:
+    - rbenv

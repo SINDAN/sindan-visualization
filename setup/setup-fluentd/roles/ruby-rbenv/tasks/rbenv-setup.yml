@@ -1,0 +1,41 @@
+- name: install rbenv
+  git: >
+    repo=git://github.com/sstephenson/rbenv.git
+    dest={{ rbenv_root }}
+    accept_hostkey=True
+  ignore_errors: true
+  tags:
+    - rbenv
+
+- name: create rbenv versions directory
+  file: >
+    path={{ rbenv_root }}/versions
+    state=directory
+  tags:
+    - rbenv
+
+- name: create rbenv plugins directory
+  file: >
+    path={{ rbenv_root }}/plugins
+    state=directory
+  tags:
+    - rbenv
+
+- name: add rbenv initialization to profile system-wide
+  template: >
+    src=rbenv.sh.j2
+    dest=/etc/profile.d/rbenv.sh
+    mode=644
+    owner=root
+    group=root
+  tags:
+    - rbenv
+
+- name: install ruby build
+  git: >
+    repo=https://github.com/sstephenson/ruby-build.git
+    dest={{ rbenv_root }}/plugins/ruby-build
+    accept_hostkey=True
+  tags:
+    - rbenv
+    - ruby

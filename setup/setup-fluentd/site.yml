@@ -1,0 +1,24 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - common
+    - ruby-rbenv
+  tags:
+    - task-common
+
+- hosts: fluentd
+  sudo: yes
+  roles:
+#    - fluentd
+#    - mysql-server
+  tags:
+    - task-fluentd
+
+- hosts: web
+  sudo: yes
+  roles:
+#    - passenger
+#    - user-deploy
+  tags:
+    - task-web
