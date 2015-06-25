@@ -1,0 +1,33 @@
+####
+## Output descriptions:
+##
+
+# mysql
+
+# debug
+<match sindan.*>
+  type file
+  path /var/log/td-agent/debug.sindan.out
+</match>
+
+####
+## Source descriptions:
+##
+
+# HTTP input: sindan log
+# http://localhost:8888/<tag>?json=<json>
+# $ curl -X POST -d 'json={"action":"login","user":2}' http://localhost:8888/sindan.log
+<source>
+  type http
+  port 8888
+  bind 0.0.0.0
+  body_size_limit 32m
+  keepalive_timeout 10s
+#  tag sindan.log
+</source>
+
+## built-in TCP input
+## @see http://docs.fluentd.org/articles/in_forward
+<source>
+  type forward
+</source>

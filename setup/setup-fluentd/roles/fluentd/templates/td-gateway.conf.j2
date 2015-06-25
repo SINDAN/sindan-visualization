@@ -1,0 +1,47 @@
+####
+## Output descriptions:
+##
+
+# foward server
+<match sindan.*>
+  type forward
+
+  <server>
+    host localhost
+    port 24224
+  </server>
+
+#  <secondary>
+#    type file
+#    path /var/log/td-agent/forward-failed
+#  </secondary>
+
+  flush_interval 1s
+</match>
+
+# debug
+<match sindan.*>
+  type file
+  path /var/log/td-agent/debug.sindan.gateway.out
+</match>
+
+## match tag=debug.** and dump to console
+<match debug.**>
+  type stdout
+</match>
+
+####
+## Source descriptions:
+##
+
+# HTTP input: sindan log
+# http://localhost:8888/<tag>?json=<json>
+# ex. http://localhost:8888/sindan.log.tag.here;
+<source>
+  type http
+  port 8888
+  bind 0.0.0.0
+  body_size_limit 32m
+  keepalive_timeout 10s
+#  tag sindan.log
+</source>

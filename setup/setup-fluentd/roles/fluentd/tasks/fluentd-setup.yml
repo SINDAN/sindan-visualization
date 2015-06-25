@@ -1,0 +1,32 @@
+- name: add fluentd config
+  template: >
+    src=td-agent.conf.j2
+    dest=/etc/td-agent/td-agent.conf
+    mode=644
+    owner=root
+    group=root
+  tags:
+    - fluentd
+
+#- name: add fluentd database config
+#  template: >
+#    src=td-database.conf.j2
+#    dest=/etc/td-agent/td-database.conf
+#    mode=644
+#    owner=root
+#    group=root
+#  tags:
+#    - fluentd
+
+#- name: add fluentd gateway config
+#  template: >
+#    src=td-gateway.conf.j2
+#    dest=/etc/td-agent/td-gateway.conf
+#    mode=644
+#    owner=root
+#    group=root
+#  tags:
+#    - fluentd
+
+- name: restart td-agent
+  service: name=td-agent state=restarted

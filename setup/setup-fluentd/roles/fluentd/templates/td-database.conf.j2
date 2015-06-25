@@ -1,0 +1,26 @@
+####
+## Output descriptions:
+##
+
+# mysql
+
+# debug
+<match sindan.*>
+  type file
+  path /var/log/td-agent/debug.sindan.database.out
+</match>
+
+## match tag=debug.** and dump to console
+#<match debug.**>
+#  type stdout
+#</match>
+
+####
+## Source descriptions:
+##
+
+## built-in TCP input
+## @see http://docs.fluentd.org/articles/in_forward
+<source>
+  type forward
+</source>

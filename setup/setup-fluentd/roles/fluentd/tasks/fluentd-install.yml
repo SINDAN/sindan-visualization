@@ -1,0 +1,5 @@
+- name: install fluentd
+  shell: bash -lc "curl -L https://td-toolbelt.herokuapp.com/sh/install-ubuntu-trusty-td-agent2.sh | sh"
+#  shell: bash -lc "curl -L http://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh | sh"
+  tags:
+    - fluentd

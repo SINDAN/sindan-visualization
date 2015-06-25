@@ -10,7 +10,7 @@
 - hosts: fluentd
   sudo: yes
   roles:
-#    - fluentd
+    - fluentd
 #    - mysql-server
   tags:
     - task-fluentd
