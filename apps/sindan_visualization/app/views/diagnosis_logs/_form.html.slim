@@ -1,0 +1,18 @@
+= form_for @diagnosis_log do |f|
+  - if @diagnosis_log.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@diagnosis_log.errors.count, "error")} prohibited this diagnosis_log from being saved:"
+      ul
+        - @diagnosis_log.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :case_name
+    = f.text_field :case_name
+  .field
+    = f.label :node_name
+    = f.text_area :node_name
+  .field
+    = f.label :ssid
+    = f.text_field :ssid
+  .actions = f.submit
