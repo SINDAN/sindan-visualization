@@ -21,6 +21,20 @@ ja:
       updated: 'を更新しました。'
       destroyed: 'を削除しました。'
   views:
-    static_pages:
-      about:
-        title: 'About'
+    diagnosis_logs:
+      index:
+        title: '診断ログ一覧'
+      show:
+        title: '診断ログ詳細'
+      new:
+        title: '診断ログ新規登録'
+      edit:
+        title: '診断ログ編集'
+  activerecord:
+    models:
+      diagnosis_logs: "診断ログ"
+    attributes:
+      diagnosis_log:
+        case_name: "CASE"
+        node_name: "NODE"
+        ssid: "SSID"

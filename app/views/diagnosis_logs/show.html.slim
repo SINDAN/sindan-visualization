@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Case name:
+  = @diagnosis_log.case_name
+p
+  strong Node name:
+  = @diagnosis_log.node_name
+p
+  strong Ssid:
+  = @diagnosis_log.ssid
+
+= link_to 'Edit', edit_diagnosis_log_path(@diagnosis_log)
+'|
+= link_to 'Back', diagnosis_logs_path
