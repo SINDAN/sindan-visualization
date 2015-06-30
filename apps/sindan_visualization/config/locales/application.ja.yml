@@ -1,0 +1,26 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+ja:
+  common:
+    site_title: "SINDAN VISUALIZATION"
+  helpers:
+    actions: "Actions"
+    links:
+      back: "戻る"
+      cancel: "キャンセル"
+      confirm: "削除してもよろしいですか?"
+      destroy: "削除"
+      new: "新規登録"
+      edit: "編集"
+      update: "更新"
+      login: "ログイン"
+      logout: "ログアウト"
+    messages:
+      created: 'を作成しました。'
+      updated: 'を更新しました。'
+      destroyed: 'を削除しました。'
+  views:
+    static_pages:
+      about:
+        title: 'About'
