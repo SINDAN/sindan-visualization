@@ -3,6 +3,23 @@
 ##
 
 # mysql
+# https://github.com/tagomoris/fluent-plugin-mysql
+<match sindan.log>
+  type mysql
+  host localhost
+  # port 3306 # default
+  database sindan_visualization_production
+  username sindan
+  password
+  # TODO: set db information
+
+  table diagnosis_logs
+  # 'columns' names order must be same with 'key_names'
+  key_names case_name, node_name, ssid
+  columns case_name, node_name, ssid
+
+  flush_interval 5s
+</match>
 
 # debug
 <match sindan.*>
@@ -16,7 +33,7 @@
 
 # HTTP input: sindan log
 # http://localhost:8888/<tag>?json=<json>
-# $ curl -X POST -d 'json={"action":"login","user":2}' http://localhost:8888/sindan.log
+# $ curl -X POST -d 'json={ "code": "123", "message": "hogehoge" }' http://localhost:8888/sindan.log
 <source>
   type http
   port 8888

@@ -1,3 +1,4 @@
 ---
 - include: fluentd-install.yml
+- include: fluentd-install-mysql.yml
 - include: fluentd-setup.yml
