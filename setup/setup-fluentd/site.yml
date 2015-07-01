@@ -7,18 +7,19 @@
   tags:
     - task-common
 
-- hosts: fluentd
+- hosts: web
   sudo: yes
   roles:
     - mysql-server
+    - passenger
+#    - user-deploy
+  tags:
+    - task-web
+
+- hosts: fluentd
+  sudo: yes
+  roles:
     - fluentd
   tags:
     - task-fluentd
 
-- hosts: web
-  sudo: yes
-  roles:
-#    - passenger
-#    - user-deploy
-  tags:
-    - task-web

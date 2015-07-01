@@ -1,0 +1,48 @@
+- name: install build depends for httpd
+  apt: name="{{item}}" state=installed
+  with_items:
+    - apache2
+    - libcurl4-openssl-dev
+    - apache2-threaded-dev
+  tags:
+    - passenger
+    - apache
+
+- name: http service state
+  service: name=apache2 state=started enabled=yes
+  tags:
+    - apache
+
+- name: Change acceptable tcp port for http on iptables
+  lineinfile:
+    dest: "/etc/iptables/{{ item }}"
+    state: present
+    regexp: "^#-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT"
+    line: "-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT"
+    backrefs: yes
+    backup: yes
+  with_items:
+    - 'rules.v4'
+    - 'rules.v6'
+  notify:
+    - restart iptables
+  tags:
+    - apache
+    - iptables
+
+#- name: Change acceptable tcp port for https on iptables
+#  lineinfile:
+#    dest: "/etc/iptables/{{ item }}"
+#    state: present
+#    regexp: "^#-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT"
+#    line: "-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT"
+#    backrefs: yes
+#    backup: yes
+#  with_items:
+#    - 'rules.v4'
+#    - 'rules.v6'
+#  notify:
+#    - restart iptables
+#  tags:
+#    - apache
+#    - iptables

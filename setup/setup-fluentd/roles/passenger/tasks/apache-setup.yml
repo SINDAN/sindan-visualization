@@ -1,0 +1,68 @@
+#- name: add apache base config
+#  template: >
+#    src=httpd.conf.j2
+#    dest=/etc/apache2/apache2.conf
+#    mode=644
+#    owner=root
+#    group=root
+#  tags:
+#    - apache
+
+#- name: add apache config
+#  template: >
+#    src={{ item }}.j2
+#    dest=/etc/apache2/conf-enabled/{{ item }}
+#    mode=644
+#    owner=root
+#    group=root
+#  with_items:
+#    - ssl.conf
+#  tags:
+#    - apache
+
+#- name: link apache config
+#  file: >
+#    path=/etc/apache2/conf-enabled/{{ item }}
+#    src=/etc/apache2/conf-available/{{ item }}
+#    state=link
+#  with_items:
+#    - ssl.conf
+#  tags:
+#    - apache
+
+#- name: create vhost conf directory
+#  file: >
+#    path=/etc/apache2/{{ item }}
+#    mode=755
+#    owner=root
+#    group=root
+#    state=directory
+#  with_items:
+#    - sites-available
+#    - sites-enabled
+#  tags:
+#    - apache
+
+- name: add apache vhost config
+  template: >
+    src={{ item }}.j2
+    dest=/etc/apache2/sites-available/{{ item }}
+    mode=644
+    owner=root
+    group=root
+  with_items:
+    - sindan-production.conf
+    - sindan-staging.conf
+  tags:
+    - apache
+
+- name: link apache vhost config ({{ stage }})
+  file: >
+    path=/etc/apache2/sites-enabled/{{ item }}
+    src=/etc/apache2/sites-available/{{ item }}
+    state=link
+  with_items:
+    - sindan-{{ stage }}.conf
+  notify: restart apache
+  tags:
+    - apache

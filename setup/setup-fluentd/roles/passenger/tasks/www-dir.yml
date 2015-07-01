@@ -1,0 +1,35 @@
+- name: create app root directory ({{ stage }})
+  file: >
+    path=/var/www/{{ item }}
+    mode=2775
+    owner=www-data
+    group=www-data
+    state=directory
+  with_items:
+    - sindan-{{ stage }}
+  tags:
+    - www-dir
+
+- name: create app releases directory ({{ stage }})
+  file: >
+    path=/var/www/{{ item }}/releases
+    mode=2775
+    owner=www-data
+    group=www-data
+    state=directory
+  with_items:
+    - sindan-{{ stage }}
+  tags:
+    - www-dir
+
+- name: create app shared directory ({{ stage }})
+  file: >
+    path=/var/www/{{ item }}/shared
+    mode=2775
+    owner=www-data
+    group=www-data
+    state=directory
+  with_items:
+    - sindan-{{ stage }}
+  tags:
+    - www-dir

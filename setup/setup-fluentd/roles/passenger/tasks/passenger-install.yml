@@ -1,0 +1,38 @@
+- stat: path=/etc/apache2/conf.d/passenger.conf
+  register: passenger_conf
+  tags:
+    - passenger
+
+- name: check passenger version
+  shell: bash -lc "grep {{ passenger.passenger_version }} /etc/apache2/conf-available/passenger.conf"
+  register: check_passenger_ver
+  failed_when: check_passenger_ver.rc not in [0, 1]
+  when: passenger_conf.stat.exists == True
+  tags:
+    - passenger
+
+- name: install passenger
+  shell: bash -lc "gem install passenger -v {{ passenger.passenger_version }}"
+  when: passenger_conf.stat.exists == False or check_passenger_ver.rc != 0
+  tags:
+    - passenger
+
+- name: install passenger module
+  shell: bash -lc "passenger-install-apache2-module --auto"
+  when: passenger_conf.stat.exists == False or check_passenger_ver.rc != 0
+  tags:
+    - passenger
+
+- name: create passenger conf
+  shell: bash -lc "passenger-install-apache2-module --snip > /etc/apache2/conf-available/passenger.conf"
+  when: passenger_conf.stat.exists == False or check_passenger_ver.rc != 0
+  tags:
+    - passenger
+
+- name: link apache config
+  file: >
+    path=/etc/apache2/conf-enabled/passenger.conf
+    src=/etc/apache2/conf-available/passenger.conf
+    state=link
+  tags:
+    - passenger

@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+
+ServerName fluentd.c.u-tokyo.ac.jp
+#ServerAlias fluentd.c.u-tokyo.ac.jp
+
+ServerAdmin t.taketo1113@gmail.com
+DocumentRoot /var/www/sindan-production/current/public
+
+<Directory /var/www>
+    RailsEnv production
+    Options FollowSymLinks -MultiViews
+    Allow from all
+</Directory>
+
+ErrorLog "/var/log/apache2/sindan-error.log"
+#CustomLog "/var/log/apache2/sindan-access.log" common
+CustomLog "/var/log/apache2/sindan-access.log" combined
+
+LogLevel warn
+
+</VirtualHost>                                  

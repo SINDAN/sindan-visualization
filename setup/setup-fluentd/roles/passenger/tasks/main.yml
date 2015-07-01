@@ -1,0 +1,5 @@
+---
+- include: passenger-packages.yml
+- include: passenger-install.yml
+- include: apache-setup.yml
+- include: www-dir.yml
