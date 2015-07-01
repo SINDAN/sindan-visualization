@@ -1,0 +1,30 @@
+---
+- name: add group deploy
+  group:
+    name: deploy
+  tags:
+    - user-deploy
+
+- name: add user deploy
+  user:
+    name: deploy
+    group: deploy
+    shell: /bin/bash
+    groups: deploy,sudo,www-data
+    append: yes
+  tags:
+    - user-deploy
+
+- name: set up authorized_keys for the deploy user
+  authorized_key:
+    user: deploy
+    key: "{{ item }}"
+  with_file:
+    - public_keys/taketo.pub
+  tags:
+    - user-deploy
+
+#- name: add user to sudoer
+#  action: lineinfile dest=/etc/sudoers regexp="^%wheel" line="%wheel\tALL=(ALL)\tALL\n" state=present
+#  tags:
+#    - user-deploy
