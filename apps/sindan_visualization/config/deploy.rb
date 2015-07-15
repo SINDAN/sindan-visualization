@@ -5,7 +5,7 @@
 set :application, 'sindan_visualization'
 
 set :scm, :git
-set :repo_url, 'sh.wide.ad.jp/~sho/sindan'
+set :repo_url, 'taketo@sh.wide.ad.jp/~sho/sindan'
 set :branch, :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
