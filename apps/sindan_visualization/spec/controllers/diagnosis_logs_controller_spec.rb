@@ -24,7 +24,7 @@ RSpec.describe DiagnosisLogsController, type: :controller do
   # DiagnosisLog. As you add validations to DiagnosisLog, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { detail: "detail" }
   }
 
   let(:invalid_attributes) {
@@ -103,14 +103,14 @@ RSpec.describe DiagnosisLogsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { detail: "new detail" }
       }
 
       it "updates the requested diagnosis_log" do
         diagnosis_log = DiagnosisLog.create! valid_attributes
         put :update, {:id => diagnosis_log.to_param, :diagnosis_log => new_attributes}, valid_session
         diagnosis_log.reload
-        skip("Add assertions for updated state")
+        expect(diagnosis_log.detail).to eq new_attributes[:detail]
       end
 
       it "assigns the requested diagnosis_log as @diagnosis_log" do
