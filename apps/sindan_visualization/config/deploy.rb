@@ -2,6 +2,13 @@
 # config valid only for current version of Capistrano
 #lock '3.4.0'
 
+# slack
+require 'slack-notifier'
+set :slack_team, "sindan"
+set :slack_webhook_url, "https://hooks.slack.com/services/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"
+set :slack_channel, '#dev-ops'
+set :slack_username, 'Slack notifier'
+
 set :application, 'sindan_visualization'
 
 set :scm, :git
@@ -126,4 +133,28 @@ namespace :log do
       execute "tail -f #{shared_path}/log/#{env}.log"
     end
   end
+end
+
+namespace :slack_notify do
+
+  notifier = Slack::Notifier.new fetch(:slack_webhook_url), channel: fetch(:slack_channel), username: fetch(:slack_username)
+
+  desc 'notify start deploy for slack'
+  task :deploy_started do
+    notifier.ping "#{ENV['USER'] || ENV['USERNAME']} started deploying branch #{fetch :application}/#{fetch :branch} to #{fetch :stage} (#{fetch :rails_env, 'production'})."
+  end
+
+  desc 'notify finish deploy for slack'
+  task :deploy_finished do
+    notifier.ping "#{ENV['USER'] || ENV['USERNAME']} finished deploying branch #{fetch :application}/#{fetch :branch} to #{fetch :stage} (#{fetch :rails_env, 'production'})."
+  end
+
+  desc 'notify fail deploy for slack'
+  task :deploy_failed do
+    notifier.ping "*ERROR!* #{ENV['USER'] || ENV['USERNAME']} failed to deploy branch #{fetch :application}/#{fetch :branch} to #{fetch :stage} (#{fetch :rails_env, 'production'})."
+  end
+
+  before 'deploy:starting', 'slack_notify:deploy_started'
+  after :deploy, :deploy_finished
+  before 'deploy:finishing_rollback', 'slack_notify:deploy_failed'
 end
