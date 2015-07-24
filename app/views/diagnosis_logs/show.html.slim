@@ -1,15 +1,25 @@
-p#notice = notice
+- provide :title, t('views.diagnosis_logs.show.title')
 
 p
-  strong Case name:
-  = @diagnosis_log.case_name
-p
-  strong Node name:
-  = @diagnosis_log.node_name
-p
-  strong Ssid:
-  = @diagnosis_log.ssid
+  a.btn.btn-default href="#{edit_diagnosis_log_path(@diagnosis_log)}" #{t('helpers.links.edit')}
 
-= link_to 'Edit', edit_diagnosis_log_path(@diagnosis_log)
-'|
-= link_to 'Back', diagnosis_logs_path
+table.table
+  colgroup
+    col.col-xs-2
+    col.col-xs-10
+  tbody
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.layer')}
+      td #{@diagnosis_log.layer}
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      td #{@diagnosis_log.log_type}
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.result')}
+      td #{@diagnosis_log.result}
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.detail')}
+      td #{hbr(@diagnosis_log.detail)}
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
+      td #{datetime_view(@diagnosis_log.occurred_at)}
