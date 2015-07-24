@@ -21,6 +21,22 @@ en:
       updated: ' was successfully updated.'
       destroyed: ' was successfully destroyed.'
   views:
-    static_pages:
-      about:
-        title: 'About'
+    diagnosis_logs:
+      index:
+        title: 'Diagnosis Logs'
+      show:
+        title: 'Diagnosis Log Detail'
+      new:
+        title: 'Create Diagnosis Log'
+      edit:
+        title: 'Edit Diagnosis Log'
+  activerecord:
+    models:
+      diagnosis_logs: "Diagnosis Log"
+    attributes:
+      diagnosis_log:
+        layer: "Layer"
+        log_type: "Type"
+        result: "Result"
+        detail: "Detail"
+        occurred_at: "Occurred at"

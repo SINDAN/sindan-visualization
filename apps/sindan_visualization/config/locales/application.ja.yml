@@ -35,6 +35,8 @@ ja:
       diagnosis_logs: "診断ログ"
     attributes:
       diagnosis_log:
-        case_name: "CASE"
-        node_name: "NODE"
-        ssid: "SSID"
+        layer: "レイヤ"
+        log_type: "計測タイプ"
+        result: "計測結果"
+        detail: "計測結果詳細"
+        occurred_at: "発生日時"

@@ -1,11 +1,14 @@
 class CreateDiagnosisLogs < ActiveRecord::Migration
   def change
     create_table :diagnosis_logs do |t|
-      t.string :case_name
-      t.text :node_name
-      t.string :ssid
+      t.string :layer
+      t.string :log_type
+      t.boolean :result
+      t.text :detail
+      t.datetime :occurred_at
 
       t.timestamps null: false
     end
+    add_index :diagnosis_logs, :result
   end
 end

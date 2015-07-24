@@ -7,12 +7,15 @@ table.table.table-condensed.table-bordered.table-striped
     col.col-xs-4
   thead
     tr
-      th #{t('activerecord.attributes.diagnosis_log.case_name')}
-      th #{t('activerecord.attributes.diagnosis_log.node_name')}
-      th #{t('activerecord.attributes.diagnosis_log.ssid')}
+      th #{t('activerecord.attributes.diagnosis_log.layer')}
+      th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
-      tr
-        td = diagnosis_log.case_name
-        td = diagnosis_log.node_name
-        td = diagnosis_log.ssid
+      tr class="#{diagnosis_log.result? ? 'success' : 'danger'}"
+        td
+          | #{diagnosis_log.layer}
+        td
+          | #{diagnosis_log.log_type}
+        td
+          | #{datetime_view(diagnosis_log.occurred_at)}
