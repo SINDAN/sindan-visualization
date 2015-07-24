@@ -1,4 +1,4 @@
-= form_for @diagnosis_log do |f|
+= form_for @diagnosis_log, html: { class: "form-horizontal" } do |f|
   - if @diagnosis_log.errors.any?
     #error_explanation
       h2 = "#{pluralize(@diagnosis_log.errors.count, "error")} prohibited this diagnosis_log from being saved:"
@@ -6,13 +6,34 @@
         - @diagnosis_log.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.label :case_name
-    = f.text_field :case_name
-  .field
-    = f.label :node_name
-    = f.text_area :node_name
-  .field
-    = f.label :ssid
-    = f.text_field :ssid
-  .actions = f.submit
+  .form-group
+    .control-label.col-sm-2
+      = f.label :layer
+    .col-sm-4
+      = f.text_field :layer, class: "form-control"
+  .form-group
+    .control-label.col-sm-2
+      = f.label :log_type
+    .col-sm-4
+      = f.text_field :log_type, class: "form-control"
+  .form-group
+    .control-label.col-sm-2
+      = f.label :result
+    .col-sm-4
+      .checkbox
+        label
+          = f.check_box :result
+  .form-group
+    .control-label.col-sm-2
+      = f.label :detail
+    .col-sm-6
+      = f.text_area :detail, class: "form-control", rows: 5
+  .form-group
+    .control-label.col-sm-2
+      = f.label :occurred_at
+    .col-sm-4
+      = f.datetime_select :occurred_at
+
+  .form-group
+    .col-sm-10.col-sm-offset-2
+      = f.submit id: "submit_diagnosis_log", class: "btn btn-primary"
