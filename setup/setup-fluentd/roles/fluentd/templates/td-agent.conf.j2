@@ -15,8 +15,8 @@
 
   table diagnosis_logs
   # 'columns' names order must be same with 'key_names'
-  key_names case_name, node_name, ssid
-  columns case_name, node_name, ssid
+  key_names layer, log_type, result, detail, occurred_at
+  columns layer, log_type, result, detail, occurred_at
 
   flush_interval 5s
 </match>
