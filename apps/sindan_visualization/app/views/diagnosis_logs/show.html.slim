@@ -19,7 +19,10 @@ table.table
       td #{@diagnosis_log.log_type}
     tr
       th #{t('activerecord.attributes.diagnosis_log.log_unit_uuid')}
-      td #{@diagnosis_log.log_unit_uuid}
+      td
+        - unless @diagnosis_log.log_unit.nil?
+          a href="#{log_unit_path(@diagnosis_log.log_unit)}"
+            | #{@diagnosis_log.log_unit_uuid}
     tr
       th #{t('activerecord.attributes.diagnosis_log.result')}
       td #{@diagnosis_log.result}
