@@ -5,6 +5,7 @@ RSpec.describe "diagnosis_logs/index", type: :view do
     assign(:diagnosis_logs, [
       DiagnosisLog.create!(
         :layer => "Layer",
+        :log_group => "Log Group",
         :log_type => "Log Type",
         :result => :success,
         :detail => "Detail",
@@ -12,6 +13,7 @@ RSpec.describe "diagnosis_logs/index", type: :view do
       ),
       DiagnosisLog.create!(
         :layer => "Layer",
+        :log_group => "Log Group",
         :log_type => "Log Type",
         :result => :fail,
         :detail => "Detail",
@@ -23,6 +25,7 @@ RSpec.describe "diagnosis_logs/index", type: :view do
   it "renders a list of diagnosis_logs" do
     render
     assert_select "tr>td", :text => "Layer".to_s, :count => 2
+    assert_select "tr>td", :text => "Log Group".to_s, :count => 2
     assert_select "tr>td", :text => "Log Type".to_s, :count => 2
   end
 

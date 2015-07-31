@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :diagnosis_log do
     layer "MyText"
+    log_group "MyText"
     log_type "MyText"
     result :success
     detail "MyText"
