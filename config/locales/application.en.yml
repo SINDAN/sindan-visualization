@@ -30,13 +30,29 @@ en:
         title: 'Create Diagnosis Log'
       edit:
         title: 'Edit Diagnosis Log'
+    log_units:
+      index:
+        title: 'Log Units'
+      show:
+        title: 'Log Unit Detail'
+      new:
+        title: 'Create Log Unit'
+      edit:
+        title: 'Edit Log Unit'
   activerecord:
     models:
       diagnosis_logs: "Diagnosis Log"
+      log_units: "Log unit"
     attributes:
       diagnosis_log:
         layer: "Layer"
         log_type: "Type"
         result: "Result"
         detail: "Detail"
+        log_unit_uuid: "UUID"
+        occurred_at: "Occurred at"
+      log_unit:
+        log_unit_uuid: "UUID"
+        mac_addr: "MAC Address"
+        os: "OS"
         occurred_at: "Occurred at"

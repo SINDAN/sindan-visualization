@@ -2,13 +2,15 @@
 
 table.table.table-condensed.table-bordered.table-striped
   colgroup
-    col.col-xs-4
-    col.col-xs-4
-    col.col-xs-4
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
   thead
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
       th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      th #{t('activerecord.attributes.diagnosis_log.log_unit_uuid')}
       th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
@@ -17,5 +19,7 @@ table.table.table-condensed.table-bordered.table-striped
           | #{diagnosis_log.layer}
         td
           | #{diagnosis_log.log_type}
+        td
+          | #{diagnosis_log.log_unit_uuid}
         td
           | #{datetime_view(diagnosis_log.occurred_at)}

@@ -1,4 +1,6 @@
 class DiagnosisLog < ActiveRecord::Base
+  belongs_to :log_unit, foreign_key: :log_unit_uuid, primary_key: :log_unit_uuid
+
   enum result: {
          fail: 0,
          success: 1,

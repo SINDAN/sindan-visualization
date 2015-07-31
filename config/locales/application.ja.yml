@@ -30,13 +30,29 @@ ja:
         title: '診断ログ新規登録'
       edit:
         title: '診断ログ編集'
+    log_units:
+      index:
+        title: 'ログUnit一覧'
+      show:
+        title: 'ログUnit詳細'
+      new:
+        title: 'ログUnit新規登録'
+      edit:
+        title: 'ログUnit編集'
   activerecord:
     models:
       diagnosis_logs: "診断ログ"
+      log_units: "ログUnit"
     attributes:
       diagnosis_log:
         layer: "レイヤ"
         log_type: "計測タイプ"
         result: "計測結果"
         detail: "計測結果詳細"
+        log_unit_uuid: "UUID"
+        occurred_at: "発生日時"
+      log_unit:
+        log_unit_uuid: "UUID"
+        mac_addr: "MACアドレス"
+        os: "OS"
         occurred_at: "発生日時"
