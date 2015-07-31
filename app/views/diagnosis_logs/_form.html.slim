@@ -19,10 +19,8 @@
   .form-group
     .control-label.col-sm-2
       = f.label :result
-    .col-sm-4
-      .checkbox
-        label
-          = f.check_box :result
+    .col-sm-2
+      = f.select :result, DiagnosisLog.results.map{ |result| [result.first, result.first] }, { include_blank: false }, { class: "form-control" }
   .form-group
     .control-label.col-sm-2
       = f.label :detail

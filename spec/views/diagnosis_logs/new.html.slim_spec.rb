@@ -5,7 +5,7 @@ RSpec.describe "diagnosis_logs/new", type: :view do
     assign(:diagnosis_log, DiagnosisLog.new(
       :layer => "Layer",
       :log_type => "Log Type",
-      :result => false,
+      :result => :fail,
       :detail => "Detail",
       :occurred_at => "2015-07-24 19:24:42",
     ))
@@ -20,7 +20,7 @@ RSpec.describe "diagnosis_logs/new", type: :view do
 
       assert_select "input#diagnosis_log_log_type[name=?]", "diagnosis_log[log_type]"
 
-      assert_select "input#diagnosis_log_result[name=?]", "diagnosis_log[result]"
+      assert_select "select#diagnosis_log_result[name=?]", "diagnosis_log[result]"
 
       assert_select "textarea#diagnosis_log_detail[name=?]", "diagnosis_log[detail]"
 
