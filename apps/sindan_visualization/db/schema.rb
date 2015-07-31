@@ -11,18 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731105413) do
+ActiveRecord::Schema.define(version: 20150731162722) do
 
   create_table "diagnosis_logs", force: :cascade do |t|
-    t.string   "layer",       limit: 255
-    t.string   "log_type",    limit: 255
-    t.integer  "result",      limit: 4
-    t.text     "detail",      limit: 65535
+    t.string   "layer",         limit: 255
+    t.string   "log_type",      limit: 255
+    t.integer  "result",        limit: 4
+    t.text     "detail",        limit: 65535
+    t.datetime "occurred_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "log_unit_uuid", limit: 38
+  end
+
+  add_index "diagnosis_logs", ["log_unit_uuid"], name: "index_diagnosis_logs_on_log_unit_uuid", using: :btree
+  add_index "diagnosis_logs", ["result"], name: "index_diagnosis_logs_on_result", using: :btree
+
+  create_table "log_units", force: :cascade do |t|
+    t.string   "log_unit_uuid", limit: 38
+    t.string   "mac_addr",      limit: 255
+    t.string   "os",            limit: 255
     t.datetime "occurred_at"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
 
-  add_index "diagnosis_logs", ["result"], name: "index_diagnosis_logs_on_result", using: :btree
+  add_index "log_units", ["log_unit_uuid"], name: "index_log_units_on_log_unit_uuid", using: :btree
 
 end

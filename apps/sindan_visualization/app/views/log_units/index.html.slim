@@ -1,0 +1,29 @@
+- provide :title, t('views.log_units.index.title')
+
+table.table.table-condensed.table-bordered.table-striped
+  colgroup
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
+  thead
+    tr
+      th #{t('activerecord.attributes.log_unit.log_unit_uuid')}
+      th #{t('activerecord.attributes.log_unit.mac_addr')}
+      th #{t('activerecord.attributes.log_unit.os')}
+      th #{t('activerecord.attributes.log_unit.occurred_at')}
+  tbody
+    - @log_units.each do |log_unit|
+      tr
+        td
+          a href="#{log_unit_path(log_unit)}"
+            | #{log_unit.log_unit_uuid}
+        td
+          a href="#{log_unit_path(log_unit)}"
+            | #{ log_unit.mac_addr}
+        td
+          a href="#{log_unit_path(log_unit)}"
+            | #{ log_unit.os}
+        td
+          a href="#{log_unit_path(log_unit)}"
+            | #{datetime_view(log_unit.occurred_at)}

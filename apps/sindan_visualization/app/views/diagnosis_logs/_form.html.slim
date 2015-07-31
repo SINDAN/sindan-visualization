@@ -18,6 +18,11 @@
       = f.text_field :log_type, class: "form-control"
   .form-group
     .control-label.col-sm-2
+      = f.label :log_unit_uuid
+    .col-sm-4
+      = f.text_field :log_unit_uuid, class: "form-control"
+  .form-group
+    .control-label.col-sm-2
       = f.label :result
     .col-sm-2
       = f.select :result, DiagnosisLog.results.map{ |result| [result.first, result.first] }, { include_blank: false }, { class: "form-control" }

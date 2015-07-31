@@ -69,6 +69,6 @@ class DiagnosisLogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def diagnosis_log_params
-      params.require(:diagnosis_log).permit(:layer, :log_type, :result, :detail, :occurred_at)
+      params.require(:diagnosis_log).permit(:layer, :log_type, :log_unit_uuid, :result, :detail, :occurred_at)
     end
 end
