@@ -12,7 +12,7 @@ table.table.table-condensed.table-bordered.table-striped
       th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
-      tr class="#{diagnosis_log.result? ? 'success' : 'danger'}"
+      tr class="#{diagnosis_log.success? ? 'success' : 'danger'}"
         td
           | #{diagnosis_log.layer}
         td

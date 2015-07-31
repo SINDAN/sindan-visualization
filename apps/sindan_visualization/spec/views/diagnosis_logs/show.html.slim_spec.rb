@@ -5,7 +5,7 @@ RSpec.describe "diagnosis_logs/show", type: :view do
     @diagnosis_log = assign(:diagnosis_log, DiagnosisLog.create!(
       :layer => "Layer",
       :log_type => "Log Type",
-      :result => false,
+      :result => :fail,
       :detail => "Detail",
       :occurred_at => "2015-07-24 19:24:42",
     ))

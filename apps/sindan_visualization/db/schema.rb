@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630154000) do
+ActiveRecord::Schema.define(version: 20150731105413) do
 
   create_table "diagnosis_logs", force: :cascade do |t|
     t.string   "layer",       limit: 255
     t.string   "log_type",    limit: 255
-    t.boolean  "result",      limit: 1
+    t.integer  "result",      limit: 4
     t.text     "detail",      limit: 65535
     t.datetime "occurred_at"
     t.datetime "created_at",                null: false

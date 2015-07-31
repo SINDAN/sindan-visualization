@@ -6,14 +6,14 @@ RSpec.describe "diagnosis_logs/index", type: :view do
       DiagnosisLog.create!(
         :layer => "Layer",
         :log_type => "Log Type",
-        :result => true,
+        :result => :success,
         :detail => "Detail",
         :occurred_at => "2015-07-24 19:24:42",
       ),
       DiagnosisLog.create!(
         :layer => "Layer",
         :log_type => "Log Type",
-        :result => false,
+        :result => :fail,
         :detail => "Detail",
         :occurred_at => "2015-07-24 19:24:42",
       )
