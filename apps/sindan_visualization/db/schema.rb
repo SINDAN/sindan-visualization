@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731162722) do
+ActiveRecord::Schema.define(version: 20150731175334) do
 
   create_table "diagnosis_logs", force: :cascade do |t|
     t.string   "layer",         limit: 255
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150731162722) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.string   "log_unit_uuid", limit: 38
+    t.string   "log_group",     limit: 255
   end
 
   add_index "diagnosis_logs", ["log_unit_uuid"], name: "index_diagnosis_logs_on_log_unit_uuid", using: :btree

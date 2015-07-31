@@ -4,6 +4,7 @@ RSpec.describe "diagnosis_logs/new", type: :view do
   before(:each) do
     assign(:diagnosis_log, DiagnosisLog.new(
       :layer => "Layer",
+      :log_group => "Log Group",
       :log_type => "Log Type",
       :result => :fail,
       :detail => "Detail",
@@ -17,6 +18,8 @@ RSpec.describe "diagnosis_logs/new", type: :view do
     assert_select "form[action=?][method=?]", diagnosis_logs_path, "post" do
 
       assert_select "input#diagnosis_log_layer[name=?]", "diagnosis_log[layer]"
+
+      assert_select "input#diagnosis_log_log_group[name=?]", "diagnosis_log[log_group]"
 
       assert_select "input#diagnosis_log_log_type[name=?]", "diagnosis_log[log_type]"
 

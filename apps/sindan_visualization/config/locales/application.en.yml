@@ -46,6 +46,7 @@ en:
     attributes:
       diagnosis_log:
         layer: "Layer"
+        log_group: "Group"
         log_type: "Type"
         result: "Result"
         detail: "Detail"

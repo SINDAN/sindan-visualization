@@ -46,6 +46,7 @@ ja:
     attributes:
       diagnosis_log:
         layer: "レイヤ"
+        log_group: "計測グループ"
         log_type: "計測タイプ"
         result: "計測結果"
         detail: "計測結果詳細"
