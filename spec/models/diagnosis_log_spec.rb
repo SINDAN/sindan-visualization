@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.describe DiagnosisLog, type: :model do
@@ -15,5 +16,31 @@ RSpec.describe DiagnosisLog, type: :model do
     @diagnosis_log.result = :invalid
 
     expect(@diagnosis_log).not_to be_valid
+  end
+
+  context "Layer label" do
+    before(:each) do
+      @diagnosis_log = DiagnosisLog.new(
+        layer: :web
+      )
+    end
+
+    it "replace label with value of layer" do
+      @diagnosis_log.layer = :web
+
+      expect(@diagnosis_log.layer_label).to eq("ウェブアプリケーション層")
+    end
+
+    it "is not plane value with value of layer" do
+      @diagnosis_log.layer = :web
+
+      expect(@diagnosis_log.layer_label).not_to eq("web")
+    end
+
+    it "not replace label with invalid value of layer" do
+      @diagnosis_log.layer = :invalid
+
+      expect(@diagnosis_log.layer_label).to eq("invalid")
+    end
   end
 end

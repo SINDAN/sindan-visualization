@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "diagnosis_logs/edit", type: :view do
   before(:each) do
     @diagnosis_log = assign(:diagnosis_log, DiagnosisLog.create!(
-      :layer => "Layer",
+      :layer => "web",
       :log_group => "Log Group",
       :log_type => "Log Type",
       :result => :fail,
@@ -17,7 +17,7 @@ RSpec.describe "diagnosis_logs/edit", type: :view do
 
     assert_select "form[action=?][method=?]", diagnosis_log_path(@diagnosis_log), "post" do
 
-      assert_select "input#diagnosis_log_layer[name=?]", "diagnosis_log[layer]"
+      assert_select "select#diagnosis_log_layer[name=?]", "diagnosis_log[layer]"
 
       assert_select "input#diagnosis_log_log_group[name=?]", "diagnosis_log[log_group]"
 
