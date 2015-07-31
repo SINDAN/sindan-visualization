@@ -10,7 +10,7 @@
     .control-label.col-sm-2
       = f.label :layer
     .col-sm-4
-      = f.text_field :layer, class: "form-control"
+      = f.select :layer, DiagnosisLog.layer_defs.map{ |key, value| [value, key] }, { include_blank: true }, { class: "form-control" }
   .form-group
     .control-label.col-sm-2
       = f.label :log_group

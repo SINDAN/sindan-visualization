@@ -19,7 +19,7 @@ table.table.table-condensed.table-bordered.table-striped
       tr class="#{diagnosis_log.success? ? 'success' : 'danger'}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
-            | #{diagnosis_log.layer}
+            | #{diagnosis_log.layer_label}
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.log_group}
