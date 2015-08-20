@@ -24,7 +24,7 @@ RSpec.describe LogCampaignsController, type: :controller do
   # LogCampaign. As you add validations to LogCampaign, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { mac_addr: "mac_addr" }
   }
 
   let(:invalid_attributes) {
@@ -103,14 +103,14 @@ RSpec.describe LogCampaignsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { mac_addr: "mac_addr2" }
       }
 
       it "updates the requested log_campaign" do
         log_campaign = LogCampaign.create! valid_attributes
         put :update, {:id => log_campaign.to_param, :log_campaign => new_attributes}, valid_session
         log_campaign.reload
-        skip("Add assertions for updated state")
+        expect(log_campaign.mac_addr).to eq new_attributes[:mac_addr]
       end
 
       it "assigns the requested log_campaign as @log_campaign" do
