@@ -50,10 +50,10 @@ en:
         log_type: "Type"
         result: "Result"
         detail: "Detail"
-        log_unit_uuid: "Campaign UUID"
+        log_campaign_uuid: "Campaign UUID"
         occurred_at: "Occurred at"
       log_campaign:
-        log_unit_uuid: "Campaign UUID"
+        log_campaign_uuid: "Campaign UUID"
         mac_addr: "MAC Address"
         os: "OS"
         occurred_at: "Occurred at"

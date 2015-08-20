@@ -50,10 +50,10 @@ ja:
         log_type: "計測タイプ"
         result: "計測結果"
         detail: "計測結果詳細"
-        log_unit_uuid: "キャンペーンUUID"
+        log_campaign_uuid: "キャンペーンUUID"
         occurred_at: "発生日時"
       log_campaign:
-        log_unit_uuid: "キャンペーンUUID"
+        log_campaign_uuid: "キャンペーンUUID"
         mac_addr: "MACアドレス"
         os: "OS"
         occurred_at: "発生日時"
