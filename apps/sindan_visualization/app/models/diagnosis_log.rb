@@ -11,10 +11,10 @@ class DiagnosisLog < ActiveRecord::Base
   cattr_reader :layer_defs
   @@layer_defs = {
     datalink: 'データリンク層',
-    ifconf: 'インタフェース設定層',
+    interface: 'インタフェース設定層',
     localnet: 'ローカルネットワーク層',
-    dns: '名前解決層',
     globalnet: 'グローバルネットワーク層',
+    dns: '名前解決層',
     web: 'ウェブアプリケーション層',
   }
 
