@@ -20,8 +20,8 @@ table.table
     tr
       th #{t('activerecord.attributes.diagnosis_log.log_unit_uuid')}
       td
-        - unless @diagnosis_log.log_unit.nil?
-          a href="#{log_unit_path(@diagnosis_log.log_unit)}"
+        - unless @diagnosis_log.log_campaign.nil?
+          a href="#{log_campaign_path(@diagnosis_log.log_campaign)}"
             | #{@diagnosis_log.log_unit_uuid}
     tr
       th #{t('activerecord.attributes.diagnosis_log.result')}

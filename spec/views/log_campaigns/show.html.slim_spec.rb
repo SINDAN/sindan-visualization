@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "log_units/show", type: :view do
+RSpec.describe "log_campaigns/show", type: :view do
   before(:each) do
-    @log_unit = assign(:log_unit, LogUnit.create!(
+    @log_campaign = assign(:log_campaign, LogCampaign.create!(
       :log_unit_uuid => "Log Unit Uuid",
       :mac_addr => "Mac Addr",
       :os => "Os",

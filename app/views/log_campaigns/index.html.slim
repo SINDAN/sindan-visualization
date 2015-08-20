@@ -1,0 +1,29 @@
+- provide :title, t('views.log_campaigns.index.title')
+
+table.table.table-condensed.table-bordered.table-striped
+  colgroup
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
+    col.col-xs-3
+  thead
+    tr
+      th #{t('activerecord.attributes.log_campaign.log_unit_uuid')}
+      th #{t('activerecord.attributes.log_campaign.mac_addr')}
+      th #{t('activerecord.attributes.log_campaign.os')}
+      th #{t('activerecord.attributes.log_campaign.occurred_at')}
+  tbody
+    - @log_campaigns.each do |log_campaign|
+      tr
+        td
+          a href="#{log_campaign_path(log_campaign)}"
+            | #{log_campaign.log_unit_uuid}
+        td
+          a href="#{log_campaign_path(log_campaign)}"
+            | #{ log_campaign.mac_addr}
+        td
+          a href="#{log_campaign_path(log_campaign)}"
+            | #{ log_campaign.os}
+        td
+          a href="#{log_campaign_path(log_campaign)}"
+            | #{datetime_view(log_campaign.occurred_at)}

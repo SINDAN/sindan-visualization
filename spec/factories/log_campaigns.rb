@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :log_unit do
+  factory :log_campaign do
     log_unit_uuid "8D9CEC4B-9A99-4A44-BFDA-445C6765475A"
     mac_addr "MyString"
     os "MyString"

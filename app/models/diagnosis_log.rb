@@ -1,6 +1,6 @@
 # coding: utf-8
 class DiagnosisLog < ActiveRecord::Base
-  belongs_to :log_unit, foreign_key: :log_unit_uuid, primary_key: :log_unit_uuid
+  belongs_to :log_campaign, foreign_key: :log_unit_uuid, primary_key: :log_unit_uuid
 
   enum result: {
          fail: 0,
