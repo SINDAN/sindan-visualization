@@ -30,19 +30,19 @@ ja:
         title: '診断ログ新規登録'
       edit:
         title: '診断ログ編集'
-    log_units:
+    log_campaigns:
       index:
-        title: 'ログUnit一覧'
+        title: 'ログキャンペーン一覧'
       show:
-        title: 'ログUnit詳細'
+        title: 'ログキャンペーン詳細'
       new:
-        title: 'ログUnit新規登録'
+        title: 'ログキャンペーン新規登録'
       edit:
-        title: 'ログUnit編集'
+        title: 'ログキャンペーン編集'
   activerecord:
     models:
       diagnosis_logs: "診断ログ"
-      log_units: "ログUnit"
+      log_campaigns: "ログキャンペーン"
     attributes:
       diagnosis_log:
         layer: "レイヤ"
@@ -50,10 +50,10 @@ ja:
         log_type: "計測タイプ"
         result: "計測結果"
         detail: "計測結果詳細"
-        log_unit_uuid: "UUID"
+        log_unit_uuid: "キャンペーンUUID"
         occurred_at: "発生日時"
-      log_unit:
-        log_unit_uuid: "UUID"
+      log_campaign:
+        log_unit_uuid: "キャンペーンUUID"
         mac_addr: "MACアドレス"
         os: "OS"
         occurred_at: "発生日時"

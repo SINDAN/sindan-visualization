@@ -30,19 +30,19 @@ en:
         title: 'Create Diagnosis Log'
       edit:
         title: 'Edit Diagnosis Log'
-    log_units:
+    log_campaigns:
       index:
-        title: 'Log Units'
+        title: 'Log Campaigns'
       show:
-        title: 'Log Unit Detail'
+        title: 'Log Campaign Detail'
       new:
-        title: 'Create Log Unit'
+        title: 'Create Log Campaign'
       edit:
-        title: 'Edit Log Unit'
+        title: 'Edit Log Campaign'
   activerecord:
     models:
       diagnosis_logs: "Diagnosis Log"
-      log_units: "Log unit"
+      log_campaigns: "Log Campaign"
     attributes:
       diagnosis_log:
         layer: "Layer"
@@ -50,10 +50,10 @@ en:
         log_type: "Type"
         result: "Result"
         detail: "Detail"
-        log_unit_uuid: "UUID"
+        log_unit_uuid: "Campaign UUID"
         occurred_at: "Occurred at"
-      log_unit:
-        log_unit_uuid: "UUID"
+      log_campaign:
+        log_unit_uuid: "Campaign UUID"
         mac_addr: "MAC Address"
         os: "OS"
         occurred_at: "Occurred at"

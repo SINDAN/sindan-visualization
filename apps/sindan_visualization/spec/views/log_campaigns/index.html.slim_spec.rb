@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe "log_units/index", type: :view do
+RSpec.describe "log_campaigns/index", type: :view do
   before(:each) do
-    assign(:log_units, [
-      LogUnit.create!(
+    assign(:log_campaigns, [
+      LogCampaign.create!(
         :log_unit_uuid => "Log Unit Uuid 1",
         :mac_addr => "Mac Addr",
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",
       ),
-      LogUnit.create!(
+      LogCampaign.create!(
         :log_unit_uuid => "Log Unit Uuid 2",
         :mac_addr => "Mac Addr",
         :os => "Os",
@@ -18,7 +18,7 @@ RSpec.describe "log_units/index", type: :view do
     ])
   end
 
-  it "renders a list of log_units" do
+  it "renders a list of log_campaigns" do
     render
     assert_select "tr>td", :text => "Log Unit Uuid 1".to_s, :count => 1
     assert_select "tr>td", :text => "Log Unit Uuid 2".to_s, :count => 1

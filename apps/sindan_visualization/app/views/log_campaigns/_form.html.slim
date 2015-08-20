@@ -1,9 +1,9 @@
-= form_for @log_unit, html: { class: "form-horizontal" } do |f|
-  - if @log_unit.errors.any?
+= form_for @log_campaign, html: { class: "form-horizontal" } do |f|
+  - if @log_campaign.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@log_unit.errors.count, "error")} prohibited this log_unit from being saved:"
+      h2 = "#{pluralize(@log_campaign.errors.count, "error")} prohibited this log_campaign from being saved:"
       ul
-        - @log_unit.errors.full_messages.each do |message|
+        - @log_campaign.errors.full_messages.each do |message|
           li = message
 
   .form-group
@@ -29,4 +29,4 @@
 
   .form-group
     .col-sm-10.col-sm-offset-2
-      = f.submit id: "submit_log_unit", class: "btn btn-primary"
+      = f.submit id: "submit_log_campaign", class: "btn btn-primary"
