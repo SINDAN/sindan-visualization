@@ -18,6 +18,8 @@ class DiagnosisLog < ActiveRecord::Base
     web: 'ウェブアプリケーション層',
   }
 
+  default_scope { order(occurred_at: :desc) }
+
   def layer_label
     if !self.layer.blank? && self.layer_defs.keys.include?(self.layer.to_sym)
       self.layer_defs[self.layer.to_sym]
