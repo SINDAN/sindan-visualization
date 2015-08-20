@@ -18,11 +18,11 @@ table.table
       th #{t('activerecord.attributes.diagnosis_log.log_type')}
       td #{@diagnosis_log.log_type}
     tr
-      th #{t('activerecord.attributes.diagnosis_log.log_unit_uuid')}
+      th #{t('activerecord.attributes.diagnosis_log.log_campaign_uuid')}
       td
         - unless @diagnosis_log.log_campaign.nil?
           a href="#{log_campaign_path(@diagnosis_log.log_campaign)}"
-            | #{@diagnosis_log.log_unit_uuid}
+            | #{@diagnosis_log.log_campaign_uuid}
     tr
       th #{t('activerecord.attributes.diagnosis_log.result')}
       td #{@diagnosis_log.result}

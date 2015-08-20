@@ -4,13 +4,13 @@ RSpec.describe "log_campaigns/index", type: :view do
   before(:each) do
     assign(:log_campaigns, [
       LogCampaign.create!(
-        :log_unit_uuid => "Log Unit Uuid 1",
+        :log_campaign_uuid => "Log Campaign Uuid 1",
         :mac_addr => "Mac Addr",
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",
       ),
       LogCampaign.create!(
-        :log_unit_uuid => "Log Unit Uuid 2",
+        :log_campaign_uuid => "Log Campaign Uuid 2",
         :mac_addr => "Mac Addr",
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",
@@ -20,8 +20,8 @@ RSpec.describe "log_campaigns/index", type: :view do
 
   it "renders a list of log_campaigns" do
     render
-    assert_select "tr>td", :text => "Log Unit Uuid 1".to_s, :count => 1
-    assert_select "tr>td", :text => "Log Unit Uuid 2".to_s, :count => 1
+    assert_select "tr>td", :text => "Log Campaign Uuid 1".to_s, :count => 1
+    assert_select "tr>td", :text => "Log Campaign Uuid 2".to_s, :count => 1
     assert_select "tr>td", :text => "Mac Addr".to_s, :count => 2
     assert_select "tr>td", :text => "Os".to_s, :count => 2
   end

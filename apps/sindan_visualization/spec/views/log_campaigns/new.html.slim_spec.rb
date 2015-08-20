@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "log_campaigns/new", type: :view do
   before(:each) do
     assign(:log_campaign, LogCampaign.new(
-      :log_unit_uuid => "MyString",
+      :log_campaign_uuid => "MyString",
       :mac_addr => "MyString",
       :os => "MyString",
       :occurred_at => "2015-07-24 19:24:42",
@@ -15,7 +15,7 @@ RSpec.describe "log_campaigns/new", type: :view do
 
     assert_select "form[action=?][method=?]", log_campaigns_path, "post" do
 
-      assert_select "input#log_campaign_log_unit_uuid[name=?]", "log_campaign[log_unit_uuid]"
+      assert_select "input#log_campaign_log_campaign_uuid[name=?]", "log_campaign[log_campaign_uuid]"
 
       assert_select "input#log_campaign_mac_addr[name=?]", "log_campaign[mac_addr]"
 
