@@ -23,7 +23,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '2.2.2'
+set :rbenv_ruby, '2.2.3'
 
 # server alias
 set :sindan, "fluentd.c.u-tokyo.ac.jp"
