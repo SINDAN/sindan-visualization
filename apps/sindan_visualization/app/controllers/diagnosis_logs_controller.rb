@@ -4,7 +4,14 @@ class DiagnosisLogsController < ApplicationController
   # GET /diagnosis_logs
   # GET /diagnosis_logs.json
   def index
-    @diagnosis_logs = DiagnosisLog.all
+    if params[:date].nil?
+      @diagnosis_logs = DiagnosisLog.all
+
+    else
+      @date = Date.parse(params[:date])
+      @search = DiagnosisLog.search(occurred_at_date_eq: @date)
+      @diagnosis_logs = @search.result(distinct: true)
+    end
   end
 
   # GET /diagnosis_logs/1

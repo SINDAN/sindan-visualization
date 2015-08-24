@@ -17,6 +17,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
+gem 'ransack'
+
 gem 'slack-notifier'
 
 # Use ActiveModel has_secure_password
