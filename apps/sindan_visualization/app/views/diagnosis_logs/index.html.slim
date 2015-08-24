@@ -1,4 +1,7 @@
-- provide :title, t('views.diagnosis_logs.index.title')
+- if @date.nil?
+  - provide :title, t('views.diagnosis_logs.index.title')
+- else
+  - provide :title, t('views.diagnosis_logs.index.title') + " (#{@date.to_s})"
 
 table.table.table-condensed.table-bordered.table-striped
   colgroup
