@@ -30,8 +30,17 @@ html
           ul.nav.navbar-nav
             li
               a href="#" About
-            li
-              a href="#{diagnosis_logs_path}" #{t('activerecord.models.diagnosis_logs')}
+            li.dropdown
+              a data-toggle="dropdown" data-target="#" href="#{diagnosis_logs_path}"
+                | #{t('activerecord.models.diagnosis_logs')}
+                |  
+                span.caret
+              ul.dropdown-menu
+                li
+                  a href="#{diagnosis_logs_path}" All
+                - @diagnosis_log_dates.each do |diagnosis_log_date|
+                  li
+                    a href="#{diagnosis_logs_path(date: diagnosis_log_date)}" #{diagnosis_log_date}
             li
               a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
         /!.navbar-collapse.collapse
