@@ -42,6 +42,20 @@ RSpec.describe DiagnosisLogsController, type: :controller do
       get :index, {}, valid_session
       expect(assigns(:diagnosis_logs)).to eq([diagnosis_log])
     end
+
+    context "with date param" do
+      it "assigns all diagnosis_logs as @diagnosis_logs" do
+        diagnosis_log = DiagnosisLog.create!(occurred_at: '2015-07-31 19:24:42')
+        get :index, { date: '20150731' }, valid_session
+        expect(assigns(:diagnosis_logs)).to eq([diagnosis_log])
+      end
+
+      it "assigns no diagnosis_logs as @diagnosis_logs" do
+        diagnosis_log = DiagnosisLog.create! valid_attributes
+        get :index, { date: '20150731' }, valid_session
+        expect(assigns(:diagnosis_logs)).to eq([])
+      end
+    end
   end
 
   describe "GET #show" do

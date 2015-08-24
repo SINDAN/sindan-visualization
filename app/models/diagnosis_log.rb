@@ -33,4 +33,9 @@ class DiagnosisLog < ActiveRecord::Base
       self.result
     end
   end
+
+  # for ransacker
+  ransacker :occurred_at do
+    Arel.sql('date(occurred_at)')
+  end
 end

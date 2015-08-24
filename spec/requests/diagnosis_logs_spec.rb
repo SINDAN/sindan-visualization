@@ -10,6 +10,11 @@ RSpec.describe "DiagnosisLogs", type: :request do
       get diagnosis_logs_path
       expect(response).to have_http_status(200)
     end
+
+    it "works! with date params" do
+      get diagnosis_logs_path(date: '20150731')
+      expect(response).to have_http_status(200)
+    end
   end
 
   describe "GET /diagnosis_logs/:id" do
