@@ -24,4 +24,31 @@ table.table
 
 h2 #{t('views.diagnosis_logs.index.title')}
 
-== render partial: 'diagnosis_logs/list', locals: { diagnosis_logs: @log_campaign.diagnosis_logs }
+table.table.table-condensed.table-bordered
+  colgroup
+    col.col-xs-2
+    col.col-xs-2
+    col.col-xs-2
+    col.col-xs-6
+  thead
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.layer')}
+      th #{t('activerecord.attributes.diagnosis_log.log_group')}
+      th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      th #{t('activerecord.attributes.diagnosis_log.detail')}
+  tbody
+    - @log_campaign.diagnosis_logs.each do |diagnosis_log|
+      tr class="#{class_row_result(diagnosis_log.result)}"
+        td
+          a href="#{diagnosis_log_path(diagnosis_log)}"
+            | #{diagnosis_log.layer_label}
+        td
+          a href="#{diagnosis_log_path(diagnosis_log)}"
+            | #{diagnosis_log.log_group}
+        td
+          a href="#{diagnosis_log_path(diagnosis_log)}"
+            | #{diagnosis_log.log_type}
+        td
+          a href="#{diagnosis_log_path(diagnosis_log)}"
+            - unless diagnosis_log.detail.nil?
+              | #{diagnosis_log.detail[0..100]}
