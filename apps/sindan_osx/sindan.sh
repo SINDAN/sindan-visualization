@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 0.8
+# version 0.13
 
 # read configurationfile
 source sindan.conf
@@ -10,18 +10,20 @@ source sindan.conf
 #
 
 #
-make_json() {
-  if [ $# -lt 4 ]; then
-    echo "ERROR: make_json <layer> <group> <result> <detail>. ($2)" 1>&2
+write_json() {
+  if [ $# -lt 5 ]; then
+    echo "ERROR: write_json <layer> <group> <type> <result> <detail>. ($2)" 1>&2
     return 1
   fi
 
-  echo "{ \"layer\" : \"$1\",
-         \"log_group\" : \"$2\",
-         \"log_campaign_uuid\" : \"${uuid}\",
-         \"result\" : \"$3\",
-         \"detail\" : \"$4\",
-         \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }, "
+  local json="{ \"layer\" : \"$1\",
+                \"log_group\" : \"$2\",
+                \"log_type\" : \"$3\",
+                \"log_campaign_uuid\" : \"${uuid}\",
+                \"result\" : \"$4\",
+                \"detail\" : \"$5\",
+                \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
+  echo ${json} > log/sindan_$1_$3_`date '+%s'`.json
 }
 
 ## for datalink layer
@@ -216,8 +218,9 @@ get_v6lladdr() {
     return 1
   fi
 
-  ifconfig $1 | grep inet6 | grep fe80 | awk '{print$2}' |
-   awk -F% '{print $1}'
+#  ifconfig $1 | grep inet6 | grep fe80 | awk '{print$2}' |
+#   awk -F% '{print $1}'
+  ifconfig $1 | grep inet6 | grep fe80 | awk '{print$2}'
 }
 
 #
@@ -227,8 +230,18 @@ get_ra_prefix() {
     return 1
   fi
 
-###  cat ndp-p.txt | grep $1 | grep -v 'fe80:' | awk '{print $1}'
   ndp -pn | grep $1 | grep -v 'fe80:' | awk '{print $1}'
+}
+
+#
+get_ra_prefixes() {
+  if [ $# -lt 1 ]; then
+    echo "ERROR: get_ra_prefixes <devicename>." 1>&2
+    return 1
+  fi
+
+  ndp -pn | grep $1 | grep -v fe80 | awk '{print $1}' |
+   awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
 }
 
 #
@@ -240,7 +253,6 @@ get_ra_prefix_flags() {
 
   prefix=`echo $1 | awk -F/ '{print $1}'`
 
-###  cat ndp-p.txt |
   ndp -pn |
   awk 'BEGIN{
     find=0;
@@ -264,35 +276,36 @@ get_ra_flags() {
     return 1
   fi
 
-###  cat ndp-r.txt | grep $1 | sed 's/,//g' | awk '{print $3}' |
-###   awk -F= '{print $2}'
   ndp -rn | grep $1 | sed 's/,//g' | awk '{print $3}' |
    awk -F= '{print $2}'
 }
 
 #
 get_v6addrs() {
-  if [ $# -lt 3 ]; then
-    echo "ERROR: get_v6addr <devicename> <v6ifconf> <ra_flags>." 1>&2
+  if [ $# -lt 4 ]; then
+    echo "ERROR: get_v6addrs <devicename> <v6ifconf> <ra_prefix> <ra_flags>." 1>&2
+    echo "ERROR: $1,$2,$3,$4"
     return 1
   fi
 
-  dhcpv6=`echo $3 | grep M`
+  prefix=`echo $3 | awk -F':/' '{print $1}' | sed 's/:0:/::/g'`
+  dhcpv6=`echo $4 | grep M`
   if [ $2 = "automatic" -a "${dhcpv6}" ]; then
     ipconfig getv6packet $1 | grep yiaddr | awk '{print $3}'
   else
-    ifconfig $1 | grep inet6 | grep -v fe80 | awk '{print $2}'
+    ifconfig $1 | grep inet6 | grep -v fe80 | grep ${prefix} | awk '{print $2}' |
+     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
   fi
 }
 
 #
 get_prefixlen() {
   if [ $# -lt 1 ]; then
-    echo "ERROR: get_prefixlen <devicename>." 1>&2
+    echo "ERROR: get_prefixlen <ra_prefix>." 1>&2
     return 1
   fi
 
-  ifconfig $1 | grep inet6 | grep -v fe80 | awk '{print $4}'
+  echo $1 | awk -F/ '{print $2}'
 }
 
 #
@@ -307,8 +320,9 @@ get_v6routers() {
     ipconfig getv6packet $1 | grep router |
      sed 's/.*{\([0-9A-Fa-f:]*\)}$/\1/'
   else
-    netstat -rn | grep default | grep "%$1" | awk '{print $2}' |
-     awk -F% '{print $1}'
+#    netstat -rn | grep default | grep "%$1" | awk '{print $2}' |
+#     awk -F% '{print $1}'
+    netstat -rn | grep default | grep "%$1" | awk '{print $2}'
   fi
 }
 
@@ -324,7 +338,8 @@ get_v6nameservers() {
     ipconfig getv6packet $1 | grep domain_name_server |
      sed 's/.*{\([0-9A-Fa-f:, ]*\)}$/\1/'
   else
-    echo 'TBD'
+    :
+#    echo 'TBD'
   fi
 }
 
@@ -433,6 +448,19 @@ do_dnslookup() {
 }
 
 ## for web layer
+#
+do_curl() {
+  if [ $# -lt 2 ]; then
+    echo "ERROR: do_curl <version> <target_url>." 1>&2
+    return 1
+  fi
+  if [ $1 != 4 -a $1 != 6 ]; then
+    echo "ERROR: <version> must be 4 or 6." 1>&2
+    return 9
+  fi
+
+  curl -$1 --connect-timeout 5 --write-out %{http_code} --silent --output /dev/null $2
+}
 
 #
 # main
@@ -480,10 +508,15 @@ mac_addr=$(get_macaddr ${devicename})
 os=$(get_os)
 
 # Make JSON
-json="{ \"log_campaign_uuid\" : \"${uuid}\",
+json0="{ \"log_campaign_uuid\" : \"${uuid}\",
         \"mac_addr\" : \"${mac_addr}\",
         \"os\" : \"${os}\",
-        \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }, "
+        \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
+
+# write log file
+echo ${json0} > log/campaign_`date '+%s'`.json
+
+# remove lock file
 
 ####################
 ## Phase 1
@@ -502,6 +535,12 @@ if [ ${RECONNECT} = "yes" ]; then
   sleep 2
 fi
 
+if [ "X${SSID}" != "X" -a "X${SSID_KEY}" != "X" ]; then
+  echo " set SSID:${SSID}"
+  networksetup -setairportnetwork ${devicename} ${SSID} ${SSID_KEY}
+  sleep 5
+fi
+
 # Check I/F status
 ifup=0
 ifstatus=$(get_ifstatus ${devicename})
@@ -509,36 +548,36 @@ result=${FAIL}
 if [ ${ifstatus} = "active" ]; then
   result=${SUCCESS}
 fi
-json="${json} $(make_json ${layer} ifstatus ${result} ${ifstatus})"
+write_json ${layer} "" ifstatus ${result} ${ifstatus}
 
 # Get iftype
-json="${json} $(make_json ${layer} iftype ${INFO} ${IFTYPE})"
+write_json ${layer} "" iftype ${INFO} ${IFTYPE}
 
 # Get ifmtu
 ifmtu=$(get_ifmtu ${devicename})
-json="${json} $(make_json ${layer} ifmtu ${INFO} ${ifmtu})"
+write_json ${layer} "" ifmtu ${INFO} ${ifmtu}
 
 #
 if [ ${IFTYPE} != "Wi-Fi" ]; then
   # Get media type
   media=$(get_mediatype ${devicename})
-  json="${json} $(make_json ${layer} media ${INFO} ${media})"
+  write_json ${layer} ${IFTYPE} media ${INFO} ${media}
 else
   # Get Wi-Fi SSID
   ssid=$(get_wifi_ssid)
-  json="${json} $(make_json ${layer} ssid ${INFO} ${ssid})"
+  write_json ${layer} ${IFTYPE} ssid ${INFO} ${ssid}
   # Get Wi-Fi channel
   channel=$(get_wifi_channel)
-  json="${json} $(make_json ${layer} channel ${INFO} ${channel})"
+  write_json ${layer} ${IFTYPE} channel ${INFO} ${channel}
   # Get Wi-Fi RSSI
   rssi=$(get_wifi_rssi)
-  json="${json} $(make_json ${layer} rssi ${INFO} ${rssi})"
+  write_json ${layer} ${IFTYPE} rssi ${INFO} ${rssi}
   # Get Wi-Fi noise
   noise=$(get_wifi_noise)
-  json="${json} $(make_json ${layer} noise ${INFO} ${noise})"
+  write_json ${layer} ${IFTYPE} noise ${INFO} ${noise}
   # Get Wi-Fi rate
   rate=$(get_wifi_rate)
-  json="${json} $(make_json ${layer} rate ${INFO} ${rate})"
+  write_json ${layer} ${IFTYPE} rate ${INFO} ${rate}
 fi
 
 # Report phase 1 results
@@ -552,7 +591,7 @@ else
   echo "  rssi:${rssi} dB, noise:${noise} dB"
 fi
 
-sleep 2
+sleep 5
 
 ####################
 ## Phase 2
@@ -561,83 +600,96 @@ layer="interface"
 
 # Get if configurations
 v4ifconf=$(get_v4ifconf ${IFTYPE})
-json="${json} $(make_json ${layer} v4ifconf ${INFO} ${v4ifconf})"
+write_json ${layer} IPv4 v4ifconf ${INFO} ${v4ifconf}
 v6ifconf=$(get_v6ifconf ${IFTYPE})
-json="${json} $(make_json ${layer} v6ifconf ${INFO} ${v6ifconf})"
+write_json ${layer} IPv6 v6ifconf ${INFO} ${v6ifconf}
 
 # Get IPv4 address
 v4addr=$(get_v4addr ${devicename} ${v4ifconf})
-json="${json} $(make_json ${layer} v4addr ${INFO} ${v4addr})"
+if [ "X${v4addr}" != "X" ]; then
+  write_json ${layer} IPv4 v4addr ${INFO} ${v4addr}
+fi
 
 # Get IPv4 netmask
 netmask=$(get_netmask ${devicename} ${v4ifconf})
-json="${json} $(make_json ${layer} netmask ${INFO} ${netmask})"
+if [ "X${netmask}" != "X" ]; then
+  write_json ${layer} IPv4 netmask ${INFO} ${netmask}
+fi
 
 # Get IPv4 routers
 v4routers=$(get_v4routers ${devicename} ${v4ifconf})
-json="${json} $(make_json ${layer} v4routers ${INFO} ${v4routers})"
+if [ "X${v4routers}" != "X" ]; then
+  write_json ${layer} IPv4 v4routers ${INFO} ${v4routers}
+fi
 
 # Get IPv4 name servers
 v4nameservers=$(get_v4nameservers ${devicename} ${v4ifconf})
-json="${json} $(make_json ${layer} v4nameservers ${INFO} ${v4nameservers})"
+if [ "X${v4nameservers}" != "X" ]; then
+  write_json ${layer} IPv4 v4nameservers ${INFO} ${v4nameservers}
+fi
 
 # Get IPv4 NTP servers
 #TBD
 
-# Get IPv6 linklocal address
-v6lladdr=$(get_v6lladdr ${devicename})
-json="${json} $(make_json ${layer} v6lladdr ${INFO} ${v6lladdr})"
-
-# Get IPv6 RA prefix
-ra_prefix=$(get_ra_prefix ${devicename})
-  json="${json} $(make_json ${layer} ra_prefix ${INFO} "${ra_prefix}")"
-
-if [ "X${ra_prefix}" != "X" ]; then
-  # Get IPv6 RA prefix flags
-  ra_prefix_flags=$(get_ra_prefix_flags ${ra_prefix})
-  json="${json} $(make_json ${layer} ra_prefix_flags ${INFO} ${ra_prefix_flags})"
-
-  # Get IPv6 RA flags
-  ra_flags=$(get_ra_flags ${devicename})
-  json="${json} $(make_json ${layer} ra_flags ${INFO} ${ra_flags})"
-
-  # Get IPv6 prefix length
-  prefixlen=$(get_prefixlen ${devicename})
-  json="${json} $(make_json ${layer} prefixlen ${INFO} ${prefixlen})"
-
-  # Get IPv6 address
-  v6addrs=$(get_v6addrs ${devicename} ${v6ifconf})
-  json="${json} $(make_json ${layer} v6addrs ${INFO} ${v6addrs})"
-
-  # Get IPv6 routers
-  v6routers=$(get_v6routers ${devicename} ${v6ifconf} ${ra_flags})
-  json="${json} $(make_json ${layer} v6routers ${INFO} ${v6routers})"
-
-  # Get IPv6 name servers
-  v6nameservers=$(get_v6nameservers ${devicename} ${v6ifconf} ${ra_flags})
-  json="${json} $(make_json ${layer} v6nameservers ${INFO} "${v6nameservers}")"
-
-  # Get IPv6 NTP servers
-  #TBD
-fi
-
-# Report phase 2 results
+# Report phase 2 results (IPv4)
 echo " interface information:"
 echo "  IPv4 conf:${v4ifconf}"
 echo "  IPv4 addr:${v4addr}/${netmask}"
 echo "  IPv4 router:${v4routers}"
 echo "  IPv4 namesrv:${v4nameservers}"
+
+# Get IPv6 linklocal address
+v6lladdr=$(get_v6lladdr ${devicename})
+write_json ${layer} IPv6 v6lladdr ${INFO} ${v6lladdr}
+
+# Get IPv6 RA flags
+ra_flags=$(get_ra_flags ${devicename})
+if [ "X${ra_flags}" != "X" ]; then
+  write_json ${layer} RA ra_flags ${INFO} ${ra_flags}
+fi
+
+# Get IPv6 RA prefix
+ra_prefixes=$(get_ra_prefixes ${devicename})
+if [ "X${ra_prefixes}" != "X" ]; then
+  write_json ${layer} RA ra_prefixes ${INFO} ${ra_prefixes}
+fi
+
+# Report phase 2 results (IPv6)
 echo "  IPv6 conf:${v6ifconf}"
 echo "  IPv6 lladdr:${v6lladdr}"
-if [ "X${ra_prefix}" != "X" ]; then
-  echo "  IPv6 RA prefix\(flags\):${ra_prefix}\(${ra_prefix_flags}\)"
+
+if [ "X${ra_flags}" != "X" ]; then
   echo "  IPv6 RA flags:${ra_flags}"
-  for var in `echo ${v6addrs} | sed 's/,/ /g'`
-  do
-    echo "  IPv6 addr:${var}/${prefixlen}"
+  for pref in `echo ${ra_prefixes} | sed 's/,/ /g'`; do
+    # Get IPv6 RA prefix flags
+    ra_prefix_flags=$(get_ra_prefix_flags ${pref})
+    write_json ${layer} RA ra_prefix_flags ${INFO} "(${pref}) ${ra_prefix_flags}"
+    echo "  IPv6 RA prefix(flags):${pref}(${ra_prefix_flags})"
+
+    # Get IPv6 prefix length
+    prefixlen=$(get_prefixlen ${pref})
+    write_json ${layer} RA prefixlen ${INFO} "(${pref}) ${prefixlen}"
+
+    # Get IPv6 address
+    v6addrs=$(get_v6addrs ${devicename} ${v6ifconf} ${pref} ${ra_flags})
+    write_json ${layer} IPv6 v6addrs ${INFO} "(${pref}) ${v6addrs}"
+    for addr in `echo ${v6addrs} | sed 's/,/ /g'`; do
+      echo "   IPv6 addr:${addr}/${prefixlen}"
+    done
   done
-  echo "  IPv6 router:${v6routers}"
-  echo "  IPv6 namesrv:${v6nameservers}"
+
+  # Get IPv6 routers
+  v6routers=$(get_v6routers ${devicename} ${v6ifconf} ${ra_flags})
+  write_json ${layer} IPv6 v6routers ${INFO} "${v6routers}"
+  echo "  IPv6 routers:${v6routers}"
+
+  # Get IPv6 name servers
+  v6nameservers=$(get_v6nameservers ${devicename} ${v6ifconf} ${ra_flags})
+  write_json ${layer} IPv6 v6nameservers ${INFO} "${v6nameservers}"
+  echo "  IPv6 nameservers:${v6nameservers}"
+
+  # Get IPv6 NTP servers
+  #TBD
 else
   echo "   RA does not exist."
 fi
@@ -650,17 +702,16 @@ echo "Phase 3: Localnet Layer checking..."
 layer="localnet"
 
 # Do ping to IPv4 routers
-for var in `echo ${v4routers} | sed 's/,/ /g'`
-do
+for var in `echo ${v4routers} | sed 's/,/ /g'`; do
   result=${FAIL}
   echo " ping to IPv4 router:${var}"
   v4alive_router=$(do_ping 4 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
-  json="${json} $(make_json ${layer} v4alive_router ${result} "(${var}) ${v4alive_router}")"
+  write_json ${layer} IPv4 v4alive_router ${result} "(${var}) ${v4alive_router}"
   v4rtt_router=$(get_rtt "${v4alive_router}")
-  json="${json} $(make_json ${layer} v4rtt_router ${INFO} "(${var}) ${v4rtt_router}")"
+  write_json ${layer} IPv4 v4rtt_router ${INFO} "(${var}) ${v4rtt_router}"
   if [ ${result} = ${SUCCESS} ]; then
     echo "  status:ok, rtt:${v4rtt_router} msec"
   else
@@ -669,17 +720,16 @@ do
 done
 
 # Do ping to IPv4 nameservers
-for var in `echo ${v4nameservers} | sed 's/,/ /g'`
-do
+for var in `echo ${v4nameservers} | sed 's/,/ /g'`; do
   result=${FAIL}
   echo " ping to IPv4 nameserver:${var}"
   v4alive_namesrv=$(do_ping 4 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
-  json="${json} $(make_json ${layer} v4alive_namesrv ${result} "(${var}) ${v4alive_namesrv}")"
+  write_json ${layer} IPv4 v4alive_namesrv ${result} "(${var}) ${v4alive_namesrv}"
   v4rtt_namesrv=$(get_rtt "${v4alive_namesrv}")
-  json="${json} $(make_json ${layer} v4rtt_namesrv ${INFO} "(${var}) ${v4rtt_namesrv}")"
+  write_json ${layer} IPv4 v4rtt_namesrv ${INFO} "(${var}) ${v4rtt_namesrv}"
   if [ ${result} = ${SUCCESS} ]; then
     echo "  status:ok, rtt:${v4rtt_namesrv} msec"
   else
@@ -688,17 +738,16 @@ do
 done
 
 # Do ping to IPv6 routers
-for var in `echo ${v6routers} | sed 's/,/ /g'`
-do
+for var in `echo ${v6routers} | sed 's/,/ /g'`; do
   result=${FAIL}
   echo " ping to IPv6 router:${var}"
-  v4alive_router=$(do_ping 6 ${var})
+  v6alive_router=$(do_ping 6 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
-  json="${json} $(make_json ${layer} v6alive_router ${result} "(${var}) ${v6alive_router}")"
+  write_json ${layer} IPv6 v6alive_router ${result} "(${var}) ${v6alive_router}"
   v6rtt_router=$(get_rtt "${v6alive_router}")
-  json="${json} $(make_json ${layer} v6rtt_router ${INFO} "(${var}) ${v6rtt_router}")"
+  write_json ${layer} IPv6 v6rtt_router ${INFO} "(${var}) ${v6rtt_router}"
   if [ ${result} = ${SUCCESS} ]; then
     echo "  status:ok, rtt:${v6rtt_router} msec"
   else
@@ -707,17 +756,16 @@ do
 done
 
 # Do ping to IPv6 nameservers
-for var in `echo ${v6nameservers} | sed 's/,/ /g'`
-do
+for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
   result=${FAIL}
   echo " ping to IPv6 nameserver:${var}"
   v4alive_namesrv=$(do_ping 6 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
-  json="${json} $(make_json ${layer} v6alive_namesrv ${result} "(${var}) ${v6alive_namesrv}")"
+  write_json ${layer} IPv6 v6alive_namesrv ${result} "(${var}) ${v6alive_namesrv}"
   v6rtt_namesrv=$(get_rtt "${v6alive_namesrv}")
-  json="${json} $(make_json ${layer} v6rtt_namesrv ${INFO} "(${var}) ${v6rtt_namesrv}")"
+  write_json ${layer} IPv6 v6rtt_namesrv ${INFO} "(${var}) ${v6rtt_namesrv}"
   if [ ${result} = ${SUCCESS} ]; then
     echo "  status:ok, rtt:${v6rtt_namesrv} msec"
   else
@@ -740,17 +788,16 @@ fi
 
 if [ "X${v4addr}" != "X" ]; then
   # Do ping to extarnal IPv4 servers
-  for var in `echo $PING_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING_SRVS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " ping to extarnal IPv4 server:${var}"
     v4alive_srv=$(do_ping 4 ${var})
     if [ $? -eq 0 ]; then
       result=${SUCCESS}
     fi
-    json="${json} $(make_json ${layer} v4alive_srv ${result} "(${var}) ${v4alive_srv}")"
+    write_json ${layer} IPv4 v4alive_srv ${result} "(${var}) ${v4alive_srv}"
     v4rtt_srv=$(get_rtt "${v4alive_srv}")
-    json="${json} $(make_json ${layer} v4rtt_srv ${INFO} "(${var}) ${v4rtt_srv}")"
+    write_json ${layer} IPv4 v4rtt_srv ${INFO} "(${var}) ${v4rtt_srv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok, rtt:${v4rtt_srv} msec"
     else
@@ -759,25 +806,23 @@ if [ "X${v4addr}" != "X" ]; then
   done
   
   # Do traceroute to extarnal IPv4 servers
-  for var in `echo $PING_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING_SRVS} | sed 's/,/ /g'`; do
     echo " traceroute to extarnal IPv4 server:${var}"
     v4path_srv=$(do_traceroute 4 ${var})
-    json="${json} $(make_json ${layer} v4path_srv ${INFO} "(${var}) ${v4path_srv}")"
+    write_json ${layer} IPv4 v4path_srv ${INFO} "(${var}) ${v4path_srv}"
     echo "  path:${v4path_srv}"
   done
   
   # Check path MTU to extarnal IPv4 servers
-  for var in `echo $PING_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING_SRVS} | sed 's/,/ /g'`; do
     echo " do pmtud to extarnal IPv4 server:${var}"
     data=$(do_pmtud 4 ${var} 1450 1473)
     if [ ${data} -eq 0 ]; then
-      json="${json} $(make_json ${layer} v4pmtu_srv ${INFO} "(${var}) unmeasurable")"
+      write_json ${layer} IPv4 v4pmtu_srv ${INFO} "(${var}) unmeasurable"
       echo "  pmtud:unmeasurable"
     else
       v4pmtu_srv=`expr ${data} + 28`
-      json="${json} $(make_json ${layer} v4pmtu_srv ${INFO} "(${var}) ${v4pmtu_srv}")"
+      write_json ${layer} IPv4 v4pmtu_srv ${INFO} "(${var}) ${v4pmtu_srv}"
       echo "  pmtu:${v4pmtu_srv} MB"
     fi
   done
@@ -791,17 +836,16 @@ fi
 
 if [ "X${v6addrs}" != "X" ]; then
   # Do ping to extarnal IPv6 servers
-  for var in `echo $PING6_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING6_SRVS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " ping to extarnal IPv6 server:${var}"
     v6alive_srv=$(do_ping 6 ${var})
     if [ $? -eq 0 ]; then
       result=${SUCCESS}
     fi
-    json="${json} $(make_json ${layer} v6alive_srv ${result} "(${var}) ${v6alive_srv}")"
+    write_json ${layer} IPv6 v6alive_srv ${result} "(${var}) ${v6alive_srv}"
     v6rtt_srv=$(get_rtt "${v6alive_srv}")
-    json="${json} $(make_json ${layer} v6rtt_srv ${INFO} "(${var}) ${v6rtt_srv}")"
+    write_json ${layer} IPv6 v6rtt_srv ${INFO} "(${var}) ${v6rtt_srv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok, rtt:${v6rtt_srv} msec"
     else
@@ -810,25 +854,23 @@ if [ "X${v6addrs}" != "X" ]; then
   done
   
   # Do traceroute to extarnal IPv6 servers
-  for var in `echo $PING6_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING6_SRVS} | sed 's/,/ /g'`; do
     echo " traceroute to extarnal IPv6 server:${var}"
     v6path_srv=$(do_traceroute 6 ${var})
-    json="${json} $(make_json ${layer} v6path_srv ${INFO} "(${var}) ${v6path_srv}")"
+    write_json ${layer} IPv6 v6path_srv ${INFO} "(${var}) ${v6path_srv}"
     echo "  path:${v6path_srv}"
   done
   
   # Check path MTU to extarnal IPv6 servers
-  for var in `echo $PING6_SRVS | sed 's/,/ /g'`
-  do
+  for var in `echo ${PING6_SRVS} | sed 's/,/ /g'`; do
     echo " do pmtud to extarnal IPv6 server:${var}"
     data=$(do_pmtud 6 ${var} 1450 1473)
     if [ ${data} -eq 0 ]; then
-      json="${json} $(make_json ${layer} v6pmtu_srv ${INFO} "(${var}) unmeasurable")"
+      write_json ${layer} IPv6 v6pmtu_srv ${INFO} "(${var}) unmeasurable"
       echo "  pmtud:unmeasurable"
     else
       v6pmtu_srv=`expr ${data} + 28`
-      json="${json} $(make_json ${layer} v6pmtu_srv ${INFO} "(${var}) ${v6pmtu_srv}")"
+      write_json ${layer} IPv6 v6pmtu_srv ${INFO} "(${var}) ${v6pmtu_srv}"
       echo "  pmtu:${v6pmtu_srv} MB"
     fi
   done
@@ -852,11 +894,9 @@ fi
 
 if [ "X${v4addr}" != "X" ]; then
   # Do dns lookup for A record by IPv4
-  for var in `echo ${v4nameservers} | sed 's/,/ /g'`
-  do
+  for var in `echo ${v4nameservers} | sed 's/,/ /g'`; do
     echo " do dns lookup for A record by IPv4 nameserver:${var}"
-    for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-    do
+    for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
       result=${FAIL}
       echo " do resolve server:${fqdn}"
       v4trans_a_namesrv=$(do_dnslookup ${var} a ${fqdn})
@@ -865,9 +905,9 @@ if [ "X${v4addr}" != "X" ]; then
       else
         stat=$?
       fi
-      json="${json} $(make_json ${layer} v4trans_a_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v4trans_a_namesrv}")"
+      write_json ${layer} IPv4 v4trans_a_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v4trans_a_namesrv}"
       if [ ${result} = ${SUCCESS} ]; then
-        echo "  status:ok"
+        echo "  status:ok, result:${v4trans_a_namesrv}"
       else
         echo "  status:ng ($stat)"
       fi
@@ -875,11 +915,9 @@ if [ "X${v4addr}" != "X" ]; then
   done
 
   # Do dns lookup for AAAA record by IPv4
-  for var in `echo ${v4nameservers} | sed 's/,/ /g'`
-  do
+  for var in `echo ${v4nameservers} | sed 's/,/ /g'`; do
     echo " do dns lookup for AAAA record by IPv4 nameserver:${var}"
-    for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-    do
+    for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
       result=${FAIL}
       echo " do resolve server:${fqdn}"
       v4trans_aaaa_namesrv=$(do_dnslookup ${var} aaaa ${fqdn})
@@ -888,9 +926,9 @@ if [ "X${v4addr}" != "X" ]; then
       else
         stat=$?
       fi
-      json="${json} $(make_json ${layer} v4trans_aaaa_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v4trans_aaaa_namesrv}")"
+      write_json ${layer} IPv4 v4trans_aaaa_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v4trans_aaaa_namesrv}"
       if [ ${result} = ${SUCCESS} ]; then
-        echo "  status:ok"
+        echo "  status:ok, result:${v4trans_aaaa_namesrv}"
       else
         echo "  status:ng ($stat)"
       fi
@@ -900,11 +938,9 @@ fi
 
 if [ "X${v6addrs}" != "X" ]; then
   # Do dns lookup for A record by IPv6
-  for var in `echo ${v6nameservers} | sed 's/,/ /g'`
-  do
+  for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
     echo " do dns lookup for A record by IPv6 nameserver:${var}"
-    for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-    do
+    for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
       result=${FAIL}
       echo " do resolve server:${fqdn}"
       v6trans_a_namesrv=$(do_dnslookup ${var} a ${fqdn})
@@ -913,9 +949,9 @@ if [ "X${v6addrs}" != "X" ]; then
       else
         stat=$?
       fi
-      json="${json} $(make_json ${layer} v6trans_a_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v6trans_a_namesrv}")"
+      write_json ${layer} IPv6 v6trans_a_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v6trans_a_namesrv}"
       if [ ${result} = ${SUCCESS} ]; then
-        echo "  status:ok"
+        echo "  status:ok, result:${v6trans_a_namesrv}"
       else
         echo "  status:ng ($stat)"
       fi
@@ -923,11 +959,9 @@ if [ "X${v6addrs}" != "X" ]; then
   done
 
   # Do dns lookup for AAAA record by IPv6
-  for var in `echo ${v6nameservers} | sed 's/,/ /g'`
-  do
+  for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
     echo " do dns lookup for AAAA record by IPv6 nameserver:${var}"
-    for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-    do
+    for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
       result=${FAIL}
       echo " do resolve server:${fqdn}"
       v6trans_aaaa_namesrv=$(do_dnslookup ${var} aaaa ${fqdn})
@@ -936,9 +970,9 @@ if [ "X${v6addrs}" != "X" ]; then
       else
         stat=$?
       fi
-      json="${json} $(make_json ${layer} v6trans_aaaa_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v6trans_aaaa_namesrv}")"
+      write_json ${layer} IPv6 v6trans_aaaa_namesrv ${result} "(@${var}, resolv ${fqdn}) ${v6trans_aaaa_namesrv}"
       if [ ${result} = ${SUCCESS} ]; then
-        echo "  status:ok"
+        echo "  status:ok, result:${v6trans_aaaa_namesrv}"
       else
         echo "  status:ng ($stat)"
       fi
@@ -959,8 +993,7 @@ fi
 if [ "X${v4addr}" != "X" ]; then
   # Do dns lookup for A record by GPDNS4
   echo " do dns lookup for A record by IPv4 nameserver:${GPDNS4}"
-  for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-  do
+  for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " do resolve server:${fqdn}"
     v4trans_a_namesrv=$(do_dnslookup ${GPDNS4} a ${fqdn})
@@ -969,7 +1002,7 @@ if [ "X${v4addr}" != "X" ]; then
     else
       stat=$?
     fi
-    json="${json} $(make_json ${layer} v4trans_a_namesrv ${result} "(@${GPDNS4}, resolv ${fqdn}) ${v4trans_a_namesrv}")"
+    write_json ${layer} IPv4 v4trans_a_namesrv ${result} "(@${GPDNS4}, resolv ${fqdn}) ${v4trans_a_namesrv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok"
     else
@@ -979,8 +1012,7 @@ if [ "X${v4addr}" != "X" ]; then
 
   # Do dns lookup for AAAA record by GPDNS4
   echo " do dns lookup for AAAA record by IPv4 nameserver:${GPDNS4}"
-  for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-  do
+  for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " do resolve server:${fqdn}"
     v4trans_aaaa_namesrv=$(do_dnslookup ${GPDNS4} aaaa ${fqdn})
@@ -989,7 +1021,7 @@ if [ "X${v4addr}" != "X" ]; then
     else
       stat=$?
     fi
-    json="${json} $(make_json ${layer} v4trans_aaaa_namesrv ${result} "(@${GPDNS4}, resolv ${fqdn}) ${v4trans_aaaa_namesrv}")"
+    write_json ${layer} IPv4 v4trans_aaaa_namesrv ${result} "(@${GPDNS4}, resolv ${fqdn}) ${v4trans_aaaa_namesrv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok"
     else
@@ -1001,8 +1033,7 @@ fi
 if [ "X${v6addrs}" != "X" ]; then
   # Do dns lookup for A record by GPDNS6
   echo " do dns lookup for A record by IPv6 nameserver:${GPDNS6}"
-  for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-  do
+  for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " do resolve server:${fqdn}"
     v6trans_a_namesrv=$(do_dnslookup ${GPDNS6} a ${fqdn})
@@ -1011,7 +1042,7 @@ if [ "X${v6addrs}" != "X" ]; then
     else
       stat=$?
     fi
-    json="${json} $(make_json ${layer} v6trans_a_namesrv ${result} "(@${GPDNS6}, resolv ${fqdn}) ${v6trans_a_namesrv}")"
+    write_json ${layer} IPv6 v6trans_a_namesrv ${result} "(@${GPDNS6}, resolv ${fqdn}) ${v6trans_a_namesrv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok"
     else
@@ -1021,8 +1052,7 @@ if [ "X${v6addrs}" != "X" ]; then
 
   # Do dns lookup for AAAA record by GPDNS6
   echo " do dns lookup for AAAA record by IPv6 nameserver:${GPDNS6}"
-  for fqdn in `echo $FQDNS | sed 's/,/ /g'`
-  do
+  for fqdn in `echo ${FQDNS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " do resolve server:${fqdn}"
     v6trans_aaaa_namesrv=$(do_dnslookup ${GPDNS6} aaaa ${fqdn})
@@ -1031,7 +1061,7 @@ if [ "X${v6addrs}" != "X" ]; then
     else
       stat=$?
     fi
-    json="${json} $(make_json ${layer} v6trans_aaaa_namesrv ${result} "(@${GPDNS6}, resolv ${fqdn}) ${v6trans_aaaa_namesrv}")"
+    write_json ${layer} IPv6 v6trans_aaaa_namesrv ${result} "(@${GPDNS6}, resolv ${fqdn}) ${v6trans_aaaa_namesrv}"
     if [ ${result} = ${SUCCESS} ]; then
       echo "  status:ok"
     else
@@ -1045,15 +1075,72 @@ sleep 2
 ####################
 ## Phase 6
 echo "Phase 6: Web Layer checking..."
+layer="web"
+
+# Check V4WEB_SRVS parameter
+if [ "X${V4WEB_SRVS}" = "X" ]; then
+  echo "ERROR: V4WEB_SRVS is null at configration file." 1>&2
+  return 1
+fi
+
+if [ "X${v4addr}" != "X" ]; then
+  # Do curl to extarnal web servers by IPv4
+  for var in `echo ${V4WEB_SRVS} | sed 's/,/ /g'`; do
+    result=${FAIL}
+    echo " curl to extarnal server:${var} by IPv4"
+    v6http_srv=$(do_curl 4 ${var})
+    if [ $? -eq 0 ]; then
+      result=${SUCCESS}
+    else
+      stat=$?
+    fi
+    write_json ${layer} IPv4 v4http_srv ${result} "(${var}) ${v4http_srv}"
+    if [ ${result} = ${SUCCESS} ]; then
+      echo "  status:ok, http status code:${v4http_srv}"
+    else
+      echo "  status:ng ($stat)"
+    fi
+  done
+
+  # Do measure http throuput by IPv4
+  #TBD
+  # v4http_throughput_srv
+fi
+
+# Check V6WEB_SRVS parameter
+if [ "X${V6WEB_SRVS}" = "X" ]; then
+  echo "ERROR: V6WEB_SRVS is null at configration file." 1>&2
+  return 1
+fi
+
+if [ "X${v6addrs}" != "X" ]; then
+  # Do curl to extarnal web servers by IPv6
+  for var in `echo ${V6WEB_SRVS} | sed 's/,/ /g'`; do
+    result=${FAIL}
+    echo " curl to extarnal server:${var} by IPv6"
+    v6http_srv=$(do_curl 6 ${var})
+    if [ $? -eq 0 ]; then
+      result=${SUCCESS}
+    else
+      stat=$?
+    fi
+    write_json ${layer} IPv6 v6http_srv ${result} "(${var}) ${v6http_srv}"
+    if [ ${result} = ${SUCCESS} ]; then
+      echo "  status:ok, http status code:${v6http_srv}"
+    else
+      echo "  status:ng ($stat)"
+    fi
+  done
+
+  # Do measure http throuput by IPv6
+  #TBD
+  # v6http_throughput_srv
+fi
 
 sleep 2
 
 ####################
 ## Phase 7
-
-# write log file
-json=`echo ${json} | sed -e s/,*$//`
-echo ${json} > log/`date '+%s'`.json
 
 # remove lock file
 rm -f ${LOCKFILE}
