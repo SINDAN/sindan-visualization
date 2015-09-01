@@ -1,0 +1,5 @@
+- name: install fluent plugin mysql
+  shell: bash -lc "td-agent-gem install fluent-plugin-elasticsearch"
+  tags:
+    - fluentd
+    - fluentd-plugin

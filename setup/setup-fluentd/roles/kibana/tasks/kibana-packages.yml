@@ -1,0 +1,7 @@
+- name: install build depends for kibana/elastic
+  apt: name="{{item}}" state=installed
+  with_items:
+    - openjdk-7-jdk
+  tags:
+    - kibana
+    - elastic

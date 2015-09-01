@@ -1,0 +1,4 @@
+---
+- include: kibana-packages.yml
+- include: elastic-install.yml
+- include: kibana-install.yml

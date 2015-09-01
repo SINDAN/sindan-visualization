@@ -23,3 +23,9 @@
   tags:
     - task-fluentd
 
+- hosts: kibana
+  sudo: yes
+  roles:
+    - kibana
+  tags:
+    - task-kibana

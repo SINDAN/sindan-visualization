@@ -1,0 +1,9 @@
+---
+- name: restart sshd
+  service: name=sshd state=restarted
+
+- name: restart iptables
+  service: name=iptables-persistent state=restarted
+  with_items:
+    - iptables
+    - ip6tables

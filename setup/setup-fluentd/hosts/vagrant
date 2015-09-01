@@ -2,9 +2,13 @@
 [fluentd]
 127.0.0.1:2222 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 
+[kibana]
+127.0.0.1:2222 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
 [web]
 127.0.0.1:2222 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 
 [staging:children]
 fluentd
+kibana
 web

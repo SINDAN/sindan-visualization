@@ -5,37 +5,80 @@
 # mysql
 # https://github.com/tagomoris/fluent-plugin-mysql
 <match sindan.log>
-  type mysql
-  host localhost
-  # port 3306 # default
-  database sindan_production
-  username sindan
-  password
-  # TODO: set db information
+  type copy
 
-  table diagnosis_logs
-  # 'columns' names order must be same with 'key_names'
-  key_names layer, log_group, log_type, log_campaign_uuid, result, detail, occurred_at
-  columns layer, log_group, log_type, log_campaign_uuid, result, detail, occurred_at
+  <store>
+    type file
+    path /var/log/td-agent/debug.sindan.log.out
+  </store>
 
-  flush_interval 5s
+  <store>
+    type mysql
+    host localhost
+    # port 3306 # default
+    database sindan_production
+    username sindan
+    password
+    # TODO: set db information
+
+    table diagnosis_logs
+    # 'columns' names order must be same with 'key_names'
+    key_names layer, log_group, log_type, log_campaign_uuid, result, detail, occurred_at
+    columns layer, log_group, log_type, log_campaign_uuid, result, detail, occurred_at
+
+    flush_interval 5s
+  </store>
+
+  # elasticsearch
+  <store>
+    type elasticsearch
+    host localhost
+    port 9200
+    logstash_format true
+#    include_tag_key true
+    logstash_prefix sindan
+    index_name sindan
+    type_name log
+    time_key occurred_at
+  </store>
 </match>
 
 <match sindan.log_campaign>
-  type mysql
-  host localhost
-  # port 3306 # default
-  database sindan_production
-  username sindan
-  password
-  # TODO: set db information
+  type copy
 
-  table log_campaigns
-  # 'columns' names order must be same with 'key_names'
-  key_names log_campaign_uuid, mac_addr, os, occurred_at
-  columns log_campaign_uuid, mac_addr, os, occurred_at
+  <store>
+    type file
+    path /var/log/td-agent/debug.sindan.log_campaign.out
+  </store>
 
-  flush_interval 5s
+  <store>
+    type mysql
+    host localhost
+    # port 3306 # default
+    database sindan_production
+    username sindan
+    password
+    # TODO: set db information
+
+    table log_campaigns
+    # 'columns' names order must be same with 'key_names'
+    key_names log_campaign_uuid, mac_addr, os, occurred_at
+    columns log_campaign_uuid, mac_addr, os, occurred_at
+
+    flush_interval 5s
+  </store>
+
+  # elasticsearch
+  <store>
+    type elasticsearch
+    host localhost
+    port 9200
+    index_name fluentd
+    type_name fluentd
+    logstash_format true
+
+    time_key occurred_at
+  </store>
 </match>
 
 # debug
