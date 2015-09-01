@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 0.13
+# version 0.14
 
 # read configurationfile
 source sindan.conf
@@ -400,8 +400,10 @@ do_pmtud() {
   fi
   if [ $1 = 4 ]; then
     command=ping
+    dfopt="-D"
   elif [ $1 = 6 ]; then
     command=ping6
+    dfopt=""
   else
     echo "ERROR: <version> must be 4 or 6." 1>&2
     return 9
@@ -425,7 +427,7 @@ do_pmtud() {
     return
   fi
 
-  ${command} -c 3 -s ${mid} -D ${target} >/dev/null 2>/dev/null
+  ${command} -c 3 -s ${mid} ${dfopt} ${target} >/dev/null 2>/dev/null
   if [ $? -eq 0 ]; then
     result=$(do_pmtud ${version} ${target} ${mid} ${max})
   else
@@ -506,6 +508,9 @@ mac_addr=$(get_macaddr ${devicename})
 
 # Get OS version
 os=$(get_os)
+
+# Make log directory
+mkdir -p log
 
 # Make JSON
 json0="{ \"log_campaign_uuid\" : \"${uuid}\",
@@ -864,12 +869,12 @@ if [ "X${v6addrs}" != "X" ]; then
   # Check path MTU to extarnal IPv6 servers
   for var in `echo ${PING6_SRVS} | sed 's/,/ /g'`; do
     echo " do pmtud to extarnal IPv6 server:${var}"
-    data=$(do_pmtud 6 ${var} 1450 1473)
+    data=$(do_pmtud 6 ${var} 1232 1453)
     if [ ${data} -eq 0 ]; then
       write_json ${layer} IPv6 v6pmtu_srv ${INFO} "(${var}) unmeasurable"
       echo "  pmtud:unmeasurable"
     else
-      v6pmtu_srv=`expr ${data} + 28`
+      v6pmtu_srv=`expr ${data} + 48`
       write_json ${layer} IPv6 v6pmtu_srv ${INFO} "(${var}) ${v6pmtu_srv}"
       echo "  pmtu:${v6pmtu_srv} MB"
     fi
@@ -1088,7 +1093,7 @@ if [ "X${v4addr}" != "X" ]; then
   for var in `echo ${V4WEB_SRVS} | sed 's/,/ /g'`; do
     result=${FAIL}
     echo " curl to extarnal server:${var} by IPv4"
-    v6http_srv=$(do_curl 4 ${var})
+    v4http_srv=$(do_curl 4 ${var})
     if [ $? -eq 0 ]; then
       result=${SUCCESS}
     else
