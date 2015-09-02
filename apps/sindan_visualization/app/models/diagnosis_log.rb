@@ -25,7 +25,6 @@ class DiagnosisLog < ActiveRecord::Base
                 .or(arel_table[:result].eq(DiagnosisLog.results[:success]))
     where(condition)
   }
-  scope :error, -> { where(result: 'error') }
 
   def layer_label
     if !self.layer.blank? && self.layer_defs.keys.include?(self.layer.to_sym)

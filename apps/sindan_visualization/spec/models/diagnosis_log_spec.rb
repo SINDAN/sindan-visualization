@@ -38,7 +38,7 @@ RSpec.describe DiagnosisLog, type: :model do
       FactoryGirl.create(:diagnosis_log, result: 'fail')
       FactoryGirl.create(:diagnosis_log, result: 'information')
 
-      @diagnosis_logs = DiagnosisLog.error
+      @diagnosis_logs = DiagnosisLog.fail
     end
 
     it "only include error " do
