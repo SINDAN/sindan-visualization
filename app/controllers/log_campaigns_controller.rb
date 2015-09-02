@@ -4,7 +4,7 @@ class LogCampaignsController < ApplicationController
   # GET /log_campaigns
   # GET /log_campaigns.json
   def index
-    @log_campaigns = LogCampaign.all
+    @log_campaigns = LogCampaign.all.page(params[:page])
   end
 
   # GET /log_campaigns/1
