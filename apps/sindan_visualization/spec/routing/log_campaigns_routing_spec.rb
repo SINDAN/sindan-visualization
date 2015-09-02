@@ -15,6 +15,18 @@ RSpec.describe LogCampaignsController, type: :routing do
       expect(:get => "/log_campaigns/1").to route_to("log_campaigns#show", :id => "1")
     end
 
+    it "routes to #all" do
+      expect(:get => "/log_campaigns/1/all").to route_to("log_campaigns#all", :id => "1")
+    end
+
+    it "routes to #log" do
+      expect(:get => "/log_campaigns/1/log").to route_to("log_campaigns#log", :id => "1")
+    end
+
+    it "routes to #error" do
+      expect(:get => "/log_campaigns/1/error").to route_to("log_campaigns#error", :id => "1")
+    end
+
     it "routes to #edit" do
       expect(:get => "/log_campaigns/1/edit").to route_to("log_campaigns#edit", :id => "1")
     end

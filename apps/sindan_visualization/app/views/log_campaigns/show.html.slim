@@ -24,6 +24,15 @@ table.table
 
 h2 #{t('views.diagnosis_logs.index.title')}
 
+p
+  ul.nav.nav-tabs
+    li.presentation class="#{current_class(all_log_campaign_path(@log_campaign))}"
+      a href="#{all_log_campaign_path(@log_campaign)}" All
+    li.presentation class="#{current_class(log_campaign_path(@log_campaign))}"
+      a href="#{log_campaign_path(@log_campaign)}" Log
+    li.presentation class="#{current_class(error_log_campaign_path(@log_campaign))}"
+      a href="#{error_log_campaign_path(@log_campaign)}" Error
+
 table.table.table-condensed.table-bordered
   colgroup
     col.col-xs-2
@@ -37,7 +46,7 @@ table.table.table-condensed.table-bordered
       th #{t('activerecord.attributes.diagnosis_log.log_type')}
       th #{t('activerecord.attributes.diagnosis_log.detail')}
   tbody
-    - @log_campaign.diagnosis_logs.each do |diagnosis_log|
+    - @diagnosis_logs.each do |diagnosis_log|
       tr class="#{class_row_result(diagnosis_log.result)}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"

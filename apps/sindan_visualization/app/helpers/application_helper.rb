@@ -32,6 +32,13 @@ module ApplicationHelper
     date.utc.strftime(t('date.formats.default'))
   end
 
+  # CSS Class
+  def current_class(target_path)
+    if current_page?(target_path)
+      'active'
+    end
+  end
+
   # Public: Pick the correct arguments for form_for when shallow routes are used.
   #
   # parent - The Resource that has_* child
