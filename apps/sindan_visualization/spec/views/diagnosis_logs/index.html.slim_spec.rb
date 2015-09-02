@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "diagnosis_logs/index", type: :view do
   before(:each) do
-    assign(:diagnosis_logs, [
+    assign(:diagnosis_logs, Kaminari.paginate_array([
       DiagnosisLog.create!(
         :layer => "Layer",
         :log_group => "Log Group",
@@ -19,7 +19,7 @@ RSpec.describe "diagnosis_logs/index", type: :view do
         :detail => "Detail",
         :occurred_at => "2015-07-24 19:24:42",
       )
-    ])
+    ]).page(1))
   end
 
   it "renders a list of diagnosis_logs" do
