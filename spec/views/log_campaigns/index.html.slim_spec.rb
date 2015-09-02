@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "log_campaigns/index", type: :view do
   before(:each) do
-    assign(:log_campaigns, [
+    assign(:log_campaigns, Kaminari.paginate_array([
       LogCampaign.create!(
         :log_campaign_uuid => "Log Campaign Uuid 1",
         :mac_addr => "Mac Addr",
@@ -15,7 +15,7 @@ RSpec.describe "log_campaigns/index", type: :view do
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",
       )
-    ])
+    ]).page(1))
   end
 
   it "renders a list of log_campaigns" do
