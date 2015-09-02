@@ -3,6 +3,9 @@
 - else
   - provide :title, t('views.diagnosis_logs.index.title') + " (#{@date.to_s})"
 
+p
+  = paginate @diagnosis_logs
+
 table.table.table-condensed.table-bordered
   colgroup
     col.col-xs-2
