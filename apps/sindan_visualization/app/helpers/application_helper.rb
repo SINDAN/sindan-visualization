@@ -20,12 +20,23 @@ module ApplicationHelper
 
   def datetime_view(datetime)
     return nil if datetime.blank?
-    datetime.strftime(t('time.formats.default'))
+#    datetime.strftime(t('time.formats.default'))
+    # dirty hack
+    datetime.utc.strftime(t('time.formats.default'))
   end
 
   def date_view(date)
     return nil if date.blank?
-    date.strftime(t('date.formats.default'))
+#    date.strftime(t('date.formats.default'))
+    # dirty hack
+    date.utc.strftime(t('date.formats.default'))
+  end
+
+  # CSS Class
+  def current_class(target_path)
+    if current_page?(target_path)
+      'active'
+    end
   end
 
   # Public: Pick the correct arguments for form_for when shallow routes are used.

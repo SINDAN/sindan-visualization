@@ -1,15 +1,40 @@
 class LogCampaignsController < ApplicationController
-  before_action :set_log_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :set_log_campaign, only: [:show, :all, :log, :error, :edit, :update, :destroy]
 
   # GET /log_campaigns
   # GET /log_campaigns.json
   def index
-    @log_campaigns = LogCampaign.all
+    @log_campaigns = LogCampaign.all.page(params[:page])
   end
 
   # GET /log_campaigns/1
   # GET /log_campaigns/1.json
   def show
+    @diagnosis_logs = @log_campaign.diagnosis_logs.log
+  end
+
+  # GET /log_campaigns/1/all
+  # GET /log_campaigns/1/all.json
+  def all
+    @diagnosis_logs = @log_campaign.diagnosis_logs
+
+    render action: :show
+  end
+
+  # GET /log_campaigns/1/log
+  # GET /log_campaigns/1/log.json
+  def log
+    @diagnosis_logs = @log_campaign.diagnosis_logs.log
+
+    render action: :show
+  end
+
+  # GET /log_campaigns/1/error
+  # GET /log_campaigns/1/error.json
+  def error
+    @diagnosis_logs = @log_campaign.diagnosis_logs.fail
+
+    render action: :show
   end
 
   # GET /log_campaigns/new

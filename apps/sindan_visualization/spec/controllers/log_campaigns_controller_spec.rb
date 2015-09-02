@@ -52,6 +52,57 @@ RSpec.describe LogCampaignsController, type: :controller do
     end
   end
 
+  describe "GET #all" do
+    before(:each) do
+      @log_campaign = FactoryGirl.create(:log_campaign)
+      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
+    end
+
+    it "assigns the requested log_campaign as @log_campaign" do
+      get :all, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:log_campaign)).to eq(@log_campaign)
+    end
+
+    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+      get :all, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+    end
+  end
+
+  describe "GET #log" do
+    before(:each) do
+      @log_campaign = FactoryGirl.create(:log_campaign)
+      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
+    end
+
+    it "assigns the requested log_campaign as @log_campaign" do
+      get :log, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:log_campaign)).to eq(@log_campaign)
+    end
+
+    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+      get :log, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+    end
+  end
+
+  describe "GET #error" do
+    before(:each) do
+      @log_campaign = FactoryGirl.create(:log_campaign)
+      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'fail')
+    end
+
+    it "assigns the requested log_campaign as @log_campaign" do
+      get :error, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:log_campaign)).to eq(@log_campaign)
+    end
+
+    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+      get :error, {:id => @log_campaign.to_param}, valid_session
+      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+    end
+  end
+
   describe "GET #new" do
     it "assigns a new log_campaign as @log_campaign" do
       get :new, {}, valid_session

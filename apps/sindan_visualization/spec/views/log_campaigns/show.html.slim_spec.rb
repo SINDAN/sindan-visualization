@@ -8,6 +8,25 @@ RSpec.describe "log_campaigns/show", type: :view do
       :os => "Os",
       :occurred_at => "2015-07-24 19:24:42",
     ))
+
+    assign(:diagnosis_logs, [
+      DiagnosisLog.create!(
+        :layer => "Layer",
+        :log_group => "Log Group",
+        :log_type => "Log Type",
+        :result => :success,
+        :detail => "Detail",
+        :occurred_at => "2015-07-24 19:24:42",
+      ),
+      DiagnosisLog.create!(
+        :layer => "Layer",
+        :log_group => "Log Group",
+        :log_type => "Log Type",
+        :result => :fail,
+        :detail => "Detail",
+        :occurred_at => "2015-07-24 19:24:42",
+      )
+    ])
   end
 
   it "renders attributes in <p>" do

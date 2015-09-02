@@ -12,6 +12,8 @@ class DiagnosisLogsController < ApplicationController
       @search = DiagnosisLog.search(occurred_at_date_eq: @date)
       @diagnosis_logs = @search.result(distinct: true)
     end
+
+    @diagnosis_logs = @diagnosis_logs.page(params[:page])
   end
 
   # GET /diagnosis_logs/1
