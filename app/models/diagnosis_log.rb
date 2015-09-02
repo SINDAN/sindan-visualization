@@ -20,6 +20,13 @@ class DiagnosisLog < ActiveRecord::Base
 
   default_scope { order(occurred_at: :desc) }
 
+  scope :log, lambda {
+    condition = arel_table[:result].eq(DiagnosisLog.results[:fail])
+                .or(arel_table[:result].eq(DiagnosisLog.results[:success]))
+    where(condition)
+  }
+  scope :error, -> { where(result: 'error') }
+
   def layer_label
     if !self.layer.blank? && self.layer_defs.keys.include?(self.layer.to_sym)
       self.layer_defs[self.layer.to_sym]

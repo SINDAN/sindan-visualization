@@ -18,6 +18,34 @@ RSpec.describe DiagnosisLog, type: :model do
     expect(@diagnosis_log).not_to be_valid
   end
 
+  context "scope log" do
+    before(:each) do
+      FactoryGirl.create(:diagnosis_log, result: 'success')
+      FactoryGirl.create(:diagnosis_log, result: 'fail')
+      FactoryGirl.create(:diagnosis_log, result: 'information')
+
+      @diagnosis_logs = DiagnosisLog.log
+    end
+
+    it "not include error" do
+      expect(@diagnosis_logs.count).to eq 2
+    end
+  end
+
+  context "scope error" do
+    before(:each) do
+      FactoryGirl.create(:diagnosis_log, result: 'success')
+      FactoryGirl.create(:diagnosis_log, result: 'fail')
+      FactoryGirl.create(:diagnosis_log, result: 'information')
+
+      @diagnosis_logs = DiagnosisLog.error
+    end
+
+    it "only include error " do
+      expect(@diagnosis_logs.count).to eq 1
+    end
+  end
+
   context "Layer label" do
     before(:each) do
       @diagnosis_log = DiagnosisLog.new(
