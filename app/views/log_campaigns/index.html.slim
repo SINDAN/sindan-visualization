@@ -14,7 +14,7 @@ table.table.table-condensed.table-bordered.table-striped
       th #{t('activerecord.attributes.log_campaign.occurred_at')}
   tbody
     - @log_campaigns.each do |log_campaign|
-      tr
+      tr class="#{class_row_result(log_campaign.result)}"
         td
           a href="#{log_campaign_path(log_campaign)}"
             | #{log_campaign.log_campaign_uuid}
