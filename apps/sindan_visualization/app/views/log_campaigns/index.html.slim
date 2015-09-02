@@ -1,5 +1,8 @@
 - provide :title, t('views.log_campaigns.index.title')
 
+p
+  = paginate @log_campaigns
+
 table.table.table-condensed.table-bordered.table-striped
   colgroup
     col.col-xs-3
