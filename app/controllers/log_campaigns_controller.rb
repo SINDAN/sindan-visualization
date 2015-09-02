@@ -32,7 +32,7 @@ class LogCampaignsController < ApplicationController
   # GET /log_campaigns/1/error
   # GET /log_campaigns/1/error.json
   def error
-    @diagnosis_logs = @log_campaign.diagnosis_logs.error
+    @diagnosis_logs = @log_campaign.diagnosis_logs.fail
 
     render action: :show
   end
