@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 0.15
+# version 0.16
 
 # read configurationfile
 source sindan.conf
@@ -136,7 +136,7 @@ check_v4autoconf() {
   fi
 
   if [ $2 = "dhcp" -o $2 = "bootp" ]; then
-    ipconfig getpacket $1
+    ipconfig getpacket $1 | awk -F\n -v ORS=',' '{print}'
     return 0
   fi
   echo "v4conf is $2"
@@ -655,7 +655,7 @@ result=${FAIL}
 if [ $? = 0 -a "X${v4autoconf}" != "X" ]; then
   result=${SUCCESS}
 fi
-write_json ${layer} IPv4 v4autoconf ${result} ${v4autoconf}
+write_json ${layer} IPv4 v4autoconf ${result} "${v4autoconf}"
 
 # Get IPv4 address
 v4addr=$(get_v4addr ${devicename} ${v4ifconf})
