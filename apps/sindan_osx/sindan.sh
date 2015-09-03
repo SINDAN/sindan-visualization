@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 0.14
+# version 0.15
 
 # read configurationfile
 source sindan.conf
@@ -129,24 +129,18 @@ get_v4ifconf() {
 }
 
 #
-get_v6ifconf() {
-  if [ $# -lt 1 ]; then
-    echo "ERROR: get_v6ifconf <iftype>." 1>&2
+check_v4autoconf() {
+  if [ $# -lt 2 ]; then
+    echo "ERROR: check_v4autoconf <devicename> <v4ifconf>." 1>&2
     return 1
   fi
 
-  if networksetup -getinfo $1 | grep 'IPv6: Automatic' > /dev/null
-  then
-    echo 'automatic'
-  elif networksetup -getinfo $1 | grep 'IPv6: Manual' > /dev/null
-  then
-    echo 'manual'
-  elif networksetup -getinfo $1 | grep 'IPv6 IP address: none' > /dev/null
-  then
-    echo 'linklocal'
-  else
-    echo 'unknown'
+  if [ $2 = "dhcp" -o $2 = "bootp" ]; then
+    ipconfig getpacket $1
+    return 0
   fi
+  echo "v4conf is $2"
+  return 9
 }
 
 #
@@ -208,6 +202,27 @@ get_v4nameservers() {
      sed 's/.*{\([0-9., ]*\)}$/\1/'
   else
     echo 'TBD'
+  fi
+}
+
+#
+get_v6ifconf() {
+  if [ $# -lt 1 ]; then
+    echo "ERROR: get_v6ifconf <iftype>." 1>&2
+    return 1
+  fi
+
+  if networksetup -getinfo $1 | grep 'IPv6: Automatic' > /dev/null
+  then
+    echo 'automatic'
+  elif networksetup -getinfo $1 | grep 'IPv6: Manual' > /dev/null
+  then
+    echo 'manual'
+  elif networksetup -getinfo $1 | grep 'IPv6 IP address: none' > /dev/null
+  then
+    echo 'linklocal'
+  else
+    echo 'unknown'
   fi
 }
 
@@ -281,10 +296,36 @@ get_ra_flags() {
 }
 
 #
+check_v6autoconf() {
+  if [ $# -lt 5 ]; then
+    echo "ERROR: check_v6autoconf <devicename> <v6ifconf> <ra_flags> <ra_prefixs> <ra_prefix_flags>." 1>&2
+    return 1
+  fi
+
+  v6addrs=""
+  a_flag=`echo $3 | grep A`
+  m_flag=`echo $5 | grep M`
+  if [ $2 = "automatic" ]; then
+    if [ "X${a_flag}" != "X" ]; then
+      v6addrs=`ifconfig $1 | grep inet6 | grep -v fe80 | grep ${prefix} | awk '{print $2}' |
+       awk -F\n -v ORS=',' '{print}'`
+    fi
+    if [ "X${m_flag}" != "X" ]; then
+      v6addrs=`ipconfig getv6packet $1 | grep yiaddr | awk '{print $3}'`
+    fi
+    echo ${v6addrs} | sed 's/,$//'
+    return 0
+  else
+    ifconfig $1 | grep inet6 | grep -v fe80 | grep ${prefix} | awk '{print $2}' |
+     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
+    return 9
+  fi
+}
+
+#
 get_v6addrs() {
   if [ $# -lt 4 ]; then
-    echo "ERROR: get_v6addrs <devicename> <v6ifconf> <ra_prefix> <ra_flags>." 1>&2
-    echo "ERROR: $1,$2,$3,$4"
+    echo "ERROR: get_v6addrs <devicename> <v6ifconf> <ra_prefix> <ra_prefix_flags>." 1>&2
     return 1
   fi
 
@@ -547,7 +588,6 @@ if [ "X${SSID}" != "X" -a "X${SSID_KEY}" != "X" ]; then
 fi
 
 # Check I/F status
-ifup=0
 ifstatus=$(get_ifstatus ${devicename})
 result=${FAIL}
 if [ ${ifstatus} = "active" ]; then
@@ -608,6 +648,14 @@ v4ifconf=$(get_v4ifconf ${IFTYPE})
 write_json ${layer} IPv4 v4ifconf ${INFO} ${v4ifconf}
 v6ifconf=$(get_v6ifconf ${IFTYPE})
 write_json ${layer} IPv6 v6ifconf ${INFO} ${v6ifconf}
+
+# Check IPv4 autoconf
+v4autoconf=$(check_v4autoconf ${devicename} ${v4ifconf})
+result=${FAIL}
+if [ $? = 0 -a "X${v4autoconf}" != "X" ]; then
+  result=${SUCCESS}
+fi
+write_json ${layer} IPv4 v4autoconf ${result} ${v4autoconf}
 
 # Get IPv4 address
 v4addr=$(get_v4addr ${devicename} ${v4ifconf})
@@ -676,12 +724,19 @@ if [ "X${ra_flags}" != "X" ]; then
     write_json ${layer} RA prefixlen ${INFO} "(${pref}) ${prefixlen}"
 
     # Get IPv6 address
-    v6addrs=$(get_v6addrs ${devicename} ${v6ifconf} ${pref} ${ra_flags})
+    v6addrs=$(get_v6addrs ${devicename} ${v6ifconf} ${pref} ${ra_prefix_flags})
     write_json ${layer} IPv6 v6addrs ${INFO} "(${pref}) ${v6addrs}"
     for addr in `echo ${v6addrs} | sed 's/,/ /g'`; do
       echo "   IPv6 addr:${addr}/${prefixlen}"
     done
   done
+
+  # Check IPv6 autoconf
+  result=${FAIL}
+  if [ ${v6ifconf} = "automatic" -a "X${v6addrs}" != "X" ]; then
+    result=${SUCCESS}
+  fi
+  write_json ${layer} IPv6 v6autoconf ${result} ${v6addrs}
 
   # Get IPv6 routers
   v6routers=$(get_v6routers ${devicename} ${v6ifconf} ${ra_flags})
