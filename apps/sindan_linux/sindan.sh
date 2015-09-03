@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 0.17
+# version 0.1
 
 # read configurationfile
 source sindan.conf
@@ -51,7 +51,7 @@ do_ifdown() {
     echo "ERROR: do_ifdown <devicename>." 1>&2
     return 1
   fi
-  networksetup -setairportpower $1 off
+  ifdown $1
 }
 
 #
@@ -60,23 +60,35 @@ do_ifup() {
     echo "ERROR: do_ifup <devicename>." 1>&2
     return 1
   fi
-  networksetup -setairportpower $1 on
+  ifup $1
 }
 
 #
 get_os() {
-  sw_vers | awk -F: '{sub(/\t/,""); print $2}' | 
-   awk -v ORS=' ' '1; END{printf "\n"}'
+  if [ -e /etc/lsb-release ]; then
+    cat /etc/lsb-release | grep DESCRIPTION | awk -F'=' '{print $2}' |
+     sed 's/\"//g'
+    return 0
+  fi
+  if [ -e /etc/debian_version ]; then
+    local os="Debian `cat /etc/debian_version`"
+    echo "${os}"
+    return 0
+  fi
+  if [ -e /etc/redhat-release ]; then
+    cat /etc/redhat-release
+    return 0
+  fi
+  if [ -e /etc/fedora-release ]; then
+    cat /etc/fedora-release
+    return 0
+  fi
+  uname -a
 }
 
 #
 get_devicename() {
-  if [ $# -lt 1 ]; then
-    echo "ERROR: get_devicename <iftype>." 1>&2
-    return 1
-  fi
-  networksetup -listnetworkserviceorder | grep Hardware | grep $1 |
-   sed 's/^.*Device: \(.*\))$/\1/'
+  :
 }
 
 #
@@ -85,8 +97,8 @@ get_ifstatus() {
     echo "ERROR: get_ifstatus <devicename>." 1>&2
     return 1
   fi
-  local status=`ifconfig $1 | grep status | awk '{print $2}'`
-  if [ "${status}" = "active" ]; then
+  local status=`cat /sys/class/net/$1/operstate`
+  if [ "${status}" = "UP" ]; then
     echo ${status}; return 0
   else
     echo ${status}; return 1
