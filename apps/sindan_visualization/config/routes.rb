@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'diagnosis_logs#index'
+  root to: 'log_campaigns#index'
 
   resources :diagnosis_logs
   resources :log_campaigns do
