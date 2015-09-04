@@ -1,4 +1,6 @@
 class LogCampaignsController < ApplicationController
+  before_filter :authenticate_user!
+
   before_action :set_log_campaign, only: [:show, :all, :log, :error, :edit, :update, :destroy]
 
   # GET /log_campaigns

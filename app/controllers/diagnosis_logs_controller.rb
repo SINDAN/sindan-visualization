@@ -1,4 +1,6 @@
 class DiagnosisLogsController < ApplicationController
+  before_filter :authenticate_user!
+
   before_action :set_diagnosis_log, only: [:show, :edit, :update, :destroy]
 
   # GET /diagnosis_logs
