@@ -57,6 +57,7 @@ ja:
         occurred_at: "発生日時"
       log_campaign:
         log_campaign_uuid: "キャンペーンUUID"
+        ssid: "SSID"
         mac_addr: "MACアドレス"
         os: "OS"
         occurred_at: "発生日時"

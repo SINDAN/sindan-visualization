@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904044827) do
+ActiveRecord::Schema.define(version: 20150904070630) do
 
   create_table "diagnosis_logs", force: :cascade do |t|
     t.string   "layer",             limit: 255
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 20150904044827) do
     t.datetime "occurred_at"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "ssid",              limit: 255
   end
 
   add_index "log_campaigns", ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid", using: :btree
   add_index "log_campaigns", ["occurred_at"], name: "index_log_campaigns_on_occurred_at", using: :btree
+  add_index "log_campaigns", ["ssid"], name: "index_log_campaigns_on_ssid", using: :btree
 
 end
