@@ -29,7 +29,7 @@ html
         .navbar-collapse.collapse
           ul.nav.navbar-nav
             li
-              a href="#" About
+              a href="#{about_path}" #{t('views.static_pages.about.title')}
             li.dropdown
               a data-toggle="dropdown" data-target="#" href="#{diagnosis_logs_path}"
                 | #{t('activerecord.models.diagnosis_logs')}
