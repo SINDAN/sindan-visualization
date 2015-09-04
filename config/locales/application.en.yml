@@ -39,6 +39,9 @@ en:
         title: 'Create Log Campaign'
       edit:
         title: 'Edit Log Campaign'
+    static_pages:
+      about:
+        title: 'About'
   activerecord:
     models:
       diagnosis_logs: "Diagnosis Log"

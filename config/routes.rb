@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       get :error
     end
   end
+
+  get 'about', to: 'static_pages#about'
 end
