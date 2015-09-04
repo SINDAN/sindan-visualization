@@ -8,4 +8,9 @@ class ApplicationController < ActionController::Base
   def set_diagnosis_log_dates
     @diagnosis_log_dates = DiagnosisLog.all.map{ |d| d.occurred_at.to_date.to_s unless d.occurred_at.blank? }.uniq
   end
+
+  # for divise
+  def after_sign_in_path_for(resource)
+    stored_location_for(:user) || root_path
+  end
 end

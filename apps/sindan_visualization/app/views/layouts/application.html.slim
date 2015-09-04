@@ -30,19 +30,31 @@ html
           ul.nav.navbar-nav
             li
               a href="#{about_path}" #{t('views.static_pages.about.title')}
-            li.dropdown
-              a data-toggle="dropdown" data-target="#" href="#{diagnosis_logs_path}"
-                | #{t('activerecord.models.diagnosis_logs')}
-                |  
-                span.caret
-              ul.dropdown-menu
-                li
-                  a href="#{diagnosis_logs_path}" All
-                - @diagnosis_log_dates.each do |diagnosis_log_date|
+            - if current_user
+              li.dropdown
+                a data-toggle="dropdown" data-target="#" href="#{diagnosis_logs_path}"
+                  | #{t('activerecord.models.diagnosis_logs')}
+                  |  
+                  span.caret
+                ul.dropdown-menu
                   li
-                    a href="#{diagnosis_logs_path(date: diagnosis_log_date)}" #{diagnosis_log_date}
-            li
-              a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
+                    a href="#{diagnosis_logs_path}" All
+                  - @diagnosis_log_dates.each do |diagnosis_log_date|
+                    li
+                      a href="#{diagnosis_logs_path(date: diagnosis_log_date)}" #{diagnosis_log_date}
+              li
+                a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
+          ul.nav.navbar-nav.navbar-right
+            - unless current_user
+              li
+                a href="#{user_session_path}" #{t('helpers.links.login')}
+            - else
+              li
+                a href="#"
+                  i.fa.fa-user.fa-lg.fa-fw
+                  | #{current_user.name}
+              li
+                = link_to t('helpers.links.logout'), destroy_user_session_path, method: :delete
         /!.navbar-collapse.collapse
 
     .container
