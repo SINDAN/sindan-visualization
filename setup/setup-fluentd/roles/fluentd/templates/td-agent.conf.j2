@@ -27,20 +27,21 @@
     columns layer, log_group, log_type, log_campaign_uuid, result, detail, occurred_at
 
     flush_interval 5s
+    retry_limit 2
   </store>
 
-  # elasticsearch
-  <store>
-    type elasticsearch
-    host localhost
-    port 9200
-    logstash_format true
-#    include_tag_key true
-    logstash_prefix sindan
-    index_name sindan
-    type_name log
-    time_key occurred_at
-  </store>
+#  # elasticsearch
+#  <store>
+#    type elasticsearch
+#    host localhost
+#    port 9200
+#    logstash_format true
+##    include_tag_key true
+#    logstash_prefix sindan
+#    index_name sindan
+#    type_name log
+#    time_key occurred_at
+#  </store>
 </match>
 
 <match sindan.log_campaign>
@@ -62,23 +63,24 @@
 
     table log_campaigns
     # 'columns' names order must be same with 'key_names'
-    key_names log_campaign_uuid, mac_addr, os, occurred_at
-    columns log_campaign_uuid, mac_addr, os, occurred_at
+    key_names log_campaign_uuid, ssid, mac_addr, os, occurred_at
+    columns log_campaign_uuid, ssid, mac_addr, os, occurred_at
 
     flush_interval 5s
+    retry_limit 2
   </store>
 
-  # elasticsearch
-  <store>
-    type elasticsearch
-    host localhost
-    port 9200
-    index_name fluentd
-    type_name fluentd
-    logstash_format true
-
-    time_key occurred_at
-  </store>
+#  # elasticsearch
+#  <store>
+#    type elasticsearch
+#    host localhost
+#    port 9200
+#    index_name fluentd
+#    type_name fluentd
+#    logstash_format true
+#
+#    time_key occurred_at
+#  </store>
 </match>
 
 # debug
