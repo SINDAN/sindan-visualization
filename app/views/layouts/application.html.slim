@@ -52,7 +52,7 @@ html
               li
                 a href="#"
                   i.fa.fa-user.fa-lg.fa-fw
-                  | #{current_user.name}
+                  | #{current_user.login}
               li
                 = link_to t('helpers.links.logout'), destroy_user_session_path, method: :delete
         /!.navbar-collapse.collapse

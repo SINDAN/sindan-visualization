@@ -13,4 +13,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     stored_location_for(:user) || root_path
   end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_in) { |u|
+      u.permit(:login, :id, :account, :password, :remember_me)
+    }
+  end
 end
