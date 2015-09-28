@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_diagnosis_log_dates
 
   def set_diagnosis_log_dates
-    @diagnosis_log_dates = DiagnosisLog.all.map{ |d| d.occurred_at.to_date.to_s unless d.occurred_at.blank? }.uniq
+    @diagnosis_log_dates = DiagnosisLog.date_list
   end
 
   # for divise

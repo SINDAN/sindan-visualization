@@ -40,6 +40,10 @@ class DiagnosisLog < ActiveRecord::Base
     end
   end
 
+  def self.date_list
+    DiagnosisLog.pluck(:occurred_at).map{ |occurred_at| occurred_at.to_date.to_s unless occurred_at.blank? }.uniq
+  end
+
   # for ransacker
   ransacker :occurred_at do
     Arel.sql('date(occurred_at)')
