@@ -57,6 +57,7 @@ en:
         occurred_at: "Occurred at"
       log_campaign:
         log_campaign_uuid: "Campaign UUID"
+        ssid: "SSID"
         mac_addr: "MAC Address"
         os: "OS"
         occurred_at: "Occurred at"
