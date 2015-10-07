@@ -39,6 +39,9 @@ ja:
         title: 'ログキャンペーン新規登録'
       edit:
         title: 'ログキャンペーン編集'
+    static_pages:
+      about:
+        title: 'About'
   activerecord:
     models:
       diagnosis_logs: "診断ログ"
@@ -54,6 +57,7 @@ ja:
         occurred_at: "発生日時"
       log_campaign:
         log_campaign_uuid: "キャンペーンUUID"
+        ssid: "SSID"
         mac_addr: "MACアドレス"
         os: "OS"
         occurred_at: "発生日時"

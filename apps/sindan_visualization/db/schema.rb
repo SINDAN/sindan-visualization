@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820173422) do
+ActiveRecord::Schema.define(version: 20150904070630) do
 
   create_table "diagnosis_logs", force: :cascade do |t|
     t.string   "layer",             limit: 255
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150820173422) do
   end
 
   add_index "diagnosis_logs", ["log_campaign_uuid"], name: "index_diagnosis_logs_on_log_campaign_uuid", using: :btree
+  add_index "diagnosis_logs", ["occurred_at"], name: "index_diagnosis_logs_on_occurred_at", using: :btree
   add_index "diagnosis_logs", ["result"], name: "index_diagnosis_logs_on_result", using: :btree
 
   create_table "log_campaigns", force: :cascade do |t|
@@ -35,8 +36,31 @@ ActiveRecord::Schema.define(version: 20150820173422) do
     t.datetime "occurred_at"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "ssid",              limit: 255
   end
 
   add_index "log_campaigns", ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid", using: :btree
+  add_index "log_campaigns", ["occurred_at"], name: "index_log_campaigns_on_occurred_at", using: :btree
+  add_index "log_campaigns", ["ssid"], name: "index_log_campaigns_on_ssid", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "login",                  limit: 255,              null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

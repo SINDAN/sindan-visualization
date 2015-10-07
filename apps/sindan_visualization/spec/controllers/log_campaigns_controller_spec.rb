@@ -36,175 +36,178 @@ RSpec.describe LogCampaignsController, type: :controller do
   # LogCampaignsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all log_campaigns as @log_campaigns" do
-      log_campaign = LogCampaign.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:log_campaigns)).to eq([log_campaign])
-    end
-  end
+  context "for authenticated users" do
+    login_user
 
-  describe "GET #show" do
-    it "assigns the requested log_campaign as @log_campaign" do
-      log_campaign = LogCampaign.create! valid_attributes
-      get :show, {:id => log_campaign.to_param}, valid_session
-      expect(assigns(:log_campaign)).to eq(log_campaign)
-    end
-  end
-
-  describe "GET #all" do
-    before(:each) do
-      @log_campaign = FactoryGirl.create(:log_campaign)
-      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
-    end
-
-    it "assigns the requested log_campaign as @log_campaign" do
-      get :all, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:log_campaign)).to eq(@log_campaign)
-    end
-
-    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
-      get :all, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
-    end
-  end
-
-  describe "GET #log" do
-    before(:each) do
-      @log_campaign = FactoryGirl.create(:log_campaign)
-      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
-    end
-
-    it "assigns the requested log_campaign as @log_campaign" do
-      get :log, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:log_campaign)).to eq(@log_campaign)
-    end
-
-    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
-      get :log, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
-    end
-  end
-
-  describe "GET #error" do
-    before(:each) do
-      @log_campaign = FactoryGirl.create(:log_campaign)
-      @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'fail')
-    end
-
-    it "assigns the requested log_campaign as @log_campaign" do
-      get :error, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:log_campaign)).to eq(@log_campaign)
-    end
-
-    it "assigns the requested diagnosis_logs as @diagnosis_logs" do
-      get :error, {:id => @log_campaign.to_param}, valid_session
-      expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
-    end
-  end
-
-  describe "GET #new" do
-    it "assigns a new log_campaign as @log_campaign" do
-      get :new, {}, valid_session
-      expect(assigns(:log_campaign)).to be_a_new(LogCampaign)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested log_campaign as @log_campaign" do
-      log_campaign = LogCampaign.create! valid_attributes
-      get :edit, {:id => log_campaign.to_param}, valid_session
-      expect(assigns(:log_campaign)).to eq(log_campaign)
-    end
-  end
-
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new LogCampaign" do
-        expect {
-          post :create, {:log_campaign => valid_attributes}, valid_session
-        }.to change(LogCampaign, :count).by(1)
-      end
-
-      it "assigns a newly created log_campaign as @log_campaign" do
-        post :create, {:log_campaign => valid_attributes}, valid_session
-        expect(assigns(:log_campaign)).to be_a(LogCampaign)
-        expect(assigns(:log_campaign)).to be_persisted
-      end
-
-      it "redirects to the created log_campaign" do
-        post :create, {:log_campaign => valid_attributes}, valid_session
-        expect(response).to redirect_to(LogCampaign.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved log_campaign as @log_campaign" do
-        post :create, {:log_campaign => invalid_attributes}, valid_session
-        expect(assigns(:log_campaign)).to be_a_new(LogCampaign)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:log_campaign => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
-  end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        { mac_addr: "mac_addr2" }
-      }
-
-      it "updates the requested log_campaign" do
+    describe "GET #index" do
+      it "assigns all log_campaigns as @log_campaigns" do
         log_campaign = LogCampaign.create! valid_attributes
-        put :update, {:id => log_campaign.to_param, :log_campaign => new_attributes}, valid_session
-        log_campaign.reload
-        expect(log_campaign.mac_addr).to eq new_attributes[:mac_addr]
+        get :index, {}, valid_session
+        expect(assigns(:log_campaigns)).to eq([log_campaign])
+      end
+    end
+
+    describe "GET #show" do
+      it "assigns the requested log_campaign as @log_campaign" do
+        log_campaign = LogCampaign.create! valid_attributes
+        get :show, {:id => log_campaign.to_param}, valid_session
+        expect(assigns(:log_campaign)).to eq(log_campaign)
+      end
+    end
+
+    describe "GET #all" do
+      before(:each) do
+        @log_campaign = FactoryGirl.create(:log_campaign)
+        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
       end
 
       it "assigns the requested log_campaign as @log_campaign" do
-        log_campaign = LogCampaign.create! valid_attributes
-        put :update, {:id => log_campaign.to_param, :log_campaign => valid_attributes}, valid_session
-        expect(assigns(:log_campaign)).to eq(log_campaign)
+        get :all, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:log_campaign)).to eq(@log_campaign)
       end
 
-      it "redirects to the log_campaign" do
-        log_campaign = LogCampaign.create! valid_attributes
-        put :update, {:id => log_campaign.to_param, :log_campaign => valid_attributes}, valid_session
-        expect(response).to redirect_to(log_campaign)
+      it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+        get :all, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
       end
     end
 
-    context "with invalid params" do
-      it "assigns the log_campaign as @log_campaign" do
-        log_campaign = LogCampaign.create! valid_attributes
-        put :update, {:id => log_campaign.to_param, :log_campaign => invalid_attributes}, valid_session
-        expect(assigns(:log_campaign)).to eq(log_campaign)
+    describe "GET #log" do
+      before(:each) do
+        @log_campaign = FactoryGirl.create(:log_campaign)
+        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
       end
 
-      it "re-renders the 'edit' template" do
-        log_campaign = LogCampaign.create! valid_attributes
-        put :update, {:id => log_campaign.to_param, :log_campaign => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+      it "assigns the requested log_campaign as @log_campaign" do
+        get :log, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:log_campaign)).to eq(@log_campaign)
+      end
+
+      it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+        get :log, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
       end
     end
-  end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested log_campaign" do
-      log_campaign = LogCampaign.create! valid_attributes
-      expect {
+    describe "GET #error" do
+      before(:each) do
+        @log_campaign = FactoryGirl.create(:log_campaign)
+        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'fail')
+      end
+
+      it "assigns the requested log_campaign as @log_campaign" do
+        get :error, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:log_campaign)).to eq(@log_campaign)
+      end
+
+      it "assigns the requested diagnosis_logs as @diagnosis_logs" do
+        get :error, {:id => @log_campaign.to_param}, valid_session
+        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+      end
+    end
+
+    describe "GET #new" do
+      it "assigns a new log_campaign as @log_campaign" do
+        get :new, {}, valid_session
+        expect(assigns(:log_campaign)).to be_a_new(LogCampaign)
+      end
+    end
+
+    describe "GET #edit" do
+      it "assigns the requested log_campaign as @log_campaign" do
+        log_campaign = LogCampaign.create! valid_attributes
+        get :edit, {:id => log_campaign.to_param}, valid_session
+        expect(assigns(:log_campaign)).to eq(log_campaign)
+      end
+    end
+
+    describe "POST #create" do
+      context "with valid params" do
+        it "creates a new LogCampaign" do
+          expect {
+            post :create, {:log_campaign => valid_attributes}, valid_session
+          }.to change(LogCampaign, :count).by(1)
+        end
+
+        it "assigns a newly created log_campaign as @log_campaign" do
+          post :create, {:log_campaign => valid_attributes}, valid_session
+          expect(assigns(:log_campaign)).to be_a(LogCampaign)
+          expect(assigns(:log_campaign)).to be_persisted
+        end
+
+        it "redirects to the created log_campaign" do
+          post :create, {:log_campaign => valid_attributes}, valid_session
+          expect(response).to redirect_to(LogCampaign.last)
+        end
+      end
+
+      context "with invalid params" do
+        it "assigns a newly created but unsaved log_campaign as @log_campaign" do
+          post :create, {:log_campaign => invalid_attributes}, valid_session
+          expect(assigns(:log_campaign)).to be_a_new(LogCampaign)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, {:log_campaign => invalid_attributes}, valid_session
+          expect(response).to render_template("new")
+        end
+      end
+    end
+
+    describe "PUT #update" do
+      context "with valid params" do
+        let(:new_attributes) {
+          { mac_addr: "mac_addr2" }
+        }
+
+        it "updates the requested log_campaign" do
+          log_campaign = LogCampaign.create! valid_attributes
+          put :update, {:id => log_campaign.to_param, :log_campaign => new_attributes}, valid_session
+          log_campaign.reload
+          expect(log_campaign.mac_addr).to eq new_attributes[:mac_addr]
+        end
+
+        it "assigns the requested log_campaign as @log_campaign" do
+          log_campaign = LogCampaign.create! valid_attributes
+          put :update, {:id => log_campaign.to_param, :log_campaign => valid_attributes}, valid_session
+          expect(assigns(:log_campaign)).to eq(log_campaign)
+        end
+
+        it "redirects to the log_campaign" do
+          log_campaign = LogCampaign.create! valid_attributes
+          put :update, {:id => log_campaign.to_param, :log_campaign => valid_attributes}, valid_session
+          expect(response).to redirect_to(log_campaign)
+        end
+      end
+
+      context "with invalid params" do
+        it "assigns the log_campaign as @log_campaign" do
+          log_campaign = LogCampaign.create! valid_attributes
+          put :update, {:id => log_campaign.to_param, :log_campaign => invalid_attributes}, valid_session
+          expect(assigns(:log_campaign)).to eq(log_campaign)
+        end
+
+        it "re-renders the 'edit' template" do
+          log_campaign = LogCampaign.create! valid_attributes
+          put :update, {:id => log_campaign.to_param, :log_campaign => invalid_attributes}, valid_session
+          expect(response).to render_template("edit")
+        end
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "destroys the requested log_campaign" do
+        log_campaign = LogCampaign.create! valid_attributes
+        expect {
+          delete :destroy, {:id => log_campaign.to_param}, valid_session
+        }.to change(LogCampaign, :count).by(-1)
+      end
+
+      it "redirects to the log_campaigns list" do
+        log_campaign = LogCampaign.create! valid_attributes
         delete :destroy, {:id => log_campaign.to_param}, valid_session
-      }.to change(LogCampaign, :count).by(-1)
-    end
-
-    it "redirects to the log_campaigns list" do
-      log_campaign = LogCampaign.create! valid_attributes
-      delete :destroy, {:id => log_campaign.to_param}, valid_session
-      expect(response).to redirect_to(log_campaigns_url)
+        expect(response).to redirect_to(log_campaigns_url)
+      end
     end
   end
-
 end

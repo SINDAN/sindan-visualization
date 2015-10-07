@@ -63,8 +63,8 @@
 
     table log_campaigns
     # 'columns' names order must be same with 'key_names'
-    key_names log_campaign_uuid, mac_addr, os, occurred_at
-    columns log_campaign_uuid, mac_addr, os, occurred_at
+    key_names log_campaign_uuid, ssid, mac_addr, os, occurred_at
+    columns log_campaign_uuid, ssid, mac_addr, os, occurred_at
 
     flush_interval 5s
     retry_limit 2
