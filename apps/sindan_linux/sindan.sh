@@ -1,6 +1,6 @@
 #!/bin/bash
 # sindan.sh
-# version 0.9
+# version 1.0
 
 # read configurationfile
 . ./sindan.conf
@@ -47,6 +47,11 @@ write_json() {
 
 ## for datalink layer
 #
+get_devicename() {
+    echo ${DEVNAME}
+}
+
+#
 do_ifdown() {
   if [ $# -lt 1 ]; then
     echo "ERROR: do_ifdown <devicename>." 1>&2
@@ -61,7 +66,20 @@ do_ifup() {
     echo "ERROR: do_ifup <devicename>." 1>&2
     return 1
   fi
-  ifup $1
+  if [ ${IFTYPE} = "Wi-Fi" ]; then
+    if [ "X${SSID}" = "X" ]; then
+      echo "ERROR: SSID is null at configration file." 1>&2
+      return 1
+    fi
+    if [ "X${BAND}" = "X" ]; then
+      echo "ERROR: BAND is null at configration file." 1>&2
+      return 1
+    fi
+    wifidev="$1=${SSID}-${BAND}"
+    ifup ${wifidev}
+  else
+    ifup $1
+  fi
 }
 
 #
@@ -71,11 +89,6 @@ get_os() {
   else
     grep PRETTY_NAME /etc/*-release | awk -F\" '{print $2}'
   fi
-}
-
-#
-get_devicename() {
-  echo ${DEVNAME}
 }
 
 #
@@ -528,14 +541,26 @@ do_curl() {
 #
 
 ####################
-## Phase 0
+## Preparation
 
-# Set lock file
-# Check LOCKFILE parameter
+# Check parameters
 if [ "X${LOCKFILE}" = "X" ]; then
   echo "ERROR: LOCKFILE is null at configration file." 1>&2
   return 1
 fi
+if [ "X${IFTYPE}" = "X" ]; then
+  echo "ERROR: IFTYPE is null at configration file." 1>&2
+  return 1
+fi
+if [ "X${DEVNAME}" = "X" ]; then
+  echo "ERROR: DEVNAME is null at configration file." 1>&2
+  return 1
+fi
+
+####################
+## Phase 0
+
+# Set lock file
 trap 'rm -f ${LOCKFILE}; exit 0' INT
 
 if [ ! -e ${LOCKFILE} ]; then
@@ -582,18 +607,6 @@ layer="datalink"
 # Get current SSID
 pre_ssid=$(get_wifi_ssid ${devicename})
 
-if [ ${RECONNECT} = "yes" ]; then
-  # Down target interface
-  echo " interface:${devicename} down"
-  do_ifdown ${devicename}
-  sleep 2
-
-  # Start target interface
-  echo " interface:${devicename} up"
-  do_ifup ${devicename}
-  sleep 2
-fi
-
 # XXXX
 # set specific ssid
 #if [ "X${SSID}" != "X" -a "X${SSID_KEY}" != "X" ]; then
@@ -604,6 +617,23 @@ fi
 ##  networksetup -setairportnetwork ${devicename} ${pre_ssid}
 ##  sleep 5
 #fi
+
+# Down, Up interface
+if [ ${RECONNECT} = "yes" ]; then
+  # Down target interface
+  if [ "${VERBOSE}" = "yes" ]; then
+    echo " interface:${devicename} down"
+  fi
+  do_ifdown ${devicename}
+  sleep 2
+
+  # Start target interface
+  if [ "${VERBOSE}" = "yes" ]; then
+    echo " interface:${devicename} up"
+  fi
+  do_ifup ${devicename}
+  sleep 10 
+fi
 
 # Check I/F status
 ifstatus=$(get_ifstatus ${devicename})
