@@ -197,7 +197,7 @@ function GetInterfaces() {
 
 function RegisterCampaingLog() {
     # Set Date
-    $body["occurred_at"] = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $body["occurred_at"] = (Get-Date).ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")
 
     # Get MAC address
     $body["mac_addr"] = ((Get-NetAdapter -Name $params["IFTYPE"]).MacAddress -replace ("-", ":")).ToLower()
