@@ -1,6 +1,6 @@
 #!/bin/bash
 # sindan.sh
-# version 1.0
+# version 1.1
 
 # read configurationfile
 . ./sindan.conf
@@ -25,8 +25,8 @@ write_json_campaign() {
                 \"mac_addr\" : \"$2\",
                 \"os\" : \"$3\",
                 \"ssid\" : \"$4\",
-                \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
-  echo ${json} > log/campaign_`date '+%s'`.json
+                \"occurred_at\" : \"`date -u '+%Y-%m-%d %T'`\" }"
+  echo ${json} > log/campaign_`date -u '+%s'`.json
 }
 
 #
@@ -41,8 +41,8 @@ write_json() {
                 \"log_campaign_uuid\" : \"${uuid}\",
                 \"result\" : \"$4\",
                 \"detail\" : \"$5\",
-                \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
-  echo ${json} > log/sindan_$1_$3_`date '+%s'`.json
+                \"occurred_at\" : \"`date -u '+%Y-%m-%d %T'`\" }"
+  echo ${json} > log/sindan_$1_$3_`date -u '+%s'`.json
 }
 
 ## for datalink layer
@@ -66,20 +66,7 @@ do_ifup() {
     echo "ERROR: do_ifup <devicename>." 1>&2
     return 1
   fi
-  if [ ${IFTYPE} = "Wi-Fi" ]; then
-    if [ "X${SSID}" = "X" ]; then
-      echo "ERROR: SSID is null at configration file." 1>&2
-      return 1
-    fi
-    if [ "X${BAND}" = "X" ]; then
-      echo "ERROR: BAND is null at configration file." 1>&2
-      return 1
-    fi
-    wifidev="$1=${SSID}-${BAND}"
-    ifup ${wifidev}
-  else
-    ifup $1
-  fi
+  ifup $1
 }
 
 #
@@ -617,6 +604,11 @@ pre_ssid=$(get_wifi_ssid ${devicename})
 ##  networksetup -setairportnetwork ${devicename} ${pre_ssid}
 ##  sleep 5
 #fi
+
+# Select band
+if [ "X${BAND}" != "X" ]; then
+  set_band ${devicename}
+fi
 
 # Down, Up interface
 if [ ${RECONNECT} = "yes" ]; then

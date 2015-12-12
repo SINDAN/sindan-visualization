@@ -1,6 +1,6 @@
 #!/bin/sh
 # sindan.sh
-# version 1.0
+# version 1.1
 
 # read configurationfile
 source sindan.conf
@@ -25,8 +25,8 @@ write_json_campaign() {
                 \"mac_addr\" : \"$2\",
                 \"os\" : \"$3\",
                 \"ssid\" : \"$4\",
-                \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
-  echo ${json} > log/campaign_`date '+%s'`.json
+                \"occurred_at\" : \"`date -u '+%Y-%m-%d %T'`\" }"
+  echo ${json} > log/campaign_`date -u '+%s'`.json
 }
 
 #
@@ -41,8 +41,8 @@ write_json() {
                 \"log_campaign_uuid\" : \"${uuid}\",
                 \"result\" : \"$4\",
                 \"detail\" : \"$5\",
-                \"occurred_at\" : \"`date '+%Y-%m-%d %T'`\" }"
-  echo ${json} > log/sindan_$1_$3_`date '+%s'`.json
+                \"occurred_at\" : \"`date -u '+%Y-%m-%d %T'`\" }"
+  echo ${json} > log/sindan_$1_$3_`date -u '+%s'`.json
 }
 
 ## for datalink layer
