@@ -1,0 +1,20 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - common
+  tags:
+    - task-common
+
+- hosts: sindan_rpi
+  sudo: yes
+  roles:
+    - sindan_rpi
+  vars_prompt:
+    - name: "bitbucket_username"
+      prompt: "Enter bitbucket username"
+    - name: "bitbucket_password"
+      prompt: "Enter bitbucket password"
+      private: yes
+  tags:
+    - task-sindan

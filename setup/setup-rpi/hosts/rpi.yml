@@ -1,0 +1,6 @@
+[sindan_rpi]
+raspberrypi.local
+
+[sindan_rpi:vars]
+ansible_ssh_user=pi
+ansible_ssh_pass=raspberry

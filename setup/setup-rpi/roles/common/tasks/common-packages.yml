@@ -1,0 +1,13 @@
+---
+- name: install common packages
+  apt: name={{item}} state=latest
+  with_items:
+#    - libselinux-python
+    - uuid-runtime
+    - wireless-tools
+    - ndisc6
+    - dnsutils
+    - curl
+  tags:
+    - common
+    - common-packages

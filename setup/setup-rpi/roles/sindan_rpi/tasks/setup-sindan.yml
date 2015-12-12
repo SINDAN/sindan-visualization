@@ -1,0 +1,10 @@
+---
+- name: install sindan app
+  git: >
+    repo=https://{{ bitbucket_username }}:{{ bitbucket_password }}@bitbucket.org/shored/sindan.git
+    dest={{ sindan_path }}
+    accept_hostkey=True
+  ignore_errors: true
+  tags:
+    - sindan
+    - sindan_rpi
