@@ -244,7 +244,8 @@ get_v4nameservers() {
     ipconfig getpacket $1 | grep domain_name_server |
      sed 's/.*{\([0-9., ]*\)}$/\1/'
   else
-    echo "TBD"
+    grep nameserver /etc/resolv.conf | grep -v : | awk -F\n -v ORS=' ' '{print}' |
+     sed 's/nameserver \([0-9.]*\) /\1, /g'
   fi
 }
 
@@ -403,10 +404,14 @@ get_v6nameservers() {
   fi
   local dhcpv6=`echo $3 | grep M`
   if [ $2 = "automatic" -a "${dhcpv6}" ]; then
-    ipconfig getv6packet $1 | grep domain_name_server |
-     sed 's/.*{\([0-9A-Fa-f:, ]*\)}$/\1/'
+    ipconfig getv6packet $1 | grep : | grep -v DUID |
+     awk -F\n -v ORS=',' '{print}' |
+     sed 's/.* \([0-9a-f:,]*\) /\1/'
+#     awk -F\n -v ORS='' '{print}' |
+#     sed 's/.* \([0-9a-f:]*\) /\1, /'
   else
-    : #TBD
+    grep nameserver /etc/resolv.conf | grep : | awk -F\n -v ORS=' ' '{print}' |
+     sed 's/nameserver \([0-9a-f:]*\) /\1, /g'
   fi
 }
 
@@ -667,7 +672,7 @@ else
   echo "  rssi: ${rssi} dB, noise: ${noise} dB"
 fi
 
-sleep 5
+sleep 10
 
 ####################
 ## Phase 2
@@ -864,7 +869,7 @@ done
 for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
   result=${FAIL}
   echo " ping to IPv6 nameserver: ${var}"
-  v4alive_namesrv=$(do_ping 6 ${var})
+  v6alive_namesrv=$(do_ping 6 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
