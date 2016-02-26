@@ -32,6 +32,7 @@ write_json_campaign() {
 #
 write_json() {
   if [ $# -lt 5 ]; then
+    echo "$1, $2, $3, $4, #5"
     echo "ERROR: write_json <layer> <group> <type> <result> <detail>. ($3)" 1>&2
     return 1
   fi
@@ -265,7 +266,7 @@ get_v4nameservers() {
   if [ $2 = "dhcp" ]; then
     echo "TBD"
   else
-    grep nameserver /etc/resolv.conf | awk '{print $2}' |
+    grep nameserver /etc/resolv.conf | awk '{print $2}' | grep -v : |
      awk -v ORS=' ' '1; END{printf "\n"}'
   fi
 }
@@ -298,13 +299,13 @@ get_ra_prefixes() {
    awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
 }
 
-#
+# require ndisc6 ver 1.0.3
 get_ra_prefix_flags() {
-  if [ $# -lt 1 ]; then
-    echo "ERROR: get_ra_prefix_flags <ra_prefix>." 1>&2
+  if [ $# -lt 2 ]; then
+    echo "ERROR: get_ra_prefix_flags <devicename> <ra_prefix>." 1>&2
     return 1
   fi
-  local prefix=`echo $1 | awk -F/ '{print $1}'`
+  local prefix=`echo $1 | awk -F/ '{print $2}'`
   rdisc6 -1 $1 |
    awk 'BEGIN{
      find=0;
@@ -379,7 +380,10 @@ get_v6addrs() {
   if [ $2 = "automatic" -a "${m_flag}" ]; then
     echo "TBD"
   else
-    ip -6 address show $1 | sed -n '/${prefix}/s@^.*inet6 \([0-9a-f:]*\)/.*$@\1@p'
+    ip -6 address show $1 | grep inet6 | grep ${prefix} | awk '{print $2}' |
+     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
+#    ip -6 address show $1 | sed -n '/${prefix}/s@^.*inet6 \([0-9a-f:]*\)/.*$@\1@p' |
+#     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
   fi
 }
 
@@ -398,7 +402,8 @@ get_v6routers() {
     echo "ERROR: get_v6routers <devicename>." 1>&2
     return 1
   fi
-  ip -6 route | grep default | grep $1 | awk '{print $3}'
+  local v6router=`ip -6 route | grep default | grep $1 | awk '{print $3}'`
+  echo ${v6router}%$1
 }
 
 #
@@ -412,7 +417,7 @@ get_v6nameservers() {
     echo "TBD"
   else
     # need for IPv6
-    grep nameserver /etc/resolv.conf | awk '{print $2}' |
+    grep nameserver /etc/resolv.conf | awk '{print $2}' | grep : |
      awk -v ORS=' ' '1; END{printf "\n"}'
   fi
 }
@@ -796,7 +801,7 @@ if [ "X${ra_flags}" != "X" ]; then
   fi
   for pref in `echo ${ra_prefixes} | sed 's/,/ /g'`; do
     # Get IPv6 RA prefix flags
-    ra_prefix_flags=$(get_ra_prefix_flags ${pref})
+    ra_prefix_flags=$(get_ra_prefix_flags ${devicename} ${pref})
     write_json ${layer} RA ra_prefix_flags ${INFO} "(${pref}) ${ra_prefix_flags}"
     if [ "${VERBOSE}" = "yes" ]; then
       echo "  IPv6 RA prefix(flags): ${pref}(${ra_prefix_flags})"
@@ -811,7 +816,8 @@ if [ "X${ra_flags}" != "X" ]; then
     write_json ${layer} IPv6 v6addrs ${INFO} "(${pref}) ${v6addrs}"
     if [ "${VERBOSE}" = "yes" ]; then
       for addr in `echo ${v6addrs} | sed 's/,/ /g'`; do
-        echo "   IPv6 addr: ${addr}/${prefixlen}"
+#        echo "   IPv6 addr: ${addr}/${prefixlen}"
+        echo "   IPv6 addr: ${addr}"
       done
     fi
   done
