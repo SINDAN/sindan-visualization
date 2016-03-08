@@ -58,7 +58,11 @@ do_ifdown() {
     echo "ERROR: do_ifdown <devicename>." 1>&2
     return 1
   fi
-  ifdown $1
+  if [ "X${DEVNAME_WIFI}" != "X" ]; then
+    ifdown ${DEVNAME_WIFI}
+  else
+    ifdown $1
+  fi
 }
 
 #
@@ -67,7 +71,11 @@ do_ifup() {
     echo "ERROR: do_ifup <devicename>." 1>&2
     return 1
   fi
-  ifup $1
+  if [ "X${DEVNAME_WIFI}" != "X" ]; then
+    ifup ${DEVNAME_WIFI}
+  else
+    ifup $1
+  fi
 }
 
 #
@@ -629,7 +637,7 @@ if [ ${RECONNECT} = "yes" ]; then
     echo " interface:${devicename} up"
   fi
   do_ifup ${devicename}
-  sleep 10 
+  sleep 20 
 fi
 
 # Check I/F status
@@ -935,7 +943,7 @@ for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
   if [ "${VERBOSE}" = "yes" ]; then
     echo " ping to IPv6 nameserver: ${var}"
   fi
-  v4alive_namesrv=$(do_ping 6 ${var})
+  v6alive_namesrv=$(do_ping 6 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
