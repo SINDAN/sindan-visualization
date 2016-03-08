@@ -58,11 +58,7 @@ do_ifdown() {
     echo "ERROR: do_ifdown <devicename>." 1>&2
     return 1
   fi
-  if [ "X${DEVNAME_WIFI}" != "X" ]; then
-    ifdown ${DEVNAME_WIFI}
-  else
-    ifdown $1
-  fi
+  ifdown $1
 }
 
 #
@@ -71,11 +67,7 @@ do_ifup() {
     echo "ERROR: do_ifup <devicename>." 1>&2
     return 1
   fi
-  if [ "X${DEVNAME_WIFI}" != "X" ]; then
-    ifup ${DEVNAME_WIFI}
-  else
-    ifup $1
-  fi
+  ifup $1
 }
 
 #
@@ -637,7 +629,7 @@ if [ ${RECONNECT} = "yes" ]; then
     echo " interface:${devicename} up"
   fi
   do_ifup ${devicename}
-  sleep 20 
+  sleep 40 
 fi
 
 # Check I/F status
