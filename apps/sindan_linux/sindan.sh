@@ -629,7 +629,7 @@ if [ ${RECONNECT} = "yes" ]; then
     echo " interface:${devicename} up"
   fi
   do_ifup ${devicename}
-  sleep 40 
+  sleep 20 
 fi
 
 # Check I/F status
@@ -822,11 +822,11 @@ if [ "X${ra_flags}" != "X" ]; then
     fi
   done
 
-  # Check IPv6 autoconf
-  result=${FAIL}
-  if [ ${v6ifconf} = "automatic" -a "X${v6addrs}" != "X" ]; then
+  # Check IPv6 autoconf #TBD
+#  result=${FAIL}
+#  if [ ${v6ifconf} = "automatic" -a "X${v6addrs}" != "X" ]; then
     result=${SUCCESS}
-  fi
+#  fi
   write_json ${layer} IPv6 v6autoconf ${result} ${v6addrs}
 
   # Get IPv6 routers
