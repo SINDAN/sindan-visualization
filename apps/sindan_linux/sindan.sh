@@ -199,7 +199,7 @@ check_v4autoconf() {
     return 1
   fi
   if [ $2 = "dhcp" ]; then
-    cat /var/lib/dhcp/dhclient.$1.leases
+    cat /var/lib/dhcp/dhclient.$1.leases | sed 's/"//g'
     return 0
   fi
   echo "v4conf is $2"
