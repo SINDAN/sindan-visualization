@@ -17,10 +17,10 @@ cleate_uuid() {
 
 #
 write_json_campaign() {
-  if [ $# -lt 4 ]; then
-    echo "ERROR: write_json_campaign <uuid> <mac_addr> <os> <ssid>." 1>&2
-    return 1
-  fi
+#  if [ $# -lt 4 ]; then
+#    echo "ERROR: write_json_campaign <uuid> <mac_addr> <os> <ssid>." 1>&2
+#    return 1
+#  fi
   local json="{ \"log_campaign_uuid\" : \"$1\",
                 \"mac_addr\" : \"$2\",
                 \"os\" : \"$3\",
@@ -59,6 +59,7 @@ do_ifdown() {
     return 1
   fi
   ifdown $1
+  rm /var/lib/dhcp/dhclient.$1.leases
 }
 
 #
@@ -197,7 +198,12 @@ check_v4autoconf() {
     echo "ERROR: check_v4autoconf <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  echo "TBD"
+  if [ $2 = "dhcp" ]; then
+    cat /var/lib/dhcp/dhclient.$1.leases
+    return 0
+  fi
+  echo "v4conf is $2"
+  return 9
 }
 
 #
@@ -1417,6 +1423,7 @@ sleep 2
 echo "Phase 7: Create campaign log..."
 
 # Write campaign log file
+ssid=$(get_wifi_ssid ${devicename})
 write_json_campaign ${uuid} ${mac_addr} "${os}" ${ssid}
 
 # remove lock file
