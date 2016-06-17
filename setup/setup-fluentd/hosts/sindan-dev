@@ -1,0 +1,13 @@
+[fluentd]
+sindan-dev.sindan-net.com
+
+[kibana]
+sindan-dev.sindan-net.com
+
+[web]
+sindan-dev.sindan-net.com
+
+[production:children]
+fluentd
+kibana
+web
