@@ -17,10 +17,10 @@ cleate_uuid() {
 
 #
 write_json_campaign() {
-  if [ $# -lt 4 ]; then
-    echo "ERROR: write_json_campaign <uuid> <mac_addr> <os> <ssid>." 1>&2
-    return 1
-  fi
+#  if [ $# -lt 4 ]; then
+#    echo "ERROR: write_json_campaign <uuid> <mac_addr> <os> <ssid>." 1>&2
+#    return 1
+#  fi
   local json="{ \"log_campaign_uuid\" : \"$1\",
                 \"mac_addr\" : \"$2\",
                 \"os\" : \"$3\",
@@ -32,6 +32,7 @@ write_json_campaign() {
 #
 write_json() {
   if [ $# -lt 5 ]; then
+    echo "$1, $2, $3, $4, #5"
     echo "ERROR: write_json <layer> <group> <type> <result> <detail>. ($3)" 1>&2
     return 1
   fi
@@ -58,6 +59,7 @@ do_ifdown() {
     return 1
   fi
   ifdown $1
+  rm /var/lib/dhcp/dhclient.$1.leases
 }
 
 #
@@ -183,10 +185,11 @@ get_wifi_rate() {
 #
 get_v4ifconf() {
   if [ $# -lt 1 ]; then
-    echo "ERROR: get_v4ifconf <iftype>." 1>&2
+    echo "ERROR: get_v4ifconf <devicename>." 1>&2
     return 1
   fi
-  echo "TBD"
+  grep "$1 inet" /etc/network/interfaces | awk '{print $4}'
+#  echo "TBD"
 }
 
 #
@@ -195,7 +198,12 @@ check_v4autoconf() {
     echo "ERROR: check_v4autoconf <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  echo "TBD"
+  if [ $2 = "dhcp" ]; then
+    cat /var/lib/dhcp/dhclient.$1.leases | sed 's/"//g'
+    return 0
+  fi
+  echo "v4conf is $2"
+  return 9
 }
 
 #
@@ -204,11 +212,11 @@ get_v4addr() {
     echo "ERROR: get_v4addr <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  if [ $2 = "dhcp" ]; then
-    echo "TBD"
-  else
+#  if [ $2 = "dhcp" ]; then
+#    echo "TBD"
+#  else
     ip -4 address show $1 | sed -n 's@^.*inet \([0-9.]*\)/.*$@\1@p'
-  fi
+#  fi
 }
 
 #
@@ -217,9 +225,9 @@ get_netmask() {
     echo "ERROR: get_netmask <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  if [ $2 = "dhcp" ]; then
-    echo "TBD"
-  else
+#  if [ $2 = "dhcp" ]; then
+#    echo "TBD"
+#  else
     local preflen=`ip -4 address show $1 | sed -n 's@^.*inet [0-9.]*/\([0-9]*\) .*$@\1@p'`
     case "${preflen}" in
       16) echo "255.255.0.0" ;;
@@ -240,7 +248,7 @@ get_netmask() {
       31) echo "255.255.255.254" ;;
       *) ;;
     esac
-  fi
+#  fi
 }
 
 #
@@ -249,11 +257,11 @@ get_v4routers() {
     echo "ERROR: get_v4routers <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  if [ $2 = "dhcp" ]; then
-    echo "TBD"
-  else
+#  if [ $2 = "dhcp" ]; then
+#    echo "TBD"
+#  else
     ip -4 route | grep default | grep $1 | awk '{print $3}'
-  fi
+#  fi
 }
 
 #
@@ -262,21 +270,27 @@ get_v4nameservers() {
     echo "ERROR: get_v4nameservers <devicename> <v4ifconf>." 1>&2
     return 1
   fi
-  if [ $2 = "dhcp" ]; then
-    echo "TBD"
-  else
-    grep nameserver /etc/resolv.conf | awk '{print $2}' |
+#  if [ $2 = "dhcp" ]; then
+#    echo "TBD"
+#  else
+    grep nameserver /etc/resolv.conf | awk '{print $2}' | grep -v : |
      awk -v ORS=' ' '1; END{printf "\n"}'
-  fi
+#  fi
 }
 
 #
 get_v6ifconf() {
   if [ $# -lt 1 ]; then
-    echo "ERROR: get_v6ifconf <iftype>." 1>&2
+    echo "ERROR: get_v6ifconf <devicename>." 1>&2
     return 1
   fi
-  echo "TBD"
+  local v6ifconf=`grep "$1 inet6" /etc/network/interfaces | awk '{print $4}'`
+  if [ "X${v6ifconf}" != "X" ]; then
+    cat ${v6ifconf}
+  else
+    echo "automatic"
+  fi
+#  echo "TBD"
 }
 
 #
@@ -298,13 +312,13 @@ get_ra_prefixes() {
    awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
 }
 
-#
+# require ndisc6 ver 1.0.3
 get_ra_prefix_flags() {
-  if [ $# -lt 1 ]; then
-    echo "ERROR: get_ra_prefix_flags <ra_prefix>." 1>&2
+  if [ $# -lt 2 ]; then
+    echo "ERROR: get_ra_prefix_flags <devicename> <ra_prefix>." 1>&2
     return 1
   fi
-  local prefix=`echo $1 | awk -F/ '{print $1}'`
+  local prefix=`echo $1 | awk -F/ '{print $2}'`
   rdisc6 -1 $1 |
    awk 'BEGIN{
      find=0;
@@ -379,7 +393,10 @@ get_v6addrs() {
   if [ $2 = "automatic" -a "${m_flag}" ]; then
     echo "TBD"
   else
-    ip -6 address show $1 | sed -n '/${prefix}/s@^.*inet6 \([0-9a-f:]*\)/.*$@\1@p'
+    ip -6 address show $1 | grep inet6 | grep ${prefix} | awk '{print $2}' |
+     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
+#    ip -6 address show $1 | sed -n '/${prefix}/s@^.*inet6 \([0-9a-f:]*\)/.*$@\1@p' |
+#     awk -F\n -v ORS=',' '{print}' | sed 's/,$//'
   fi
 }
 
@@ -398,7 +415,8 @@ get_v6routers() {
     echo "ERROR: get_v6routers <devicename>." 1>&2
     return 1
   fi
-  ip -6 route | grep default | grep $1 | awk '{print $3}'
+  local v6router=`ip -6 route | grep default | grep $1 | awk '{print $3}'`
+  echo ${v6router}%$1
 }
 
 #
@@ -407,14 +425,14 @@ get_v6nameservers() {
     echo "ERROR: get_v6nameservers <devicename> <v6ifconf> <ra_flags>." 1>&2
     return 1
   fi
-  local dhcpv6=`echo $3 | grep M`
-  if [ $2 = "automatic" -a "${dhcpv6}" ]; then
-    echo "TBD"
-  else
+#  local dhcpv6=`echo $3 | grep M`
+#  if [ $2 = "automatic" -a "${dhcpv6}" ]; then
+#    echo "TBD"
+#  else
     # need for IPv6
-    grep nameserver /etc/resolv.conf | awk '{print $2}' |
+    grep nameserver /etc/resolv.conf | awk '{print $2}' | grep : |
      awk -v ORS=' ' '1; END{printf "\n"}'
-  fi
+#  fi
 }
 
 ## for localnet layer
@@ -624,7 +642,7 @@ if [ ${RECONNECT} = "yes" ]; then
     echo " interface:${devicename} up"
   fi
   do_ifup ${devicename}
-  sleep 10 
+  sleep 20 
 fi
 
 # Check I/F status
@@ -710,7 +728,7 @@ layer="interface"
 
 ## IPv4
 # Get IPv4 I/F configurations
-v4ifconf=$(get_v4ifconf "${IFTYPE}")
+v4ifconf=$(get_v4ifconf "${devicename}")
 if [ "X${v4ifconf}" != "X" ]; then
   write_json ${layer} IPv4 v4ifconf ${INFO} ${v4ifconf}
 fi
@@ -761,7 +779,7 @@ fi
 
 ## IPv6
 # Get IPv6 I/F configurations
-v6ifconf=$(get_v6ifconf "${IFTYPE}")
+v6ifconf=$(get_v6ifconf "${devicename}")
 if [ "X${v6ifconf}" != "X" ]; then
   write_json ${layer} IPv6 v6ifconf ${INFO} ${v6ifconf}
 fi
@@ -796,7 +814,7 @@ if [ "X${ra_flags}" != "X" ]; then
   fi
   for pref in `echo ${ra_prefixes} | sed 's/,/ /g'`; do
     # Get IPv6 RA prefix flags
-    ra_prefix_flags=$(get_ra_prefix_flags ${pref})
+    ra_prefix_flags=$(get_ra_prefix_flags ${devicename} ${pref})
     write_json ${layer} RA ra_prefix_flags ${INFO} "(${pref}) ${ra_prefix_flags}"
     if [ "${VERBOSE}" = "yes" ]; then
       echo "  IPv6 RA prefix(flags): ${pref}(${ra_prefix_flags})"
@@ -811,12 +829,13 @@ if [ "X${ra_flags}" != "X" ]; then
     write_json ${layer} IPv6 v6addrs ${INFO} "(${pref}) ${v6addrs}"
     if [ "${VERBOSE}" = "yes" ]; then
       for addr in `echo ${v6addrs} | sed 's/,/ /g'`; do
-        echo "   IPv6 addr: ${addr}/${prefixlen}"
+#        echo "   IPv6 addr: ${addr}/${prefixlen}"
+        echo "   IPv6 addr: ${addr}"
       done
     fi
   done
 
-  # Check IPv6 autoconf
+  # Check IPv6 autoconf #TBD
   result=${FAIL}
   if [ ${v6ifconf} = "automatic" -a "X${v6addrs}" != "X" ]; then
     result=${SUCCESS}
@@ -929,7 +948,7 @@ for var in `echo ${v6nameservers} | sed 's/,/ /g'`; do
   if [ "${VERBOSE}" = "yes" ]; then
     echo " ping to IPv6 nameserver: ${var}"
   fi
-  v4alive_namesrv=$(do_ping 6 ${var})
+  v6alive_namesrv=$(do_ping 6 ${var})
   if [ $? -eq 0 ]; then
     result=${SUCCESS}
   fi
@@ -1401,11 +1420,15 @@ sleep 2
 
 ####################
 ## Phase 7
+echo "Phase 7: Create campaign log..."
 
 # Write campaign log file
+ssid=$(get_wifi_ssid ${devicename})
 write_json_campaign ${uuid} ${mac_addr} "${os}" ${ssid}
 
 # remove lock file
 rm -f ${LOCKFILE}
+
+echo " done."
 
 exit 0
