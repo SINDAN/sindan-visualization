@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails_12factor', group: :production
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.6'
 
 gem 'mysql2'
 
