@@ -1,6 +1,6 @@
 # coding: utf-8
 # config valid only for current version of Capistrano
-#lock '3.4.0'
+#lock '3.6.0'
 
 # slack
 require 'slack-notifier'
@@ -23,7 +23,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '2.2.3'
+set :rbenv_ruby, '2.3.1'
 
 # server alias
 set :sindan, "fluentd.c.u-tokyo.ac.jp"
@@ -31,19 +31,24 @@ set :sindan, "fluentd.c.u-tokyo.ac.jp"
 set :sindandev, ""
 set :vagrant, '127.0.0.1'
 
-# Default value for :format is :pretty
-set :format, :pretty
+# Default value for :format is :airbrussh.
+set :format, :airbrussh
 
 # Default value for :log_level is :debug
 set :log_level, :debug # :debug or :info
 
+# You can configure the Airbrussh format using :format_options.
+# These are the defaults.
+# set :format_options, command_output: true, log_file: 'log/capistrano.log', color: :auto, truncate: :auto
+
 # Default value for :pty is false
 # set :pty, true
 
-set :linked_files, %w{config/database.yml config/secrets.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+# Default value for :linked_files is []
+append :linked_files, 'config/database.yml', 'config/secrets.yml'
+
+# Default value for linked_dirs is []
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -54,19 +59,10 @@ set :ssh_options, {
   auth_methods: %w(publickey)
 }
 
+# Default value for keep_releases is 5
 set :keep_releases, 5
 
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  after :publishing, :restart
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -76,17 +72,26 @@ namespace :deploy do
       # end
     end
   end
+
+  desc 'upload important files'
+  task :config do
+    on roles(:app) do |host|
+      upload!('config/secrets.yml',"#{shared_path}/config/secrets.yml")
+    end
+  end
 end
 
 namespace :db do
 
   # linked_filesで使用するファイルをアップロードする
-  desc 'upload importabt files'
+  desc 'upload important files'
   task :config do
     on roles(:app) do |host|
       upload!('config/database.yml',"#{shared_path}/config/database.yml")
     end
   end
+
+  after 'deploy:config', 'db:config'
 
   desc 'reset databse'
   task :reset do
@@ -155,6 +160,6 @@ namespace :slack_notify do
   end
 
   before 'deploy:starting', 'slack_notify:deploy_started'
-  after :deploy, :deploy_finished
+  after :deploy, 'slack_notify:deploy_finished'
   before 'deploy:finishing_rollback', 'slack_notify:deploy_failed'
 end

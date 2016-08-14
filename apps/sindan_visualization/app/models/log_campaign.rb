@@ -1,4 +1,4 @@
-class LogCampaign < ActiveRecord::Base
+class LogCampaign < ApplicationRecord
   has_many :diagnosis_logs, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid
 
   default_scope { order(occurred_at: :desc) }
