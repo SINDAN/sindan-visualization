@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails_12factor', group: :production
 
-gem 'rails', '4.2.7.1'
+gem 'rails', '5.0.0.1'
 
 gem 'mysql2'
 
@@ -11,10 +11,9 @@ gem 'devise'
 gem 'slim-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'jbuilder', '~> 2.5'
 
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
@@ -24,6 +23,8 @@ gem 'ransack'
 
 gem 'slack-notifier'
 
+# Use Redis adapter to run Action Cable in production
+# gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -40,7 +41,13 @@ group :development do
 end
 
 group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platform: :mri
+end
+
+group :development, :test do
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'capybara'
   gem 'webrat'
   gem 'factory_girl_rails'
@@ -48,9 +55,13 @@ group :development, :test do
 end
 
 group :development, :test do
-  gem 'byebug'
-#  gem 'web-console', '~> 2.0'
+#  gem 'web-console'
+  gem 'listen', '~> 3.0.5'
   gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'awesome_print'
 end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

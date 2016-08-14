@@ -1,5 +1,5 @@
 # coding: utf-8
-class DiagnosisLog < ActiveRecord::Base
+class DiagnosisLog < ApplicationRecord
   belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid
 
   enum result: {
