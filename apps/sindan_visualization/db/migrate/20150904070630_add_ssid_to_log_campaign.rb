@@ -1,4 +1,4 @@
-class AddSsidToLogCampaign < ActiveRecord::Migration
+class AddSsidToLogCampaign < ActiveRecord::Migration[5.0]
   def change
     add_column :log_campaigns, :ssid, :string
     add_index :log_campaigns, :ssid

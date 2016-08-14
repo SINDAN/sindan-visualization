@@ -1,4 +1,4 @@
-class CreateLogUnits < ActiveRecord::Migration
+class CreateLogUnits < ActiveRecord::Migration[5.0]
   def change
     create_table :log_units do |t|
       t.string :log_unit_uuid, limit: 38
