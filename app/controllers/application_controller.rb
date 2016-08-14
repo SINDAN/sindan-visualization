@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_diagnosis_log_dates
+  before_action :set_diagnosis_log_dates
 
   def set_diagnosis_log_dates
     @diagnosis_log_dates = DiagnosisLog.date_list
