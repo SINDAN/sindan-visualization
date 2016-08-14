@@ -1,4 +1,4 @@
-class CreateDiagnosisLogs < ActiveRecord::Migration
+class CreateDiagnosisLogs < ActiveRecord::Migration[5.0]
   def change
     create_table :diagnosis_logs do |t|
       t.string :layer
