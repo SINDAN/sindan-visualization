@@ -8,5 +8,5 @@
 
 if User.count.zero?
   puts '-- added user'
-  User.create(login: 'wide', email: 'sindan@ml.kanazawa-u.ac.jp', password: 'open sesame')
+  User.create(login: 'sindan', email: 'sindan@ml.kanazawa-u.ac.jp', password: 'sindan@ml.kanazawa-u.ac.jp')
 end
