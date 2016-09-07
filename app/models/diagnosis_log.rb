@@ -47,6 +47,10 @@ class DiagnosisLog < ApplicationRecord
     end
   end
 
+  def log
+    "#{self.layer_label}(#{self.log_group}) #{self.log_type}<br />#{self.detail}"
+  end
+
   def self.date_list
     Rails.cache.fetch("date_list") do
       DiagnosisLog.pluck(:occurred_at).map{ |occurred_at| occurred_at.to_date.to_s unless occurred_at.blank? }.uniq
