@@ -8,11 +8,11 @@ class StatusesController < ApplicationController
 #    @ssid_list = LogCampaign.uniq.pluck(:ssid)
 
     term = 10
-    @time_list = (11 * term).step(0, -1 * term).map { |i| DateTime.now - i.minutes }
+    @time_list = (11 * term).step(0, -1 * term).map { |i| Time.zone.now - i.minutes }
     @layers = DiagnosisLog.layer_defs.keys.reverse
 
     # TODO: get log per ssid
-    @target_logs = DiagnosisLog.occurred_after(DateTime.now - 1.hours)
+    @target_logs = DiagnosisLog.occurred_after(Time.zone.now - 1.hours)
 
     @diagnosis_logs = @target_logs.fail
   end
