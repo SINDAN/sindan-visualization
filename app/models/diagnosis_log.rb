@@ -25,6 +25,9 @@ class DiagnosisLog < ApplicationRecord
                 .or(arel_table[:result].eq(DiagnosisLog.results[:success]))
     where(condition)
   }
+  scope :occurred_before, ->(time) { where("occurred_at < ?", time) }
+  scope :occurred_after, ->(time) { where("occurred_at > ?", time) }
+  scope :layer_by, ->(layer) { where(layer: layer) }
 
   def self.layer_label(layer)
     if !layer.blank? && self.layer_defs.keys.include?(layer.to_sym)
