@@ -7,7 +7,8 @@ class StatusesController < ApplicationController
     @ssid = params[:ssid]
 #    @ssid_list = LogCampaign.uniq.pluck(:ssid)
 
-    @time_list = 55.step(0, -5).map { |i| DateTime.now - i.minutes }
+    term = 10
+    @time_list = (11 * term).step(0, -1 * term).map { |i| DateTime.now - i.minutes }
     @layers = DiagnosisLog.layer_defs.keys.reverse
 
     # TODO: get log per ssid
