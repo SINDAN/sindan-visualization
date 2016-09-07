@@ -26,12 +26,16 @@ class DiagnosisLog < ApplicationRecord
     where(condition)
   }
 
-  def layer_label
-    if !self.layer.blank? && self.layer_defs.keys.include?(self.layer.to_sym)
-      self.layer_defs[self.layer.to_sym]
+  def self.layer_label(layer)
+    if !layer.blank? && self.layer_defs.keys.include?(layer.to_sym)
+      self.layer_defs[layer.to_sym]
     else
-      self.layer
+      layer
     end
+  end
+
+  def layer_label
+    DiagnosisLog.layer_label(self.layer)
   end
 
   def result_label

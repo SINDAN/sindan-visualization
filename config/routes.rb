@@ -12,5 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :statuses, path: "status", only: [ :index ]
+
   get 'about', to: 'static_pages#about'
 end

@@ -71,4 +71,24 @@ RSpec.describe DiagnosisLog, type: :model do
       expect(@diagnosis_log.layer_label).to eq("invalid")
     end
   end
+
+  context "Layer label for args" do
+    it "replace label with value of layer" do
+      layer_label = DiagnosisLog.layer_label('web')
+
+      expect(layer_label).to eq("ウェブアプリケーション層")
+    end
+
+    it "is not plane value with value of layer" do
+      layer_label = DiagnosisLog.layer_label('web')
+
+      expect(layer_label).not_to eq("web")
+    end
+
+    it "not replace label with invalid value of layer" do
+      layer_label = DiagnosisLog.layer_label('invalid')
+
+      expect(layer_label).to eq("invalid")
+    end
+  end
 end

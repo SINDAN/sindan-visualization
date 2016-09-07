@@ -1,0 +1,226 @@
+- provide :title, "SSID: #{@ssid}"
+
+table.table.status-layer
+  thead
+    tr
+      th Layer
+      /TODO: mockup datetime
+      th 15:00
+      th 15:05
+      th 15:10
+      th 15:15
+      th 15:20
+      th 15:25
+      th 15:30
+      th 15:35
+      th 15:40
+      th 15:45
+      th 15:50
+      th 15:55
+  tbody
+    tr
+      th #{DiagnosisLog.layer_label('web')}
+      /TODO: mockup status
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        a data-toggle="popover" title="Errors" data-content="名前解決層(IPv4) v4trans_a_namesrv<br />ローカルネットワーク層(IPv4) v4alive_router<br />ウェブアプリケーション層(IPv4) v4http_srv<br />"
+          span.dot-danger
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+    tr
+      th #{DiagnosisLog.layer_label('dns')}
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        a data-toggle="popover" title="Errors" data-content=""
+          span.dot-danger
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        a data-toggle="popover" title="Errors" data-content=""
+          span.dot-warning
+      td 
+        a data-toggle="popover" title="Errors" data-content=""
+          span.dot-warning
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+    tr
+      th #{DiagnosisLog.layer_label('globalnet')}
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        a data-toggle="popover" title="Errors" data-content=""
+          span.dot-warning
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+    tr
+      th #{DiagnosisLog.layer_label('localnet')}
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+    tr
+      th #{DiagnosisLog.layer_label('interface')}
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+    tr
+      th #{DiagnosisLog.layer_label('datalink')}
+      td
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-success
+      td 
+        span.dot-default
+
+h2 #{t('views.diagnosis_logs.index.title')}
+
+table.table.table-condensed.table-bordered
+  colgroup
+    col.col-xs-2
+    col.col-xs-2
+    col.col-xs-2
+    col.col-xs-3
+    col.col-xs-3
+  thead
+    tr
+      th #{t('activerecord.attributes.diagnosis_log.layer')}
+      th #{t('activerecord.attributes.diagnosis_log.log_group')}
+      th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      th #{t('activerecord.attributes.diagnosis_log.log_campaign_uuid')}
+      th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
+  tbody
+    - @diagnosis_logs.each do |diagnosis_log|
+      - cache diagnosis_log
+        tr class="#{class_row_result(diagnosis_log.result)}"
+          td
+            a href="#{diagnosis_log_path(diagnosis_log)}"
+              | #{diagnosis_log.layer_label}
+          td
+            a href="#{diagnosis_log_path(diagnosis_log)}"
+              | #{diagnosis_log.log_group}
+          td
+            a href="#{diagnosis_log_path(diagnosis_log)}"
+              | #{diagnosis_log.log_type}
+          td
+            a href="#{diagnosis_log_path(diagnosis_log)}"
+              | #{diagnosis_log.log_campaign_uuid}
+          td
+            a href="#{diagnosis_log_path(diagnosis_log)}"
+              | #{datetime_view(diagnosis_log.occurred_at)}
+
+- content_for :header do
+  javascript:
+    $(function() {
+      $('td a').popover({
+        html: true
+      });
+    });
