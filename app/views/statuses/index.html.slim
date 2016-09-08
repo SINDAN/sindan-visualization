@@ -11,7 +11,7 @@ table.table.status-layer
       tr
         th #{DiagnosisLog.layer_label(layer)}
         - @time_list.each_with_index do |t, index|
-          - logs = @target_logs.layer_by(layer).occurred_after(t).occurred_after(@time_list[index + 1])
+          - logs = @target_logs.layer_by(layer).occurred_before(t).occurred_after(@time_list[index + 1])
           td
             - if logs.count.zero?
               span.dot-default
