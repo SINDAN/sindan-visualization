@@ -44,6 +44,8 @@ html
                       a href="#{diagnosis_logs_path(date: diagnosis_log_date)}" #{diagnosis_log_date}
               li
                 a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
+              li
+                a href="#{statuses_path}" #{t('views.statuses.index.title')}
           ul.nav.navbar-nav.navbar-right
             - unless current_user
               li
