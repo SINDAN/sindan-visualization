@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904070630) do
+ActiveRecord::Schema.define(version: 20160908121120) do
 
   create_table "diagnosis_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "layer"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20150904070630) do
     t.integer  "result"
     t.text     "detail",            limit: 65535
     t.datetime "occurred_at"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "log_campaign_uuid", limit: 38
     t.string   "log_group"
     t.index ["log_campaign_uuid"], name: "index_diagnosis_logs_on_log_campaign_uuid", using: :btree
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20150904070630) do
     t.string   "mac_addr"
     t.string   "os"
     t.datetime "occurred_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "ssid"
     t.index ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid", using: :btree
     t.index ["occurred_at"], name: "index_log_campaigns_on_occurred_at", using: :btree
