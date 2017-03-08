@@ -20,3 +20,44 @@
 body {
     padding-top: 60px;
 }
+
+.status-layer {
+    $dot-size: 30px;
+
+    thead tr th:first-child, 
+    tbody tr th {
+	border-right: 1px solid $table-border-color;
+	text-align: right;
+    }
+
+    th, td {
+	text-align: center;
+    }
+
+    @mixin dot {
+	display: inline-block;
+	width: $dot-size;
+	height: $dot-size;
+	border-radius: $dot-size / 2;
+    }
+
+    .dot-default {
+	@include dot;
+	background-color: $gray-lighter;
+    }
+
+    .dot-success {
+	@include dot;
+	background-color: $brand-success;
+    }
+
+    .dot-danger {
+	@include dot;
+	background-color: $brand-danger;
+    }
+
+    .dot-warning {
+	@include dot;
+	background-color: $brand-warning;
+    }
+}
