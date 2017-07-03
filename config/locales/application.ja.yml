@@ -42,6 +42,9 @@ ja:
     static_pages:
       about:
         title: 'About'
+    statuses:
+      index:
+        title: 'ステータス'
   activerecord:
     models:
       diagnosis_logs: "診断ログ"

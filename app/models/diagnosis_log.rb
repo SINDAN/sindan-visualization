@@ -25,19 +25,30 @@ class DiagnosisLog < ApplicationRecord
                 .or(arel_table[:result].eq(DiagnosisLog.results[:success]))
     where(condition)
   }
+  scope :occurred_before, ->(time) { where("occurred_at < ?", time) }
+  scope :occurred_after, ->(time) { where("occurred_at > ?", time) }
+  scope :layer_by, ->(layer) { where(layer: layer) }
+
+  def self.layer_label(layer)
+    if !layer.blank? && self.layer_defs.keys.include?(layer.to_sym)
+      self.layer_defs[layer.to_sym]
+    else
+      layer
+    end
+  end
 
   def layer_label
-    if !self.layer.blank? && self.layer_defs.keys.include?(self.layer.to_sym)
-      self.layer_defs[self.layer.to_sym]
-    else
-      self.layer
-    end
+    DiagnosisLog.layer_label(self.layer)
   end
 
   def result_label
     unless self.result.nil?
       self.result
     end
+  end
+
+  def log
+    "#{self.layer_label}(#{self.log_group}) #{self.log_type}<br />#{self.detail}"
   end
 
   def self.date_list
