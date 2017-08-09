@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails_12factor', group: :production
 
-gem 'rails', '5.0.4'
+gem 'rails', '5.1.3'
 
 gem 'mysql2'
 
@@ -12,9 +12,10 @@ gem 'slim-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
+# gem 'therubyracer', platforms: :ruby
+
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
-
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
@@ -27,10 +28,6 @@ gem 'slack-notifier'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-# gem 'passenger'
 
 # Use Capistrano for deployment
 group :development do
@@ -47,21 +44,21 @@ group :development, :test do
 end
 
 group :development, :test do
+#  gem 'web-console'
+  gem 'listen', '~> 3.0.5'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'awesome_print'
+  gem 'rails-erd'
+end
+
+group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'capybara'
   gem 'webrat'
   gem 'factory_girl_rails'
 #  gem 'selenium-webdriver'
-end
-
-group :development, :test do
-#  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-
-  gem 'awesome_print'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
