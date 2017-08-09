@@ -1,6 +1,6 @@
 # coding: utf-8
 # config valid only for current version of Capistrano
-#lock '3.6.0'
+#lock "3.9.0"
 
 # slack
 require 'slack-notifier'
@@ -11,7 +11,6 @@ set :slack_username, 'Slack notifier'
 
 set :application, 'sindan_visualization'
 
-set :scm, :git
 set :repo_url, 'git@bitbucket.org:sindan/sindan_visualization.git'
 set :branch, :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
