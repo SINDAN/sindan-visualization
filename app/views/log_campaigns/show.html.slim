@@ -50,7 +50,7 @@ table.table.table-condensed.table-bordered
       th #{t('activerecord.attributes.diagnosis_log.detail')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
-      tr class="#{class_row_result(diagnosis_log.result)}"
+      tr class="#{class_row_result(diagnosis_log.result_label)}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.layer_label}

@@ -54,7 +54,15 @@ class DiagnosisLog < ApplicationRecord
   end
 
   def result_label
-    unless self.result.nil?
+    if self.result.nil?
+      ''
+    end
+
+    ignore_log_types = IgnoreErrorResult.where(ssid: self.log_campaign.ssid).first.try(:ignore_log_types)
+
+    if self.fail? && ignore_log_types.include?(self.log_type)
+      'warning'
+    else
       self.result
     end
   end
