@@ -1,6 +1,6 @@
 # coding: utf-8
 class DiagnosisLog < ApplicationRecord
-  belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid
+  belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid, touch: true
 
   enum result: {
          fail: 0,
