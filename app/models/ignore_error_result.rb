@@ -3,7 +3,7 @@ class IgnoreErrorResult < ApplicationRecord
 
   concerning :IgnoreLogTypes do
     included do
-      serialize :ignore_log_types
+      serialize :ignore_log_types, Array
     end
   end
 end
