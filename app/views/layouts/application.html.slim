@@ -46,6 +46,13 @@ html
                 a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
               li
                 a href="#{statuses_path}" #{t('views.statuses.index.title')}
+              li.dropdown
+                a.dropdown-toggle href="#" data-toggle="dropdown"
+                  | #{t('views.settings.index.title')}
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a href="#{ignore_error_results_path}" #{t('views.ignore_error_results.index.title')}
           ul.nav.navbar-nav.navbar-right
             - unless current_user
               li

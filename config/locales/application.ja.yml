@@ -48,6 +48,9 @@ ja:
         title: 'ログキャンペーン新規登録'
       edit:
         title: 'ログキャンペーン編集'
+    settings:
+      index:
+        title: '設定'
     static_pages:
       about:
         title: 'About'

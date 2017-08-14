@@ -48,6 +48,9 @@ en:
         title: 'Create Log Campaign'
       edit:
         title: 'Edit Log Campaign'
+    settings:
+      index:
+        title: 'Settings'
     static_pages:
       about:
         title: 'About'
