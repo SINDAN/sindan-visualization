@@ -58,7 +58,7 @@ class DiagnosisLog < ApplicationRecord
       ''
     end
 
-    ignore_log_types = IgnoreErrorResult.where(ssid: self.log_campaign.ssid).first.try(:ignore_log_types)
+    ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.log_campaign.try(:ssid)) || Array.new
 
     if self.fail? && ignore_log_types.include?(self.log_type)
       'warning'
