@@ -8,7 +8,14 @@ class LogCampaign < ApplicationRecord
 
   def result
     if self.diagnosis_logs.fail.count > 0
-      'fail'
+      ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
+
+      if self.diagnosis_logs.fail.where.not(log_type: ignore_log_types).count > 0
+        'fail'
+      else
+        'warning'
+      end
+
     elsif self.diagnosis_logs.success.count > 0
       'success'
     else

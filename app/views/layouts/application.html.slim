@@ -46,17 +46,26 @@ html
                 a href="#{log_campaigns_path}" #{t('activerecord.models.log_campaigns')}
               li
                 a href="#{statuses_path}" #{t('views.statuses.index.title')}
+              li.dropdown
+                a.dropdown-toggle href="#" data-toggle="dropdown"
+                  | #{t('views.settings.index.title')}
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a href="#{ignore_error_results_path}" #{t('views.ignore_error_results.index.title')}
           ul.nav.navbar-nav.navbar-right
             - unless current_user
               li
                 a href="#{user_session_path}" #{t('helpers.links.login')}
             - else
-              li
-                a href="#"
+              li.dropdown
+                a.dropdown-toggle href="#" data-toggle="dropdown"
                   i.fa.fa-user.fa-lg.fa-fw
-                  | #{current_user.login}
-              li
-                = link_to t('helpers.links.logout'), destroy_user_session_path, method: :delete
+                  | #{current_user.login} 
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    = link_to t('helpers.links.logout'), destroy_user_session_path, method: :delete
         /!.navbar-collapse.collapse
 
     .container

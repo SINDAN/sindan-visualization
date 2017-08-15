@@ -30,6 +30,15 @@ ja:
         title: '診断ログ新規登録'
       edit:
         title: '診断ログ編集'
+    ignore_error_results:
+      index:
+        title: 'エラー無視設定一覧'
+      show:
+        title: 'エラー無視設定詳細'
+      new:
+        title: 'エラー無視設定新規登録'
+      edit:
+        title: 'エラー無視設定編集'
     log_campaigns:
       index:
         title: 'ログキャンペーン一覧'
@@ -39,6 +48,9 @@ ja:
         title: 'ログキャンペーン新規登録'
       edit:
         title: 'ログキャンペーン編集'
+    settings:
+      index:
+        title: '設定'
     static_pages:
       about:
         title: 'About'
@@ -48,6 +60,7 @@ ja:
   activerecord:
     models:
       diagnosis_logs: "診断ログ"
+      ignore_error_results: "エラー無視設定"
       log_campaigns: "ログキャンペーン"
     attributes:
       diagnosis_log:
@@ -58,6 +71,9 @@ ja:
         detail: "計測結果詳細"
         log_campaign_uuid: "キャンペーンUUID"
         occurred_at: "発生日時"
+      ignore_error_result:
+        ssid: "SSID"
+        ignore_log_types: "エラー無視する計測タイプ"
       log_campaign:
         log_campaign_uuid: "キャンペーンUUID"
         ssid: "SSID"
