@@ -91,4 +91,72 @@ RSpec.describe DiagnosisLog, type: :model do
       expect(layer_label).to eq("invalid")
     end
   end
+
+  context "result_label" do
+    context "without settings of ignore_log_types" do
+      context "result is fail" do
+        before(:each) do
+          @diagnosis_log = DiagnosisLog.new(
+            result: :fail
+          )
+        end
+
+        it "result_label return 'fail'" do
+          expect(@diagnosis_log.result_label).to eq("fail")
+        end
+      end
+
+      context "result is not fail" do
+        before(:each) do
+          @diagnosis_log = DiagnosisLog.new(
+            result: :success
+          )
+        end
+
+        it "result_label return result of 'success'" do
+          expect(@diagnosis_log.result_label).to eq("success")
+        end
+      end
+    end
+
+    context "with settings of ignore_log_types" do
+      before(:each) do
+        @ignore_error_result = FactoryGirl.create(:ignore_error_result,
+                                                  ssid: 'SSID',
+                                                  ignore_log_types: ["v4http_srv", "v6trans_aaaa_namesrv"],
+                                                 )
+        @log_campaign = FactoryGirl.create(:log_campaign, ssid: 'SSID')
+      end
+
+      context "result is fail with ignore_log_types" do
+        before(:each) do
+          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'v4http_srv')
+        end
+
+        it "result_label return 'warning'" do
+          expect(@diagnosis_log.result_label).to eq("warning")
+        end
+      end
+
+      context "result is fail without ignore_log_types" do
+        before(:each) do
+          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'other')
+        end
+
+        it "result_label return 'warning'" do
+          expect(@diagnosis_log.result_label).to eq("fail")
+        end
+      end
+
+     context "result is not fail" do
+        before(:each) do
+          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :success)
+        end
+
+        it "result_label return result of 'success'" do
+          expect(@diagnosis_log.result_label).to eq("success")
+        end
+      end
+    end
+  end
 end
