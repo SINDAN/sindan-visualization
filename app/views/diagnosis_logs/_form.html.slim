@@ -1,8 +1,7 @@
 = form_for @diagnosis_log, html: { class: "form-horizontal" } do |f|
   - if @diagnosis_log.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@diagnosis_log.errors.count, "error")} prohibited this diagnosis_log from being saved:"
-      ul
+    #error_explanation.bs-callout.bs-callout-danger
+      ul.text-danger
         - @diagnosis_log.errors.full_messages.each do |message|
           li = message
 
