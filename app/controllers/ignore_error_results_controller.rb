@@ -3,6 +3,27 @@ class IgnoreErrorResultsController < ApplicationController
 
   before_action :set_ignore_error_result, only: [:show, :edit, :update, :destroy]
 
+  concerning :BreadcrumbFeature do
+    included do
+      before_action only: [:index, :show, :new, :create, :edit, :update] do |controller|
+        add_breadcrumb I18n.t('views.settings.index.title'), ''
+        add_breadcrumb I18n.t('views.ignore_error_results.index.title'), ignore_error_results_path
+      end
+
+      before_action only: [:show, :edit, :update] do |controller|
+        add_breadcrumb "#{@ignore_error_result.ssid}", ignore_error_result_path(@ignore_error_result)
+      end
+
+      before_action only: [:new, :create] do |controller|
+        add_breadcrumb I18n.t('views.ignore_error_results.new.title'), new_ignore_error_result_path
+      end
+
+      before_action only: [:edit, :update] do |controller|
+        add_breadcrumb I18n.t('views.ignore_error_results.edit.title'), edit_ignore_error_result_path(@ignore_error_result)
+      end
+    end
+  end
+
   # GET /ignore_error_results
   # GET /ignore_error_results.json
   def index
