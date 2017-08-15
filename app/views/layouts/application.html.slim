@@ -71,6 +71,8 @@ html
     .container
       .row
         .col-sm-12.col-lg-12
+          = render_breadcrumbs builder: ::CustomBreadcrumbsBuilder
+
           - unless notice.blank?
             p.alert.alert-success #{notice}
           - unless alert.blank?
