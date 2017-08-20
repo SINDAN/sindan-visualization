@@ -61,3 +61,64 @@ body {
 	background-color: $brand-warning;
     }
 }
+
+/*
+ * Callouts
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+
+/* Common styles for all types */
+
+.bs-callout {
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+
+    h4 {
+	margin-top: 0;
+	margin-bottom: 5px;
+    }
+
+    p:last-child {
+	margin-bottom: 0;
+    }
+}
+
+/* Variations */
+.bs-callout-danger {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+
+    h4 {
+	color: #b94a48;
+    }
+}
+
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+
+    h4 {
+	color: #8a6d3b;
+    }
+}
+
+.bs-callout-info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+
+    h4 {
+	color: #34789a;
+    }
+}
+
+.bs-callout-success {
+    background-color: #DFF0D8;
+    border-color: #5CB85C;
+
+    h4 {
+	color: #3C763D;
+    }
+}

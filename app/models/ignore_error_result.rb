@@ -1,5 +1,6 @@
 class IgnoreErrorResult < ApplicationRecord
   validates_presence_of :ssid
+  validates_uniqueness_of :ssid
 
   default_scope { order(:ssid) }
 

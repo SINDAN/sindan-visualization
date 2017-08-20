@@ -1,8 +1,7 @@
 = form_for @ignore_error_result, html: { class: "form-horizontal" } do |f|
   - if @ignore_error_result.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@ignore_error_result.errors.count, "error")} prohibited this ignore_error_result from being saved:"
-      ul
+    #error_explanation.bs-callout.bs-callout-danger
+      ul.text-danger
         - @ignore_error_result.errors.full_messages.each do |message|
           li = message
 

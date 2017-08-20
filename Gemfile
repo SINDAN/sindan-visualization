@@ -21,6 +21,7 @@ gem 'font-awesome-rails'
 
 gem 'kaminari'
 gem 'ransack'
+gem 'breadcrumbs_on_rails'
 
 gem 'slack-notifier'
 

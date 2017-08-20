@@ -17,6 +17,13 @@ RSpec.describe IgnoreErrorResult, type: :model do
     expect(@ignore_error_result).not_to be_valid
   end
 
+  it "is not valid with same value of ssid" do
+    @ignore_error_result.save
+    @ignore_error_result2 = IgnoreErrorResult.new(ssid: 'SSID')
+
+    expect(@ignore_error_result2).not_to be_valid
+  end
+
   context "ignore_log_types by ssid" do
     context "ignore_log_types set values" do
       before(:each) do

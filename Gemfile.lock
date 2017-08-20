@@ -50,6 +50,7 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     byebug (9.0.6)
     capistrano (3.9.0)
@@ -282,6 +283,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   bootstrap-sass
+  breadcrumbs_on_rails
   byebug
   capistrano-bundler
   capistrano-ext
