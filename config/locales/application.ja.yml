@@ -48,6 +48,10 @@ ja:
         title: 'ログキャンペーン新規登録'
       edit:
         title: 'ログキャンペーン編集'
+      search:
+        title: '検索'
+        search_condition: '検索条件'
+        search_button: '検索'
     settings:
       index:
         title: '設定'
