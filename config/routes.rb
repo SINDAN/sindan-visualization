@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :diagnosis_logs
   resources :log_campaigns do
+    collection do
+      get :search
+    end
     member do
       get :all
       get :log

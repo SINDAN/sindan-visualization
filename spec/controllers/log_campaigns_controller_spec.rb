@@ -47,6 +47,14 @@ RSpec.describe LogCampaignsController, type: :controller do
       end
     end
 
+    describe "GET #search" do
+      it "assigns all log_campaigns as @log_campaigns" do
+        log_campaign = LogCampaign.create! valid_attributes
+        get :search, params: {}, session: valid_session
+        expect(assigns(:log_campaigns)).to eq([log_campaign])
+      end
+    end
+
     describe "GET #show" do
       it "assigns the requested log_campaign as @log_campaign" do
         log_campaign = LogCampaign.create! valid_attributes

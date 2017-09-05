@@ -7,6 +7,10 @@ RSpec.describe LogCampaignsController, type: :routing do
       expect(:get => "/log_campaigns").to route_to("log_campaigns#index")
     end
 
+    it "routes to #search" do
+      expect(:get => "/log_campaigns/search").to route_to("log_campaigns#search")
+    end
+
     it "routes to #new" do
       expect(:get => "/log_campaigns/new").to route_to("log_campaigns#new")
     end

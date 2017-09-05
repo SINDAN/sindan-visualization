@@ -48,6 +48,10 @@ en:
         title: 'Create Log Campaign'
       edit:
         title: 'Edit Log Campaign'
+      search:
+        title: 'Search'
+        search_condition: 'Search Condition'
+        search_button: 'Search'
     settings:
       index:
         title: 'Settings'

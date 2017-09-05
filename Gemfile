@@ -19,6 +19,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
+gem 'momentjs-rails'
+gem 'bootstrap3-datetimepicker-rails'
+
 gem 'kaminari'
 gem 'ransack'
 gem 'breadcrumbs_on_rails'
