@@ -38,10 +38,13 @@ class LogCampaignsController < ApplicationController
     @log_campaign_list = @log_campaign_list.joins(shared_context.join_sources).where(shared_conditions.reduce(&:and))
 
     # search Datetime from / to
-    @datetime_from = DateTime.parse(params[:datetime_from]) rescue ''
-    @datetime_to = DateTime.parse(params[:datetime_to]) rescue ''
+    @datetime_from = DateTime.parse(params[:datetime_from]) rescue nil
+    @datetime_to = DateTime.parse(params[:datetime_to]) rescue nil
 
-    @log_campaigns = @log_campaign_list.occurred_after(@datetime_from).occurred_before(@datetime_to).page(params[:page])
+    @log_campaign_list = @log_campaign_list.occurred_after(@datetime_from) unless @datetime_from.nil?
+    @log_campaign_list = @log_campaign_list.occurred_before(@datetime_to) unless @datetime_to.nil?
+
+    @log_campaigns = @log_campaign_list.page(params[:page])
   end
 
   # GET /log_campaigns/1
