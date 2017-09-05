@@ -37,9 +37,10 @@ class DiagnosisLog < ApplicationRecord
                 .or(arel_table[:result].eq(DiagnosisLog.results[:success]))
     where(condition)
   }
-  scope :occurred_before, ->(time) { where("occurred_at < ?", time) }
-  scope :occurred_after, ->(time) { where("occurred_at > ?", time) }
+  scope :occurred_before, ->(time) { where(arel_table[:occurred_at].lt(time)) }
+  scope :occurred_after, ->(time) { where(arel_table[:occurred_at].gt(time)) }
   scope :layer_by, ->(layer) { where(layer: layer) }
+  scope :ssid_by, ->(ssid) { includes(:log_campaign).references(:log_campaign).where(log_campaigns: { ssid: ssid }) }
 
   def self.layer_label(layer)
     if !layer.blank? && self.layer_defs.keys.include?(layer.to_sym)
