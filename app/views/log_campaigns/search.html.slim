@@ -9,18 +9,18 @@
         .control-label.col-sm-2
           = label_tag :keyword
         .col-sm-8
-          = text_field_tag :keyword, '', class: "form-control"
+          = text_field_tag :keyword, @keyword, class: "form-control"
       .form-group
         .control-label.col-sm-2
           = label_tag :datetime
         .col-sm-4
           .input-group.date#datetime_from
-            = text_field_tag :datetime_from, '', class: "form-control"
+            = text_field_tag :datetime_from, @datetime_from, class: "form-control"
             span.input-group-addon
               i.fa.fa-calendar
         .col-sm-4
           .input-group.date#datetime_to
-            = text_field_tag :datetime_to, '', class: "form-control"
+            = text_field_tag :datetime_to, @datetime_to, class: "form-control"
             span.input-group-addon
               i.fa.fa-calendar
       .form-group

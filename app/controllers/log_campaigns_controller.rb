@@ -1,3 +1,4 @@
+# coding: utf-8
 class LogCampaignsController < ApplicationController
   before_action :authenticate_user!
 
@@ -12,7 +13,35 @@ class LogCampaignsController < ApplicationController
   # GET /log_campaigns/search
   # GET /log_campaigns/search.json
   def search
-    @log_campaigns = LogCampaign.all.page(params[:page])
+    @log_campaign_list = LogCampaign.all
+
+    # search keywork
+    @keyword = params[:keyword]
+    keywords = []
+
+    unless @keyword.nil?
+      keywords = @keyword.gsub("　", " ").split(" ")
+    end
+
+    # NOTE: serach target: log_campaign all column without xxx_at
+    shared_context = Ransack::Context.for(LogCampaign)
+    shared_conditions = Array.new
+
+    keywords.each do |keyword|
+      search = LogCampaign.ransack(
+        { log_campaign_uuid_or_mac_addr_or_os_or_ssid_cont: keyword }, context: shared_context
+      )
+
+      shared_conditions << Ransack::Visitor.new.accept(search.base)
+    end
+
+    @log_campaign_list = @log_campaign_list.joins(shared_context.join_sources).where(shared_conditions.reduce(&:and))
+
+    # search Datetime from / to
+    @datetime_from = DateTime.parse(params[:datetime_from]) rescue ''
+    @datetime_to = DateTime.parse(params[:datetime_to]) rescue ''
+
+    @log_campaigns = @log_campaign_list.occurred_after(@datetime_from).occurred_before(@datetime_to).page(params[:page])
   end
 
   # GET /log_campaigns/1
