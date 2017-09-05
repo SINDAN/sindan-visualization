@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :set_diagnosis_log_dates
+  before_action :set_variables
 
-  def set_diagnosis_log_dates
+  def set_variables
     @diagnosis_log_dates = DiagnosisLog.date_list
+    @ssid_list = LogCampaign.ssid_list
   end
 
   # for divise

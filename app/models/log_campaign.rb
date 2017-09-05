@@ -22,4 +22,10 @@ class LogCampaign < ApplicationRecord
       'information'
     end
   end
+
+  def self.ssid_list
+    Rails.cache.fetch("ssid_list") do
+      LogCampaign.pluck(:ssid).uniq.compact
+    end
+  end
 end
