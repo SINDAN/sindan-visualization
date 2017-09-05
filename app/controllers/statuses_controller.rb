@@ -5,7 +5,6 @@ class StatusesController < ApplicationController
   # GET /status.json
   def index
     @ssid = params[:ssid]
-#    @ssid_list = LogCampaign.uniq.pluck(:ssid)
 
     term = 10
     count = 12
