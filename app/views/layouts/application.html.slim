@@ -67,6 +67,10 @@ html
               li
                 a href="#{user_session_path}" #{t('helpers.links.login')}
             - else
+              li
+                a href="#{search_log_campaigns_path}" title="#{t('views.log_campaigns.search.title')}"
+                  i.fa.fa-search
+                  |  #{t('views.log_campaigns.search.title')}
               li.dropdown
                 a.dropdown-toggle href="#" data-toggle="dropdown"
                   i.fa.fa-user.fa-lg.fa-fw
