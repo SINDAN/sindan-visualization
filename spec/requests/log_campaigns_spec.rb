@@ -15,6 +15,13 @@ RSpec.describe "LogCampaigns", type: :request do
       end
     end
 
+    describe "GET /log_campaigns/search" do
+      it "works!" do
+        get search_log_campaigns_path
+        expect(response).to have_http_status(200)
+      end
+    end
+
     describe "GET /log_campaigns/:id" do
       it "works!" do
         get log_campaign_path(@log_campaign)
@@ -41,6 +48,13 @@ RSpec.describe "LogCampaigns", type: :request do
     describe "GET /log_campaigns" do
       it "redirects to login page" do
         get log_campaigns_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe "GET /log_campaigns/search" do
+      it "redirects to login page" do
+        get search_log_campaigns_path
         expect(response).to redirect_to(new_user_session_path)
       end
     end

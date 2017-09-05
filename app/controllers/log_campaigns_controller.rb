@@ -9,6 +9,12 @@ class LogCampaignsController < ApplicationController
     @log_campaigns = LogCampaign.all.page(params[:page])
   end
 
+  # GET /log_campaigns/search
+  # GET /log_campaigns/search.json
+  def search
+    @log_campaigns = LogCampaign.all.page(params[:page])
+  end
+
   # GET /log_campaigns/1
   # GET /log_campaigns/1.json
   def show
