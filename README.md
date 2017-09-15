@@ -10,7 +10,7 @@
 
 ## Getting Started
 * Clone from git
-** git clone this repository
+    * git clone this repository
 
 * Configure database.yml
 
