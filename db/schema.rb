@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814054928) do
+ActiveRecord::Schema.define(version: 20171116011017) do
 
   create_table "diagnosis_logs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "layer"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170814054928) do
     t.datetime "updated_at"
     t.string "log_campaign_uuid", limit: 38
     t.string "log_group"
+    t.string "target"
     t.index ["log_campaign_uuid"], name: "index_diagnosis_logs_on_log_campaign_uuid"
     t.index ["occurred_at"], name: "index_diagnosis_logs_on_occurred_at"
     t.index ["result"], name: "index_diagnosis_logs_on_result"
