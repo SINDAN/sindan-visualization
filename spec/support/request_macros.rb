@@ -1,7 +1,7 @@
 module RequestMacros
   def request_login_user
     before(:each) do
-      @loginuser = FactoryGirl.create(:login_user)
+      @loginuser = FactoryBot.create(:login_user)
       post user_session_path, params: { user: { login: @loginuser.login, password: @loginuser.password } }
       follow_redirect!
     end
@@ -9,7 +9,7 @@ module RequestMacros
 
   def request_admin_user
     before(:each) do
-      @loginuser = FactoryGirl.create(:login_user)
+      @loginuser = FactoryBot.create(:login_user)
       post user_session_path, params: { user: { login: @loginuser.login, password: @loginuser.password } }
       follow_redirect!
     end

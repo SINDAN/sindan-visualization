@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "LogCampaigns", type: :request do
   before(:each) do
-    @log_campaign = FactoryGirl.create(:log_campaign)
+    @log_campaign = FactoryBot.create(:log_campaign)
   end
 
   context "for authenticated users" do

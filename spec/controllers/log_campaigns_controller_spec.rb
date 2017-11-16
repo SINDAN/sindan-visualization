@@ -65,8 +65,8 @@ RSpec.describe LogCampaignsController, type: :controller do
 
     describe "GET #all" do
       before(:each) do
-        @log_campaign = FactoryGirl.create(:log_campaign)
-        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
+        @log_campaign = FactoryBot.create(:log_campaign)
+        @diagnosis_log = FactoryBot.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
       end
 
       it "assigns the requested log_campaign as @log_campaign" do
@@ -82,8 +82,8 @@ RSpec.describe LogCampaignsController, type: :controller do
 
     describe "GET #log" do
       before(:each) do
-        @log_campaign = FactoryGirl.create(:log_campaign)
-        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
+        @log_campaign = FactoryBot.create(:log_campaign)
+        @diagnosis_log = FactoryBot.create(:diagnosis_log, log_campaign: @log_campaign, result: 'success')
       end
 
       it "assigns the requested log_campaign as @log_campaign" do
@@ -99,8 +99,8 @@ RSpec.describe LogCampaignsController, type: :controller do
 
     describe "GET #error" do
       before(:each) do
-        @log_campaign = FactoryGirl.create(:log_campaign)
-        @diagnosis_log = FactoryGirl.create(:diagnosis_log, log_campaign: @log_campaign, result: 'fail')
+        @log_campaign = FactoryBot.create(:log_campaign)
+        @diagnosis_log = FactoryBot.create(:diagnosis_log, log_campaign: @log_campaign, result: 'fail')
       end
 
       it "assigns the requested log_campaign as @log_campaign" do
