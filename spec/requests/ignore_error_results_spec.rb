@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "IgnoreErrorResults", type: :request do
   before(:each) do
-    @ignore_error_result = FactoryGirl.create(:ignore_error_result)
+    @ignore_error_result = FactoryBot.create(:ignore_error_result)
   end
 
   context "for authenticated users" do

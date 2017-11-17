@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails_12factor', group: :production
 
-gem 'rails', '5.1.3'
+gem 'rails', '5.1.4'
 
 gem 'mysql2'
 
@@ -61,7 +61,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'capybara'
   gem 'webrat'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 #  gem 'selenium-webdriver'
 end
 

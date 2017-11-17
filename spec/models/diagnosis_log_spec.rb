@@ -20,9 +20,9 @@ RSpec.describe DiagnosisLog, type: :model do
 
   context "scope log" do
     before(:each) do
-      FactoryGirl.create(:diagnosis_log, result: 'success')
-      FactoryGirl.create(:diagnosis_log, result: 'fail')
-      FactoryGirl.create(:diagnosis_log, result: 'information')
+      FactoryBot.create(:diagnosis_log, result: 'success')
+      FactoryBot.create(:diagnosis_log, result: 'fail')
+      FactoryBot.create(:diagnosis_log, result: 'information')
 
       @diagnosis_logs = DiagnosisLog.log
     end
@@ -34,9 +34,9 @@ RSpec.describe DiagnosisLog, type: :model do
 
   context "scope error" do
     before(:each) do
-      FactoryGirl.create(:diagnosis_log, result: 'success')
-      FactoryGirl.create(:diagnosis_log, result: 'fail')
-      FactoryGirl.create(:diagnosis_log, result: 'information')
+      FactoryBot.create(:diagnosis_log, result: 'success')
+      FactoryBot.create(:diagnosis_log, result: 'fail')
+      FactoryBot.create(:diagnosis_log, result: 'information')
 
       @diagnosis_logs = DiagnosisLog.fail
     end
@@ -121,16 +121,16 @@ RSpec.describe DiagnosisLog, type: :model do
 
     context "with settings of ignore_log_types" do
       before(:each) do
-        @ignore_error_result = FactoryGirl.create(:ignore_error_result,
+        @ignore_error_result = FactoryBot.create(:ignore_error_result,
                                                   ssid: 'SSID',
                                                   ignore_log_types: ["v4http_srv", "v6trans_aaaa_namesrv"],
                                                  )
-        @log_campaign = FactoryGirl.create(:log_campaign, ssid: 'SSID')
+        @log_campaign = FactoryBot.create(:log_campaign, ssid: 'SSID')
       end
 
       context "result is fail with ignore_log_types" do
         before(:each) do
-          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'v4http_srv')
+          @diagnosis_log = FactoryBot.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'v4http_srv')
         end
 
         it "result_label return 'warning'" do
@@ -140,7 +140,7 @@ RSpec.describe DiagnosisLog, type: :model do
 
       context "result is fail without ignore_log_types" do
         before(:each) do
-          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'other')
+          @diagnosis_log = FactoryBot.build(:diagnosis_log, log_campaign: @log_campaign, result: :fail, log_type: 'other')
         end
 
         it "result_label return 'warning'" do
@@ -150,7 +150,7 @@ RSpec.describe DiagnosisLog, type: :model do
 
      context "result is not fail" do
         before(:each) do
-          @diagnosis_log = FactoryGirl.build(:diagnosis_log, log_campaign: @log_campaign, result: :success)
+          @diagnosis_log = FactoryBot.build(:diagnosis_log, log_campaign: @log_campaign, result: :success)
         end
 
         it "result_label return result of 'success'" do

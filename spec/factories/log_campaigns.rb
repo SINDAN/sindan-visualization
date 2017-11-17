@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :log_campaign do
     log_campaign_uuid "8D9CEC4B-9A99-4A44-BFDA-445C6765475A"
     ssid "SSID"

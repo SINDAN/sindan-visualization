@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "DiagnosisLogs", type: :request do
   before(:each) do
-    @diagnosis_log = FactoryGirl.create(:diagnosis_log)
+    @diagnosis_log = FactoryBot.create(:diagnosis_log)
   end
 
   context "for authenticated users" do

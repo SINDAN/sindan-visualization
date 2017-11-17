@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :diagnosis_log do
     layer "web"
     log_group "MyText"
