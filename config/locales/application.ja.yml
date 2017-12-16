@@ -71,6 +71,7 @@ ja:
         layer: "レイヤ"
         log_group: "計測グループ"
         log_type: "計測タイプ"
+        target: "計測ターゲット"
         result: "計測結果"
         detail: "計測結果詳細"
         log_campaign_uuid: "キャンペーンUUID"
