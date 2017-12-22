@@ -6,6 +6,7 @@ RSpec.describe "diagnosis_logs/show", type: :view do
       :layer => "Layer",
       :log_group => "Log Group",
       :log_type => "Log Type",
+      :target => "Target",
       :result => :fail,
       :detail => "Detail",
       :occurred_at => "2015-07-24 19:24:42",
@@ -17,6 +18,7 @@ RSpec.describe "diagnosis_logs/show", type: :view do
     expect(rendered).to match(/Layer/)
     expect(rendered).to match(/Log Group/)
     expect(rendered).to match(/Log Type/)
+    expect(rendered).to match(/Target/)
     expect(rendered).to match(/Detail/)
   end
 end
