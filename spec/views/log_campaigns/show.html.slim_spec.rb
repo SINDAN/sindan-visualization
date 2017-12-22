@@ -15,6 +15,7 @@ RSpec.describe "log_campaigns/show", type: :view do
         :layer => "Layer",
         :log_group => "Log Group",
         :log_type => "Log Type",
+        :target => "Target",
         :result => :success,
         :detail => "Detail",
         :occurred_at => "2015-07-24 19:24:42",
@@ -23,6 +24,7 @@ RSpec.describe "log_campaigns/show", type: :view do
         :layer => "Layer",
         :log_group => "Log Group",
         :log_type => "Log Type",
+        :target => "Target",
         :result => :fail,
         :detail => "Detail",
         :occurred_at => "2015-07-24 19:24:42",
@@ -36,5 +38,16 @@ RSpec.describe "log_campaigns/show", type: :view do
     expect(rendered).to match(/SSID/)
     expect(rendered).to match(/Mac Addr/)
     expect(rendered).to match(/Os/)
+  end
+
+  it "renders related attributes in <p>" do
+    render
+
+    assert_select "table#diagnosis_logs" do
+      assert_select "tr>td", text: "Layer".to_s, count: 2
+      assert_select "tr>td", text: "Log Group".to_s, count: 2
+      assert_select "tr>td", text: "Log Type".to_s, count: 2
+      assert_select "tr>td", text: "Target".to_s, count: 2
+    end
   end
 end
