@@ -68,6 +68,7 @@ en:
         layer: "Layer"
         log_group: "Group"
         log_type: "Type"
+        target: "Target"
         result: "Result"
         detail: "Detail"
         log_campaign_uuid: "Campaign UUID"

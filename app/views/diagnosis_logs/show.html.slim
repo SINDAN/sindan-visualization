@@ -24,6 +24,9 @@ table.table
           a href="#{log_campaign_path(@diagnosis_log.log_campaign)}"
             | #{@diagnosis_log.log_campaign_uuid}
     tr
+      th #{t('activerecord.attributes.diagnosis_log.target')}
+      td #{@diagnosis_log.target}
+    tr
       th #{t('activerecord.attributes.diagnosis_log.result')}
       td #{@diagnosis_log.result}
     tr
