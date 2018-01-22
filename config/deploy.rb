@@ -11,7 +11,7 @@ set :slack_username, 'Slack notifier'
 
 set :application, 'sindan_visualization'
 
-set :repo_url, 'git@bitbucket.org:sindan/sindan_visualization.git'
+set :repo_url, 'git@github.com:SINDAN/sindan-visualization.git'
 set :branch, :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
@@ -20,7 +20,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '2.4.1'
+set :rbenv_ruby, '2.4.3'
 
 # server alias
 set :sindan, ""

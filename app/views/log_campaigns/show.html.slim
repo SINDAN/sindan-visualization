@@ -36,17 +36,19 @@ p
     li.presentation class="#{current_class(error_log_campaign_path(@log_campaign))}"
       a href="#{error_log_campaign_path(@log_campaign)}" Error
 
-table.table.table-condensed.table-bordered
+table#diagnosis_logs.table.table-condensed.table-bordered
   colgroup
     col.col-xs-2
     col.col-xs-2
     col.col-xs-2
-    col.col-xs-6
+    col.col-xs-2
+    col.col-xs-4
   thead
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
       th #{t('activerecord.attributes.diagnosis_log.log_group')}
       th #{t('activerecord.attributes.diagnosis_log.log_type')}
+      th #{t('activerecord.attributes.diagnosis_log.target')}
       th #{t('activerecord.attributes.diagnosis_log.detail')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
@@ -60,6 +62,9 @@ table.table.table-condensed.table-bordered
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.log_type}
+        td
+          a href="#{diagnosis_log_path(diagnosis_log)}"
+            | #{diagnosis_log.target}
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             - unless diagnosis_log.detail.nil?
