@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails_12factor', group: :production
 
-gem 'rails', '5.1.6'
+gem 'rails', '5.2.1'
 
 gem 'mysql2'
 
@@ -12,7 +13,7 @@ gem 'slim-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-# gem 'therubyracer', platforms: :ruby
+# gem 'mini_racer', platforms: :ruby
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
@@ -41,6 +42,8 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
 end
+
+gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
