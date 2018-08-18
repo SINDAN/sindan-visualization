@@ -8,13 +8,30 @@
 /.bundle
 vendor/bundle
 
-public/system/*
+# config
 config/database.yml
+
+# system files
+public/system/*
 
 # Ignore all logfiles and tempfiles.
 /log/*
+/tmp/*
 !/log/.keep
-/tmp
+!/tmp/.keep
 
+# Ignore uploaded files in development
+/storage/*
+
+/node_modules
+/yarn-error.log
+
+/public/assets
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# tmp
 .DS_Store
 *~
