@@ -11,7 +11,7 @@ class DiagnosisLogsController < ApplicationController
 
     else
       @date = Date.parse(params[:date])
-      @search = DiagnosisLog.search(occurred_at_date_eq: @date)
+      @search = DiagnosisLog.ransack(occurred_at_date_eq: @date)
       @diagnosis_logs = @search.result(distinct: true)
     end
 
