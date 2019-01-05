@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116011017) do
+ActiveRecord::Schema.define(version: 2017_11_16_011017) do
 
-  create_table "diagnosis_logs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "diagnosis_logs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "layer"
     t.string "log_type"
     t.integer "result"
@@ -28,14 +28,14 @@ ActiveRecord::Schema.define(version: 20171116011017) do
     t.index ["result"], name: "index_diagnosis_logs_on_result"
   end
 
-  create_table "ignore_error_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "ignore_error_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "ssid"
     t.text "ignore_log_types"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "log_campaigns", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "log_campaigns", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "log_campaign_uuid", limit: 38
     t.string "mac_addr"
     t.string "os"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20171116011017) do
     t.index ["ssid"], name: "index_log_campaigns_on_ssid"
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
