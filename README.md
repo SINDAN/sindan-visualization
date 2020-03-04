@@ -5,7 +5,7 @@
 * Simple Dashboard
 
 ## Requirements
-* Ruby 2.4.1
+* Ruby 2.6.3 (ref: [.ruby-version](.ruby-version) )
 * MySQL
 
 ## Getting Started
