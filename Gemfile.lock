@@ -50,7 +50,7 @@ GEM
     autoprefixer-rails (9.7.6)
       execjs
     awesome_print (1.8.0)
-    bcrypt (3.1.13)
+    bcrypt (3.1.12)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     bootstrap-sass (3.4.1)
@@ -294,6 +294,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  bcrypt (= 3.1.12)
   bootsnap (>= 1.1.0)
   bootstrap-sass
   bootstrap3-datetimepicker-rails
