@@ -31,7 +31,7 @@ table.table
       td #{@diagnosis_log.result}
     tr
       th #{t('activerecord.attributes.diagnosis_log.detail')}
-      td #{hbr(@diagnosis_log.detail)}
+      td #{{hbr(@diagnosis_log.detail)}}
     tr
       th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
       td #{datetime_view(@diagnosis_log.occurred_at)}
