@@ -20,5 +20,7 @@ import "regenerator-runtime/runtime"
 
 import 'bootstrap-sass'
 
+//momentjs
+
 // special entry point of css
 import "@css/application"

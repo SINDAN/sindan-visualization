@@ -1,4 +1,5 @@
 - provide :title, t('views.log_campaigns.index.title')
+- provide :js_entrypoint, 'log_campaigns/index'
 
 .panel.panel-default
   .panel-heading
@@ -28,15 +29,3 @@
           = submit_tag t('views.log_campaigns.search.search_button'), name: nil, class: "btn btn-primary"
 
 = render 'list'
-
-- content_for :header do
-  javascript:  
-    $(function () {
-      var datetime_format = 'YYYY-MM-DDTHH:mm:ssZ'
-      $('#datetime_from').datetimepicker({
-        format: datetime_format
-      });
-      $('#datetime_to').datetimepicker({
-        format: datetime_format
-      });
-    });

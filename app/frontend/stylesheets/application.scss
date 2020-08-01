@@ -4,8 +4,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $fa-font-path: "~font-awesome/fonts/";
 @import "~font-awesome/scss/font-awesome.scss";
 
-// bootstrap-datepicker
-@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker";
+// bootstrap-datetimepicker
+@import "~eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build";
 
 body {
     padding-top: 60px;
