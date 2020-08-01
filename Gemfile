@@ -11,17 +11,8 @@ gem 'devise'
 
 gem 'slim-rails'
 gem 'sassc-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-# gem 'mini_racer', platforms: :ruby
-
-gem 'jquery-rails'
+gem 'webpacker', '~> 5.0'
 gem 'jbuilder', '~> 2.7'
-gem 'bootstrap-sass'
-gem 'font-awesome-rails'
-
-gem 'momentjs-rails'
-gem 'bootstrap3-datetimepicker-rails'
 
 gem 'kaminari'
 gem 'ransack'
