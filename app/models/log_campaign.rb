@@ -6,7 +6,7 @@ class LogCampaign < ApplicationRecord
   scope :occurred_before, ->(time) { where(arel_table[:occurred_at].lt(time)) }
   scope :occurred_after, ->(time) { where(arel_table[:occurred_at].gt(time)) }
 
-  validates_uniqueness_of :log_campaign_uuid,
+  validates_uniqueness_of :log_campaign_uuid, case_sensitive: true,
                           if: Proc.new { |record| !record.log_campaign_uuid.blank? }
 
   def result

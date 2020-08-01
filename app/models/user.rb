@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   validates_presence_of :login
-  validates_uniqueness_of :login
+  validates_uniqueness_of :login, case_sensitive: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
