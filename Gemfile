@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails_12factor', group: :production
-
-gem 'rails', '5.2.4.3'
+gem 'rails', '6.0.3.2'
 
 gem 'mysql2'
+
+gem 'puma', '~> 4.1'
 
 gem 'devise'
 
@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'mini_racer', platforms: :ruby
 
 gem 'jquery-rails'
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
@@ -30,9 +30,15 @@ gem 'breadcrumbs_on_rails'
 gem 'slack-notifier'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
+# gem 'redis', '~> 4.0'
+# Use Active Model has_secure_password
+#gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt', '3.1.12'
+
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
+
+gem 'bootsnap', '>= 1.4.2', require: false
 
 # Use Capistrano for deployment
 group :development do
@@ -43,16 +49,14 @@ group :development do
   gem 'capistrano-passenger'
 end
 
-gem 'bootsnap', '>= 1.1.0', require: false
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development, :test do
 #  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'awesome_print'
