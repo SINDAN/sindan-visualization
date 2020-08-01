@@ -1,6 +1,5 @@
-# coding: utf-8
-# config valid only for current version of Capistrano
-#lock "3.9.0"
+# config valid for current version and patch releases of Capistrano
+#lock "~> 3.14.1"
 
 # slack
 require 'slack-notifier'
@@ -35,7 +34,7 @@ set :log_level, :debug # :debug or :info
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
-# set :format_options, command_output: true, log_file: 'log/capistrano.log', color: :auto, truncate: :auto
+# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
 # set :pty, true
