@@ -7,6 +7,7 @@ RSpec.describe "log_campaigns/show", type: :view do
       :ssid => "SSID",
       :mac_addr => "Mac Addr",
       :os => "Os",
+      :version => "Version",
       :occurred_at => "2015-07-24 19:24:42",
     ))
 
@@ -38,6 +39,7 @@ RSpec.describe "log_campaigns/show", type: :view do
     expect(rendered).to match(/SSID/)
     expect(rendered).to match(/Mac Addr/)
     expect(rendered).to match(/Os/)
+    expect(rendered).to match(/Version/)
   end
 
   it "renders related attributes in <p>" do
