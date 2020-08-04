@@ -29,7 +29,7 @@ class LogCampaignsController < ApplicationController
 
     keywords.each do |keyword|
       search = LogCampaign.ransack(
-        { log_campaign_uuid_or_mac_addr_or_os_or_ssid_cont: keyword }, context: shared_context
+        { log_campaign_uuid_or_mac_addr_or_os_or_ssid_or_version_cont: keyword }, context: shared_context
       )
 
       shared_conditions << Ransack::Visitor.new.accept(search.base)
@@ -134,6 +134,6 @@ class LogCampaignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def log_campaign_params
-      params.require(:log_campaign).permit(:log_campaign_uuid, :ssid, :mac_addr, :os, :occurred_at)
+      params.require(:log_campaign).permit(:log_campaign_uuid, :ssid, :mac_addr, :os, :version, :occurred_at)
     end
 end

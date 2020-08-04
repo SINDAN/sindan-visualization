@@ -81,4 +81,5 @@ en:
         ssid: "SSID"
         mac_addr: "MAC Address"
         os: "OS"
+        version: "Client Version"
         occurred_at: "Occurred at"
