@@ -4,6 +4,7 @@ FactoryBot.define do
     ssid { "SSID" }
     mac_addr { "MyString" }
     os { "MyString" }
+    version { "MyString" }
     occurred_at { "2015-08-01 01:15:59" }
   end
 

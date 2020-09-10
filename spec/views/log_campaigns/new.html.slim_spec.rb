@@ -24,6 +24,8 @@ RSpec.describe "log_campaigns/new", type: :view do
 
       assert_select "input#log_campaign_os[name=?]", "log_campaign[os]"
 
+      assert_select "input#log_campaign_version[name=?]", "log_campaign[version]"
+
       assert_select "select#log_campaign_occurred_at_1i[name=?]", "log_campaign[occurred_at(1i)]"
     end
   end

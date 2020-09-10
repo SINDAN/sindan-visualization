@@ -84,4 +84,5 @@ ja:
         ssid: "SSID"
         mac_addr: "MACアドレス"
         os: "OS"
+        version: "Client Version"
         occurred_at: "発生日時"

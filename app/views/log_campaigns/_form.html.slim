@@ -27,6 +27,11 @@
       = f.text_field :os, class: "form-control"
   .form-group
     .control-label.col-sm-2
+      = f.label :version
+    .col-sm-4
+      = f.text_field :version, class: "form-control"
+  .form-group
+    .control-label.col-sm-2
       = f.label :occurred_at
     .col-sm-4
       = f.datetime_select :occurred_at
