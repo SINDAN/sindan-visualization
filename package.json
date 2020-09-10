@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/ujs": "^6.0.3-2",
+    "@rails/ujs": "^6.0.3-3",
     "@rails/webpacker": "5.1.1",
     "bootstrap-sass": "^3.4.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
