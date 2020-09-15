@@ -10,12 +10,14 @@ class DiagnosisLog < ApplicationRecord
 
   cattr_reader :layer_defs
   @@layer_defs = {
+    hardware: 'ハードウェア層',
     datalink: 'データリンク層',
     interface: 'インタフェース設定層',
     localnet: 'ローカルネットワーク層',
     globalnet: 'グローバルネットワーク層',
     dns: '名前解決層',
-    web: 'ウェブアプリケーション層',
+    web: 'アプリケーション層',
+    app: 'アプリケーション層',
   }
 
   cattr_reader :log_type_defs
