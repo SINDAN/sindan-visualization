@@ -17,6 +17,11 @@
       = f.text_field :ssid, class: "form-control"
   .form-group
     .control-label.col-sm-2
+      = f.label :network_type
+    .col-sm-4
+      = f.text_field :network_type, class: "form-control"
+  .form-group
+    .control-label.col-sm-2
       = f.label :mac_addr
     .col-sm-4
       = f.text_field :mac_addr, class: "form-control"
