@@ -134,6 +134,6 @@ class LogCampaignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def log_campaign_params
-      params.require(:log_campaign).permit(:log_campaign_uuid, :ssid, :mac_addr, :os, :version, :occurred_at)
+      params.require(:log_campaign).permit(:log_campaign_uuid, :ssid, :network_type, :mac_addr, :os, :version, :occurred_at)
     end
 end
