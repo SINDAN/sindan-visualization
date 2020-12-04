@@ -23,7 +23,7 @@ set :rbenv_type, :system
 set :rbenv_ruby, '2.6.3'
 
 # server alias
-set :sindan, ""
+set :sindan, "camp-2103-sindan.sfc.wide.ad.jp"
 set :sindandev, ""
 set :vagrant, '127.0.0.1'
 

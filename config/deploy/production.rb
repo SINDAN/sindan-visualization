@@ -1,6 +1,6 @@
 set :stage, :production
 
-set :branch, "master"
+set :branch, "wide-camp2103"
 set :deploy_to, "/var/www/sindan-production"
 set :rails_env, "production"
 set :migration_role, 'db'
