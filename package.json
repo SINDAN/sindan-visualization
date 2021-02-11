@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/ujs": "^6.0.3-4",
+    "@rails/ujs": "6.0.3-5",
     "@rails/webpacker": "^5.2.1",
     "bootstrap-sass": "^3.4.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
@@ -9,6 +9,6 @@
     "moment": "^2.27.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   }
 }
