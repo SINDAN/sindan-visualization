@@ -6,6 +6,7 @@ RSpec.describe "log_campaigns/search", type: :view do
       LogCampaign.create!(
         :log_campaign_uuid => "Log Campaign Uuid 1",
         :ssid => "SSID",
+        :network_type => "NetworkType",
         :mac_addr => "Mac Addr",
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",
@@ -13,6 +14,7 @@ RSpec.describe "log_campaigns/search", type: :view do
       LogCampaign.create!(
         :log_campaign_uuid => "Log Campaign Uuid 2",
         :ssid => "SSID",
+        :network_type => "NetworkType",
         :mac_addr => "Mac Addr",
         :os => "Os",
         :occurred_at => "2015-07-24 19:24:42",

@@ -82,6 +82,7 @@ ja:
       log_campaign:
         log_campaign_uuid: "キャンペーンUUID"
         ssid: "SSID"
+        network_type: "Network Type"
         mac_addr: "MACアドレス"
         os: "OS"
         version: "Client Version"

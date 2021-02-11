@@ -12,6 +12,9 @@ table.table
       th #{t('activerecord.attributes.log_campaign.log_campaign_uuid')}
       td #{@log_campaign.log_campaign_uuid}
     tr
+      th #{t('activerecord.attributes.log_campaign.network_type')}
+      td #{@log_campaign.network_type}
+    tr
       th #{t('activerecord.attributes.log_campaign.ssid')}
       td #{@log_campaign.ssid}
     tr
@@ -58,7 +61,7 @@ table#diagnosis_logs.table.table-condensed.table-bordered
       tr class="#{class_row_result(diagnosis_log.result_label)}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
-            | #{diagnosis_log.layer_label}
+            | #{diagnosis_log.layer}
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.log_group}

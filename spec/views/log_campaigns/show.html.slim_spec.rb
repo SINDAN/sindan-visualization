@@ -5,6 +5,7 @@ RSpec.describe "log_campaigns/show", type: :view do
     @log_campaign = assign(:log_campaign, LogCampaign.create!(
       :log_campaign_uuid => "Log Campaign Uuid",
       :ssid => "SSID",
+      :network_type => "NetworkType",
       :mac_addr => "Mac Addr",
       :os => "Os",
       :version => "Version",
@@ -37,6 +38,7 @@ RSpec.describe "log_campaigns/show", type: :view do
     render
     expect(rendered).to match(/Log Campaign Uuid/)
     expect(rendered).to match(/SSID/)
+    expect(rendered).to match(/NetworkType/)
     expect(rendered).to match(/Mac Addr/)
     expect(rendered).to match(/Os/)
     expect(rendered).to match(/Version/)
