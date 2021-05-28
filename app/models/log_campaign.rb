@@ -27,7 +27,7 @@ class LogCampaign < ApplicationRecord
   end
 
   def self.ssid_list
-    Rails.cache.fetch("ssid_list") do
+    Rails.cache.fetch("ssid_list", expires_in: 1.hours) do
       LogCampaign.pluck(:ssid).uniq.compact
     end
   end
