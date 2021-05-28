@@ -75,9 +75,10 @@ class DiagnosisLog < ApplicationRecord
   end
 
   def self.date_list
-    Rails.cache.fetch("date_list") do
-      DiagnosisLog.occurred_after(DateTime.now - 10.days).pluck(:occurred_at).map{ |occurred_at| occurred_at.to_date.to_s unless occurred_at.blank? }.uniq
-    end
+    return []
+    #Rails.cache.fetch("date_list") do
+    #  DiagnosisLog.occurred_after(DateTime.now - 10.days).pluck(:occurred_at).map{ |occurred_at| occurred_at.to_date.to_s unless occurred_at.blank? }.uniq
+    #end
   end
 
   # for ransacker
