@@ -5,16 +5,15 @@ const path = require('path')
 
 // splitChunks
 environment.splitChunks((config) => Object.assign({}, config, {
-  optimization: {
-    splitChunks: { name: 'vendor' }
-  }
+    optimization: {
+	splitChunks: { name: 'vendor' }
+    }
 }))
 
 // plugins
 environment.plugins.append('Provide', new webpack.ProvidePlugin({
-  $: 'jquery',
-  jQuery: 'jquery',
-  Popper: ['popper.js', 'default']
+    $: 'jquery',
+    jQuery: 'jquery'
 }))
 
 // resolve alis

@@ -1,11 +1,8 @@
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-
-$fa-font-path: "~font-awesome/fonts/";
-@import "~font-awesome/scss/font-awesome.scss";
+// bootstrap
+@import "~bootstrap/scss/bootstrap";
 
 // bootstrap-datetimepicker
-@import "~eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build";
+//@import "~eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build";
 
 body {
     padding-top: 60px;
@@ -33,22 +30,22 @@ body {
 
     .dot-default {
 	@include dot;
-	background-color: $gray-lighter;
+	background-color: $gray-200;
     }
 
     .dot-success {
 	@include dot;
-	background-color: $brand-success;
+	background-color: $success;
     }
 
     .dot-danger {
 	@include dot;
-	background-color: $brand-danger;
+	background-color: $danger;
     }
 
     .dot-warning {
 	@include dot;
-	background-color: $brand-warning;
+	background-color: $warning;
     }
 }
 

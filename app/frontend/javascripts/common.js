@@ -14,7 +14,11 @@ import "core-js/stable"
 import "regenerator-runtime/runtime"
 
 // lib
-import 'bootstrap-sass'
+import "bootstrap"
+
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
 
 // special entry point of css
 import "@css/application"
