@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '6.0.3.7'
+gem 'rails', '6.1.3.2'
 
 gem 'mysql2'
 
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 5.0'
 
 gem 'devise'
 
@@ -29,7 +29,7 @@ gem 'bcrypt', '3.1.12'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 
 # Use Capistrano for deployment
 group :development do
@@ -47,9 +47,9 @@ end
 
 group :development, :test do
 #  gem 'web-console'
-  gem 'listen', '~> 3.2'
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'listen', '~> 3.3'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'awesome_print'
   gem 'rails-erd'
 end

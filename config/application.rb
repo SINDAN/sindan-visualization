@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
@@ -22,22 +22,24 @@ Bundler.require(*Rails.groups)
 module SindanVisualization
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
 
     Rails.application.config.active_record.belongs_to_required_by_default = false
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
-    config.autoload_paths += %W(#{config.root}/lib)
-    config.eager_load_paths += %W(#{config.root}/lib)
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "Tokyo"
+    config.eager_load_paths << Rails.root.join("lib")
 
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
-    config.time_zone = 'Asia/Tokyo'
-
+    # assets
     config.generators.assets = false
+
+    # Don't generate system test files.
+    config.generators.system_tests = nil
   end
 end

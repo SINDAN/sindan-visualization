@@ -893,10 +893,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@rails/ujs@6.0.3-7":
-  version "6.0.3-7"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.0.3-7.tgz#8be007e500baafed256895830ae446178511773b"
-  integrity sha512-J7dvCTkZ/zaQLge1mttypoE/1j5YDcSAuu4fun8CoTqVGkcbwZu4f4jy+HKxdomtrZzXWSHlSeIe9vOtLnhmeA==
+"@rails/ujs@6.1.3-2":
+  version "6.1.3-2"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.1.3-2.tgz#5d7e161e7061654e738a116a7ec8b58b51721a11"
+  integrity sha512-Nd0Im4cW8tIX8ZR3jE/dS3wnJrN46RJSdCfU59Cji2puctIWohq63LjKFMufUwm21bCasISNGoLdkr3S7nwONw==
 
 "@rails/webpacker@^5.4.0":
   version "5.4.0"
