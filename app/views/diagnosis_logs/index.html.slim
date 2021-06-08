@@ -24,7 +24,7 @@ table.table.table-bordered.table-sm
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
       - cache diagnosis_log
-        tr class="table-#{class_row_result(diagnosis_log.result)}"
+        tr class="#{class_row_result(diagnosis_log.result_label)}"
           td
             a href="#{diagnosis_log_path(diagnosis_log)}"
               | #{diagnosis_log.layer_label}

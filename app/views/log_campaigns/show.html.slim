@@ -57,7 +57,7 @@ table#diagnosis_logs.table.table-bordered.table-sm
       th #{t('activerecord.attributes.diagnosis_log.detail')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
-      tr class="table-#{class_row_result(diagnosis_log.result_label)}"
+      tr class="#{class_row_result(diagnosis_log.result_label)}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.layer}

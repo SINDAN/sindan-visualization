@@ -17,7 +17,7 @@ table.table.table-bordered.table-striped.table-sm
   tbody
     - @log_campaigns.each do |log_campaign|
       - cache log_campaign
-        tr class="table-#{class_row_result(log_campaign.result)}"
+        tr class="#{class_row_result(log_campaign.result_label)}"
           td
             a href="#{log_campaign_path(log_campaign)}"
               | #{log_campaign.log_campaign_uuid}
