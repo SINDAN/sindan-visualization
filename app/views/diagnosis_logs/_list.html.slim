@@ -1,11 +1,11 @@
-table.table.table-condensed.table-bordered
+table.table.table-bordered.table-sm
   colgroup
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-3
-    col.col-xs-3
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-3
+    col.col-sm-3
   thead
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
@@ -16,7 +16,7 @@ table.table.table-condensed.table-bordered
       th #{t('activerecord.attributes.diagnosis_log.occurred_at')}
   tbody
     - diagnosis_logs.each do |diagnosis_log|
-      tr class="#{diagnosis_log.fail? ? 'danger' : diagnosis_log.result }"
+      tr class="#{diagnosis_log.fail? ? 'table-danger' : 'table-' + diagnosis_log.result }"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.layer}

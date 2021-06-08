@@ -1,12 +1,12 @@
 - provide :title, t('views.log_campaigns.show.title')
 
 p
-  a.btn.btn-default href="#{edit_log_campaign_path(@log_campaign)}" #{t('helpers.links.edit')}
+  a.btn.btn-outline-secondary href="#{edit_log_campaign_path(@log_campaign)}" #{t('helpers.links.edit')}
 
 table.table
   colgroup
-    col.col-xs-2
-    col.col-xs-10
+    col.col-sm-2
+    col.col-sm-10
   tbody
     tr
       th #{t('activerecord.attributes.log_campaign.log_campaign_uuid')}
@@ -31,24 +31,23 @@ table.table
       td #{datetime_view(@log_campaign.occurred_at)}
 
 
-h2 #{t('views.diagnosis_logs.index.title')}
+h2.my-4 #{t('views.diagnosis_logs.index.title')}
 
-p
-  ul.nav.nav-tabs
-    li.presentation class="#{current_class(all_log_campaign_path(@log_campaign))}"
-      a href="#{all_log_campaign_path(@log_campaign)}" All
-    li.presentation class="#{current_class(log_campaign_path(@log_campaign))}"
-      a href="#{log_campaign_path(@log_campaign)}" Log
-    li.presentation class="#{current_class(error_log_campaign_path(@log_campaign))}"
-      a href="#{error_log_campaign_path(@log_campaign)}" Error
+ul.nav.nav-tabs.mb-3
+  li.nav-item
+    a.nav-link class="#{current_class(all_log_campaign_path(@log_campaign))}" href="#{all_log_campaign_path(@log_campaign)}" All
+  li.nav-item
+    a.nav-link class="#{current_class(log_campaign_path(@log_campaign))}" href="#{log_campaign_path(@log_campaign)}" Log
+  li.nav-item
+    a.nav-link class="#{current_class(error_log_campaign_path(@log_campaign))}" href="#{error_log_campaign_path(@log_campaign)}" Error
 
-table#diagnosis_logs.table.table-condensed.table-bordered
+table#diagnosis_logs.table.table-bordered.table-sm
   colgroup
-    col.col-xs-2
-    col.col-xs-2
-    col.col-xs-2
-    col.col-xs-2
-    col.col-xs-4
+    col.col-sm-2
+    col.col-sm-2
+    col.col-sm-2
+    col.col-sm-2
+    col.col-sm-4
   thead
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
@@ -58,7 +57,7 @@ table#diagnosis_logs.table.table-condensed.table-bordered
       th #{t('activerecord.attributes.diagnosis_log.detail')}
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
-      tr class="#{class_row_result(diagnosis_log.result_label)}"
+      tr class="table-#{class_row_result(diagnosis_log.result_label)}"
         td
           a href="#{diagnosis_log_path(diagnosis_log)}"
             | #{diagnosis_log.layer}

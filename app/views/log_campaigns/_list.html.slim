@@ -1,13 +1,12 @@
-p
-  = paginate @log_campaigns
+= paginate @log_campaigns
 
-table.table.table-condensed.table-bordered.table-striped
+table.table.table-bordered.table-striped.table-sm
   colgroup
-    col.col-xs-3
-    col.col-xs-2
-    col.col-xs-2
-    col.col-xs-3
-    col.col-xs-2
+    col.col-sm-3
+    col.col-sm-2
+    col.col-sm-2
+    col.col-sm-3
+    col.col-sm-2
   thead
     tr
       th #{t('activerecord.attributes.log_campaign.log_campaign_uuid')}
@@ -18,7 +17,7 @@ table.table.table-condensed.table-bordered.table-striped
   tbody
     - @log_campaigns.each do |log_campaign|
       - cache log_campaign
-        tr class="#{class_row_result(log_campaign.result)}"
+        tr class="table-#{class_row_result(log_campaign.result)}"
           td
             a href="#{log_campaign_path(log_campaign)}"
               | #{log_campaign.log_campaign_uuid}

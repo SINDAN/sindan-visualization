@@ -1,12 +1,12 @@
 - provide :title, t('views.diagnosis_logs.show.title')
 
 p
-  a.btn.btn-default href="#{edit_diagnosis_log_path(@diagnosis_log)}" #{t('helpers.links.edit')}
+  a.btn.btn-outline-secondary href="#{edit_diagnosis_log_path(@diagnosis_log)}" #{t('helpers.links.edit')}
 
 table.table
   colgroup
-    col.col-xs-2
-    col.col-xs-10
+    col.col-sm-2
+    col.col-sm-10
   tbody
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
