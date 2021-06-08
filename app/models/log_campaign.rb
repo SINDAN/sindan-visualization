@@ -10,20 +10,39 @@ class LogCampaign < ApplicationRecord
                           if: Proc.new { |record| !record.log_campaign_uuid.blank? }
 
   def result
-    if self.diagnosis_logs.fail.count > 0
-      ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
+    ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
 
-      if self.diagnosis_logs.fail.where.not(log_type: ignore_log_types).count > 0
-        'fail'
-      else
-        'warning'
-      end
-
-    elsif self.diagnosis_logs.success.count > 0
-      'success'
-    else
-      'information'
+    if self.diagnosis_logs.fail.where(log_type: ignore_log_types).count > 0
+      return 'warning'
     end
+
+    if self.diagnosis_logs.fail.count > 0
+      return 'fail'
+    end
+
+    if self.diagnosis_logs.success.count > 0
+      return 'success'
+    end
+
+    return 'information'
+  end
+
+  def result_label
+    ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
+
+    if self.diagnosis_logs.fail.where(log_type: ignore_log_types).count > 0
+      return 'table-warning'
+    end
+
+    if self.diagnosis_logs.fail.count > 0
+      return 'table-danger'
+    end
+
+    if self.diagnosis_logs.success.count > 0
+      return 'table-success'
+    end
+
+    return ''
   end
 
   def self.ssid_list
