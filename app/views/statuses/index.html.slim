@@ -1,4 +1,5 @@
 - provide :title, "SSID: #{@ssid}"
+- provide :js_entrypoint, 'statuses/index'
 
 table.table.status-layer
   thead
@@ -57,11 +58,3 @@ table.table.table-condensed.table-bordered
           td
             a href="#{diagnosis_log_path(diagnosis_log)}"
               | #{datetime_view(diagnosis_log.occurred_at)}
-
-- content_for :header do
-  javascript:
-    $(function() {
-      $('td a').popover({
-        html: true
-      });
-    });

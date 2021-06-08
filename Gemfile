@@ -1,27 +1,18 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails_12factor', group: :production
-
-gem 'rails', '5.2.6'
+gem 'rails', '6.1.3.2'
 
 gem 'mysql2'
+
+gem 'puma', '~> 5.0'
 
 gem 'devise'
 
 gem 'slim-rails'
 gem 'sassc-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-# gem 'mini_racer', platforms: :ruby
-
-gem 'jquery-rails'
-gem 'jbuilder', '~> 2.5'
-gem 'bootstrap-sass'
-gem 'font-awesome-rails'
-
-gem 'momentjs-rails'
-gem 'bootstrap3-datetimepicker-rails'
+gem 'webpacker', '~> 5.0'
+gem 'jbuilder', '~> 2.7'
 
 gem 'kaminari'
 gem 'ransack'
@@ -30,9 +21,15 @@ gem 'breadcrumbs_on_rails'
 gem 'slack-notifier'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
+# gem 'redis', '~> 4.0'
+# Use Active Model has_secure_password
+#gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt', '3.1.12'
+
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
+
+gem 'bootsnap', '>= 1.4.4', require: false
 
 # Use Capistrano for deployment
 group :development do
@@ -43,18 +40,16 @@ group :development do
   gem 'capistrano-passenger'
 end
 
-gem 'bootsnap', '>= 1.1.0', require: false
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development, :test do
 #  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'listen', '~> 3.3'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'awesome_print'
   gem 'rails-erd'
 end

@@ -34,7 +34,7 @@ RSpec.describe "diagnosis_logs/index", type: :view do
 
   it "renders a class of diagnosis_log result" do
     render
-    assert_select "tr.success", :count => 1
-    assert_select "tr.danger", :count => 1
+    assert_select "tr.table-success", :count => 1
+    assert_select "tr.table-danger", :count => 1
   end
 end

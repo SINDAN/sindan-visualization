@@ -1,6 +1,5 @@
-# coding: utf-8
-# config valid only for current version of Capistrano
-#lock "3.9.0"
+# config valid for current version and patch releases of Capistrano
+#lock "~> 3.14.1"
 
 # slack
 require 'slack-notifier'
@@ -20,7 +19,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '2.6.3'
+set :rbenv_ruby, '3.0.1'
 
 # server alias
 set :sindan, ""
@@ -35,7 +34,7 @@ set :log_level, :debug # :debug or :info
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
-# set :format_options, command_output: true, log_file: 'log/capistrano.log', color: :auto, truncate: :auto
+# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
 # set :pty, true
@@ -44,7 +43,7 @@ set :log_level, :debug # :debug or :info
 append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "node_modules"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -79,7 +78,6 @@ end
 
 namespace :db do
 
-  # linked_filesで使用するファイルをアップロードする
   desc 'upload important files'
   task :config do
     on roles(:app) do |host|

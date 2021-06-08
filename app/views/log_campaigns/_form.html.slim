@@ -5,42 +5,35 @@
         - @log_campaign.errors.full_messages.each do |message|
           li = message
 
-  .form-group
-    .control-label.col-sm-2
-      = f.label :log_campaign_uuid
+  .row.mb-3
+    = f.label :log_campaign_uuid, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :log_campaign_uuid, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :ssid
+  .row.mb-3
+    = f.label :ssid, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :ssid, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :network_type
+  .row.mb-3
+    = f.label :network_type, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :network_type, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :mac_addr
+  .row.mb-3
+    = f.label :mac_addr, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :mac_addr, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :os
+  .row.mb-3
+    = f.label :os, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :os, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :version
+  .row.mb-3
+    = f.label :version, class: "control-label col-sm-2"
     .col-sm-4
       = f.text_field :version, class: "form-control"
-  .form-group
-    .control-label.col-sm-2
-      = f.label :occurred_at
-    .col-sm-4
+  .row.mb-3
+    = f.label :occurred_at, class: "control-label col-sm-2"
+    .col-sm-10
       = f.datetime_select :occurred_at
 
-  .form-group
-    .col-sm-10.col-sm-offset-2
+  .row.mb-3
+    .col-sm-10.ms-auto
       = f.submit id: "submit_log_campaign", class: "btn btn-primary"

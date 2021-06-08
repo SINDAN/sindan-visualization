@@ -1,4 +1,3 @@
-# coding: utf-8
 require 'rails_helper'
 
 RSpec.describe DiagnosisLog, type: :model do
@@ -102,7 +101,7 @@ RSpec.describe DiagnosisLog, type: :model do
         end
 
         it "result_label return 'fail'" do
-          expect(@diagnosis_log.result_label).to eq("fail")
+          expect(@diagnosis_log.result_label).to eq("table-danger")
         end
       end
 
@@ -114,7 +113,7 @@ RSpec.describe DiagnosisLog, type: :model do
         end
 
         it "result_label return result of 'success'" do
-          expect(@diagnosis_log.result_label).to eq("success")
+          expect(@diagnosis_log.result_label).to eq("table-success")
         end
       end
     end
@@ -134,7 +133,7 @@ RSpec.describe DiagnosisLog, type: :model do
         end
 
         it "result_label return 'warning'" do
-          expect(@diagnosis_log.result_label).to eq("warning")
+          expect(@diagnosis_log.result_label).to eq("table-warning")
         end
       end
 
@@ -144,7 +143,7 @@ RSpec.describe DiagnosisLog, type: :model do
         end
 
         it "result_label return 'warning'" do
-          expect(@diagnosis_log.result_label).to eq("fail")
+          expect(@diagnosis_log.result_label).to eq("table-danger")
         end
       end
 
@@ -154,7 +153,7 @@ RSpec.describe DiagnosisLog, type: :model do
         end
 
         it "result_label return result of 'success'" do
-          expect(@diagnosis_log.result_label).to eq("success")
+          expect(@diagnosis_log.result_label).to eq("table-success")
         end
       end
     end

@@ -1,4 +1,3 @@
-# coding: utf-8
 class DiagnosisLog < ApplicationRecord
   belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid, touch: true
 
@@ -58,16 +57,24 @@ class DiagnosisLog < ApplicationRecord
 
   def result_label
     if self.result.nil?
-      ''
+      return ''
     end
 
     ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.log_campaign.try(:ssid)) || Array.new
 
-    if self.fail? && ignore_log_types.include?(self.log_type)
-      'warning'
-    else
-      self.result
+    if ignore_log_types.include?(self.log_type)
+      return 'table-warning'
     end
+
+    if self.fail?
+      return 'table-danger'
+    end
+
+    if self.success?
+      return "table-success"
+    end
+
+    return  ""
   end
 
   def log
