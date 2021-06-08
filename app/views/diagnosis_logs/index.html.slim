@@ -3,17 +3,16 @@
 - else
   - provide :title, t('views.diagnosis_logs.index.title') + " (#{@date.to_s})"
 
-p
-  = paginate @diagnosis_logs
+= paginate @diagnosis_logs
 
-table.table.table-condensed.table-bordered
+table.table.table-bordered.table-sm
   colgroup
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-1
-    col.col-xs-2
-    col.col-xs-2
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-1
+    col.col-sm-2
+    col.col-sm-2
   thead
     tr
       th #{t('activerecord.attributes.diagnosis_log.layer')}
@@ -25,7 +24,7 @@ table.table.table-condensed.table-bordered
   tbody
     - @diagnosis_logs.each do |diagnosis_log|
       - cache diagnosis_log
-        tr class="#{class_row_result(diagnosis_log.result)}"
+        tr class="#{class_row_result(diagnosis_log.result_label)}"
           td
             a href="#{diagnosis_log_path(diagnosis_log)}"
               | #{diagnosis_log.layer_label}

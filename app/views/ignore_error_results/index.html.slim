@@ -1,12 +1,12 @@
 - provide :title, t('views.ignore_error_results.index.title')
 
 p
-  a.btn.btn-default href="#{new_ignore_error_result_path}" #{t('helpers.links.new')}
+  a.btn.btn-outline-secondary href="#{new_ignore_error_result_path}" #{t('helpers.links.new')}
 
-table.table.table-condensed.table-bordered.table-striped
+table.table.table-bordered.table-striped.table-sm
   colgroup
-    col.col-xs-3
-    col.col-xs-9
+    col.col-sm-3
+    col.col-sm-9
   thead
     tr
       th #{t('activerecord.attributes.ignore_error_result.ssid')}
