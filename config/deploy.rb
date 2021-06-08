@@ -19,7 +19,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '2.7.1'
+set :rbenv_ruby, '3.0.1'
 
 # server alias
 set :sindan, ""
@@ -43,7 +43,7 @@ set :log_level, :debug # :debug or :info
 append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "node_modules"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -78,7 +78,6 @@ end
 
 namespace :db do
 
-  # linked_filesで使用するファイルをアップロードする
   desc 'upload important files'
   task :config do
     on roles(:app) do |host|
