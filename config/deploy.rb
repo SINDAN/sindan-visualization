@@ -21,6 +21,12 @@ set :deploy_to, '/var/www/sindan-production'
 set :rbenv_type, :system
 set :rbenv_ruby, '3.0.1'
 
+# Set the node version
+set :nodenv_type, :system
+set :nodenv_node, '14.16.1'
+set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
+set :nodenv_map_bins, %w{node npm}
+
 # server alias
 set :sindan, ""
 set :sindandev, ""
