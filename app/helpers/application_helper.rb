@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def hbr(str)
-    str = html_escape(str)
+    str = ERB::Util.html_escape(str)
     str.gsub(/\r\n|\r|\n/, "<br />")
   end
 
