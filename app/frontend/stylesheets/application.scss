@@ -8,6 +8,10 @@ body {
     padding-top: 70px;
 }
 
+table tr td {
+  word-break: break-word;
+}
+
 .status-layer {
     $dot-size: 30px;
 
