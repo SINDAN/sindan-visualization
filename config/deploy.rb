@@ -53,12 +53,16 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, { path: "#{fetch(:nodenv_path)}/shims:#{fetch(:nodenv_path)}/bin:$PATH" }
 
 set :ssh_options, {
   keys: [File.expand_path('~/.ssh/id_rsa')],
   forward_agent: true,
   auth_methods: %w(publickey)
 }
+
+# passenger
+set :passenger_restart_with_touch, true
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
