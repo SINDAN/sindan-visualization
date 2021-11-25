@@ -19,7 +19,7 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '3.0.2'
+set :rbenv_ruby, '3.0.3'
 
 # Set the node version
 set :nodenv_type, :system
