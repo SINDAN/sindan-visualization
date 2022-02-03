@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '6.1.4.1'
+gem 'rails', '6.1.4.3'
 
 gem 'mysql2'
 
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 5.5'
 
 gem 'devise'
 
@@ -66,3 +66,9 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# net-smtp, net-imap and net-pop were removed from default gems in Ruby 3.1, but is used by the `mail` gem.
+# So we need to add them as dependencies until `mail` is fixed: https://github.com/mikel/mail/pull/1439
+gem "net-smtp", require: false
+gem "net-imap", require: false
+gem "net-pop", require: false
