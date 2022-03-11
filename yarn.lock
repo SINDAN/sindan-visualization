@@ -982,10 +982,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
-"@rails/ujs@6.1.4-7":
-  version "6.1.4-7"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.1.4-7.tgz#ef0b83ef40f64bc6704e13ae6624236a4a91fa6f"
-  integrity sha512-842WcLh0BErNgGE8rdqNh31VnqGQcklPQ7RXzQfA0ilQNZcU7AO+t576g1m//18Lk8m7cXZ8fIKA1YB41LKWAQ==
+"@rails/ujs@6.1.5":
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.1.5.tgz#bb1afddd0d771f00924f44b21634969e329532e1"
+  integrity sha512-Ir4yd2fdDldWIghavPr874copVKf6OOoecKHZiFRlPtm38tFvhyxr+ywzNieXGwolF9JQe3D5GrM8ejkzUgh5Q==
 
 "@rails/webpacker@^5.4.3":
   version "5.4.3"
