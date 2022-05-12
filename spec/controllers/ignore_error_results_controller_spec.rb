@@ -90,9 +90,14 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
       end
 
       context "with invalid params" do
-        it "returns a success response (i.e. to display the 'new' template)" do
+        it "returns a response with 422 response (i.e. to display the 'new' template)" do
           post :create, params: {ignore_error_result: invalid_attributes}, session: valid_session
-          expect(response).to be_successful
+          expect(response).to have_http_status(422)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, params: {ignore_error_result: invalid_attributes}, session: valid_session
+          expect(response).to render_template("new")
         end
       end
     end
@@ -112,16 +117,22 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
 
         it "redirects to the ignore_error_result" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: valid_attributes}, session: valid_session
+          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: new_attributes}, session: valid_session
           expect(response).to redirect_to(ignore_error_result)
         end
       end
 
       context "with invalid params" do
-        it "returns a success response (i.e. to display the 'edit' template)" do
+        it "returns a response with 422 response (i.e. to display the 'edit' template)" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
           put :update, params: {id: ignore_error_result.to_param, ignore_error_result: invalid_attributes}, session: valid_session
-          expect(response).to be_successful
+          expect(response).to have_http_status(422)
+        end
+
+        it "re-renders the 'edit' template" do
+          ignore_error_result = IgnoreErrorResult.create! valid_attributes
+          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: invalid_attributes}, session: valid_session
+          expect(response).to render_template("edit")
         end
       end
     end

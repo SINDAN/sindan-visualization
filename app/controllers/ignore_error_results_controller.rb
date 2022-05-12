@@ -54,7 +54,7 @@ class IgnoreErrorResultsController < ApplicationController
         format.html { redirect_to @ignore_error_result, notice: 'Ignore error result was successfully created.' }
         format.json { render :show, status: :created, location: @ignore_error_result }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @ignore_error_result.errors, status: :unprocessable_entity }
       end
     end
@@ -68,7 +68,7 @@ class IgnoreErrorResultsController < ApplicationController
         format.html { redirect_to @ignore_error_result, notice: 'Ignore error result was successfully updated.' }
         format.json { render :show, status: :ok, location: @ignore_error_result }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @ignore_error_result.errors, status: :unprocessable_entity }
       end
     end
