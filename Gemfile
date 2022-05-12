@@ -1,7 +1,7 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '6.1.6'
+gem 'rails', '7.0.3'
 
 gem 'mysql2'
 
@@ -9,10 +9,11 @@ gem 'puma', '~> 5.6'
 
 gem 'devise'
 
-gem 'slim-rails'
-gem 'sassc-rails'
+gem 'sprockets-rails'
 gem 'webpacker', '~> 5.0'
-gem 'jbuilder', '~> 2.7'
+
+gem 'slim-rails'
+gem 'jbuilder'
 
 gem 'kaminari'
 gem 'ransack'
@@ -21,15 +22,29 @@ gem 'breadcrumbs_on_rails'
 gem 'slack-notifier'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-#gem 'bcrypt', '~> 3.1.7'
-gem 'bcrypt', '3.1.12'
+# gem "redis", "~> 4.0"
+# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
+# gem "kredis"
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'bootsnap', '>= 1.4.4', require: false
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
+
+# Use Sass to process CSS
+# gem "sassc-rails"
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
+
+group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+end
 
 # Use Capistrano for deployment
 group :development do
@@ -42,14 +57,8 @@ group :development do
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-end
-
-group :development, :test do
 #  gem 'web-console'
-  gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler'
   gem 'spring'
   gem 'awesome_print'
   gem 'rails-erd'
@@ -59,16 +68,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'capybara'
-  gem 'webrat'
+  gem "selenium-webdriver"
+  gem "webdrivers"
   gem 'factory_bot_rails'
-#  gem 'selenium-webdriver'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# net-smtp, net-imap and net-pop were removed from default gems in Ruby 3.1, but is used by the `mail` gem.
-# So we need to add them as dependencies until `mail` is fixed: https://github.com/mikel/mail/pull/1439
-gem "net-smtp", require: false
-gem "net-imap", require: false
-gem "net-pop", require: false
