@@ -96,7 +96,7 @@ class LogCampaignsController < ApplicationController
         format.html { redirect_to @log_campaign, notice: 'Log campaign was successfully created.' }
         format.json { render :show, status: :created, location: @log_campaign }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @log_campaign.errors, status: :unprocessable_entity }
       end
     end
@@ -110,7 +110,7 @@ class LogCampaignsController < ApplicationController
         format.html { redirect_to @log_campaign, notice: 'Log campaign was successfully updated.' }
         format.json { render :show, status: :ok, location: @log_campaign }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @log_campaign.errors, status: :unprocessable_entity }
       end
     end

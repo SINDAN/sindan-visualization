@@ -105,9 +105,9 @@ RSpec.describe DiagnosisLogsController, type: :controller do
       end
 
       context "with invalid params" do
-        it "assigns a newly created but unsaved diagnosis_log as @diagnosis_log" do
+        it "returns a response with 422 response (i.e. to display the 'new' template)" do
           post :create, params: { diagnosis_log: invalid_attributes }, session: valid_session
-          expect(assigns(:diagnosis_log)).to be_a_new(DiagnosisLog)
+          expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'new' template" do
@@ -144,10 +144,10 @@ RSpec.describe DiagnosisLogsController, type: :controller do
       end
 
       context "with invalid params" do
-        it "assigns the diagnosis_log as @diagnosis_log" do
+        it "returns a response with 422 response (i.e. to display the 'edit' template)" do
           diagnosis_log = DiagnosisLog.create! valid_attributes
           put :update, params: { id: diagnosis_log.to_param, diagnosis_log: invalid_attributes}, session: valid_session
-          expect(assigns(:diagnosis_log)).to eq(diagnosis_log)
+          expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'edit' template" do
