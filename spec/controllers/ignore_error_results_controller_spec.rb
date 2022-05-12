@@ -117,7 +117,7 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
 
         it "redirects to the ignore_error_result" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: valid_attributes}, session: valid_session
+          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: new_attributes}, session: valid_session
           expect(response).to redirect_to(ignore_error_result)
         end
       end

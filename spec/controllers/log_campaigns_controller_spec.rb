@@ -177,13 +177,13 @@ RSpec.describe LogCampaignsController, type: :controller do
 
         it "assigns the requested log_campaign as @log_campaign" do
           log_campaign = LogCampaign.create! valid_attributes
-          put :update, params: { id: log_campaign.to_param, log_campaign: valid_attributes }, session: valid_session
+          put :update, params: { id: log_campaign.to_param, log_campaign: new_attributes }, session: valid_session
           expect(assigns(:log_campaign)).to eq(log_campaign)
         end
 
         it "redirects to the log_campaign" do
           log_campaign = LogCampaign.create! valid_attributes
-          put :update, params: { id: log_campaign.to_param, log_campaign: valid_attributes }, session: valid_session
+          put :update, params: { id: log_campaign.to_param, log_campaign: new_attributes }, session: valid_session
           expect(response).to redirect_to(log_campaign)
         end
       end

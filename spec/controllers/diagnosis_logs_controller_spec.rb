@@ -132,13 +132,13 @@ RSpec.describe DiagnosisLogsController, type: :controller do
 
         it "assigns the requested diagnosis_log as @diagnosis_log" do
           diagnosis_log = DiagnosisLog.create! valid_attributes
-          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: valid_attributes }, session: valid_session
+          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: new_attributes }, session: valid_session
           expect(assigns(:diagnosis_log)).to eq(diagnosis_log)
         end
 
         it "redirects to the diagnosis_log" do
           diagnosis_log = DiagnosisLog.create! valid_attributes
-          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: valid_attributes }, session: valid_session
+          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: new_attributes }, session: valid_session
           expect(response).to redirect_to(diagnosis_log)
         end
       end
