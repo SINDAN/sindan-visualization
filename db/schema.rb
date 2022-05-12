@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2020_09_29_043200) do
-
+ActiveRecord::Schema[7.0].define(version: 2020_09_29_043200) do
   create_table "diagnosis_logs", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "layer"
     t.string "log_type"
     t.integer "result"
     t.text "detail"
-    t.datetime "occurred_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "occurred_at", precision: nil
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "log_campaign_uuid", limit: 38
     t.string "log_group"
     t.string "target"
@@ -31,17 +30,17 @@ ActiveRecord::Schema[6.1].define(version: 2020_09_29_043200) do
   create_table "ignore_error_results", charset: "utf8mb3", force: :cascade do |t|
     t.string "ssid"
     t.text "ignore_log_types"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "log_campaigns", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "log_campaign_uuid", limit: 38
     t.string "mac_addr"
     t.string "os"
-    t.datetime "occurred_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "occurred_at", precision: nil
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "ssid"
     t.string "version"
     t.string "network_type"
@@ -54,16 +53,16 @@ ActiveRecord::Schema[6.1].define(version: 2020_09_29_043200) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "login", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
