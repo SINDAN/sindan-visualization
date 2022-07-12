@@ -31,12 +31,13 @@ config/database.yml
 
 /public/system/*
 /public/assets
+/app/assets/builds/*
+!/app/assets/builds/.keep
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/public/packs
-/public/packs-test
+# npm
 /node_modules
 /yarn-error.log
 yarn-debug.log*

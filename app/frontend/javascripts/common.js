@@ -5,13 +5,9 @@
 
 import Rails from "@rails/ujs"
 //import * as ActiveStorage from "@rails/activestorage"
-//import "channels"
 
 Rails.start()
 //ActiveStorage.start()
-
-import "core-js/stable"
-import "regenerator-runtime/runtime"
 
 // lib
 import "bootstrap"
@@ -19,6 +15,3 @@ import "bootstrap"
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
 import '@fortawesome/fontawesome-free/js/regular'
-
-// special entry point of css
-import "@css/application"
