@@ -71,8 +71,8 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     awesome_print (1.9.2)
-    bcrypt (3.1.17)
-    bootsnap (1.11.1)
+    bcrypt (3.1.18)
+    bootsnap (1.12.0)
       msgpack (~> 1.2)
     breadcrumbs_on_rails (4.1.0)
       railties (>= 5.0)
@@ -82,7 +82,7 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
-    capistrano-bundler (2.0.1)
+    capistrano-bundler (2.1.0)
       capistrano (~> 3.1)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
@@ -110,9 +110,9 @@ GEM
     choice (0.2.0)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
-    debug (1.5.0)
+    debug (1.6.0)
       irb (>= 1.3.6)
-      reline (>= 0.2.7)
+      reline (>= 0.3.1)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -127,9 +127,10 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    i18n (1.10.0)
+    i18n (1.11.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
     irb (1.4.1)
@@ -137,6 +138,8 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jsbundling-rails (1.0.3)
+      railties (>= 6.0.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -159,8 +162,8 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.15.0)
-    msgpack (1.5.1)
+    minitest (5.16.2)
+    msgpack (1.5.3)
     mysql2 (0.5.4)
     net-imap (0.2.3)
       digest
@@ -188,13 +191,11 @@ GEM
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.4)
     rack-mini-profiler (3.0.0)
       rack (>= 1.2.0)
-    rack-proxy (0.7.2)
-      rack
-    rack-test (1.1.0)
-      rack (>= 1.0, < 3)
+    rack-test (2.0.2)
+      rack (>= 1.3)
     rails (7.0.3)
       actioncable (= 7.0.3)
       actionmailbox (= 7.0.3)
@@ -216,12 +217,12 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-erd (1.6.1)
+    rails-erd (1.7.1)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     railties (7.0.3)
       actionpack (= 7.0.3)
@@ -231,11 +232,11 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    ransack (3.2.0)
+    ransack (3.2.1)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
-    regexp_parser (2.4.0)
+    regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
     responders (3.0.1)
@@ -262,11 +263,11 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     rubyzip (2.3.2)
-    selenium-webdriver (4.1.0)
+    selenium-webdriver (4.3.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2)
-    semantic_range (3.0.0)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
     slack-notifier (2.4.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
@@ -276,7 +277,7 @@ GEM
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
     spring (4.0.0)
-    sprockets (4.0.3)
+    sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.4.2)
@@ -290,7 +291,7 @@ GEM
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)
-    timeout (0.2.0)
+    timeout (0.3.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     warden (1.2.9)
@@ -299,17 +300,13 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
+    websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.4)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
@@ -329,7 +326,9 @@ DEPENDENCIES
   debug
   devise
   factory_bot_rails
+  foreman
   jbuilder
+  jsbundling-rails
   kaminari
   mysql2
   puma (~> 5.6)
@@ -346,7 +345,6 @@ DEPENDENCIES
   sprockets-rails
   tzinfo-data
   webdrivers
-  webpacker (~> 5.0)
 
 BUNDLED WITH
    2.3.7

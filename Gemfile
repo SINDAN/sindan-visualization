@@ -10,7 +10,7 @@ gem 'puma', '~> 5.6'
 gem 'devise'
 
 gem 'sprockets-rails'
-gem 'webpacker', '~> 5.0'
+gem 'jsbundling-rails'
 
 gem 'slim-rails'
 gem 'jbuilder'
@@ -62,6 +62,7 @@ group :development, :test do
   gem 'spring'
   gem 'awesome_print'
   gem 'rails-erd'
+  gem 'foreman'
 end
 
 group :development, :test do
