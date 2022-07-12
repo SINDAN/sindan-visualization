@@ -10,7 +10,7 @@ gem 'puma', '~> 5.6'
 gem 'devise'
 
 gem 'sprockets-rails'
-gem 'webpacker', '~> 5.0'
+gem 'jsbundling-rails'
 
 gem 'slim-rails'
 gem 'jbuilder'
