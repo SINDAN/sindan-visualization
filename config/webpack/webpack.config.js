@@ -16,7 +16,9 @@ module.exports = {
     application: [
       "./app/frontend/packs/application.js",
       "./app/frontend/stylesheets/application.scss",
-    ]
+    ],
+    'log_campaigns/index': "./app/frontend/packs/log_campaigns/index.js",
+    'statuses/index': "./app/frontend/packs/statuses/index.js",
   },
   output: {
     filename: "[name].js",
