@@ -34,8 +34,6 @@ module SindanVisualization
     config.time_zone = "Tokyo"
     config.eager_load_paths << Rails.root.join("lib")
 
-    config.active_record.yaml_column_permitted_classes = [Symbol]
-
     # assets
     config.generators.assets = false
 
