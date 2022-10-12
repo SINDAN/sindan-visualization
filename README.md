@@ -21,14 +21,24 @@
 
 * Installation
 
+    ```sh
+    $ bundle install
+    $ bundle exec rails db:migrate
+    $ bundle exec rails db:seed
     ```
-    bundle install
-    bundle exec rails db:migrate
-    bundle exec rails db:seed
+
+    ```sh
+    $ yarn install
+    ```
+
+* Development environment
+
+    ```sh
+    $ bundle exec bin/dev
     ```
 
 * Testing
 
-    ```
-    bundle exec rails spec
+    ```sh
+    $ bundle exec rails spec
     ```
