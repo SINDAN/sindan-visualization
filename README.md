@@ -6,7 +6,7 @@
 
 ## Requirements
 * Ruby 3.1.2 (ref: [.ruby-version](.ruby-version) )
-* Node.js 16.16.0 (ref: [.node-version](.node-version) )
+* Node.js 18.12.1 (ref: [.node-version](.node-version) )
 * MySQL
 
 ## Getting Started
@@ -21,14 +21,24 @@
 
 * Installation
 
+    ```sh
+    $ bundle install
+    $ bundle exec rails db:migrate
+    $ bundle exec rails db:seed
     ```
-    bundle install
-    bundle exec rails db:migrate
-    bundle exec rails db:seed
+
+    ```sh
+    $ yarn install
+    ```
+
+* Development environment
+
+    ```sh
+    $ bundle exec bin/dev
     ```
 
 * Testing
 
-    ```
-    bundle exec rails spec
+    ```sh
+    $ bundle exec rails spec
     ```
