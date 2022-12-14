@@ -13,7 +13,7 @@ table.table.status-layer
         th #{DiagnosisLog.layer_label(layer)}
         - @time_list.each_with_index do |t, index|
           - logs = @target_logs.layer_by(layer).occurred_after(t).occurred_before(@time_list[index + 1])
-          td
+          td data-bs-toggle="popover"
             - if logs.count.zero?
               span.dot-default
             - elsif logs.fail.count.zero?

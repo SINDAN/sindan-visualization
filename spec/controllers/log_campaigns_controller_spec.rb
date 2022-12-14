@@ -150,9 +150,9 @@ RSpec.describe LogCampaignsController, type: :controller do
       end
 
       context "with invalid params" do
-        it "assigns a newly created but unsaved log_campaign as @log_campaign" do
+        it "returns a response with 422 response (i.e. to display the 'new' template)" do
           post :create, params: { log_campaign: invalid_attributes }, session: valid_session
-          expect(assigns(:log_campaign)).to be_a_new(LogCampaign)
+          expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'new' template" do
@@ -177,22 +177,22 @@ RSpec.describe LogCampaignsController, type: :controller do
 
         it "assigns the requested log_campaign as @log_campaign" do
           log_campaign = LogCampaign.create! valid_attributes
-          put :update, params: { id: log_campaign.to_param, log_campaign: valid_attributes }, session: valid_session
+          put :update, params: { id: log_campaign.to_param, log_campaign: new_attributes }, session: valid_session
           expect(assigns(:log_campaign)).to eq(log_campaign)
         end
 
         it "redirects to the log_campaign" do
           log_campaign = LogCampaign.create! valid_attributes
-          put :update, params: { id: log_campaign.to_param, log_campaign: valid_attributes }, session: valid_session
+          put :update, params: { id: log_campaign.to_param, log_campaign: new_attributes }, session: valid_session
           expect(response).to redirect_to(log_campaign)
         end
       end
 
       context "with invalid params" do
-        it "assigns the log_campaign as @log_campaign" do
+        it "returns a response with 422 response (i.e. to display the 'new' template)" do
           log_campaign = LogCampaign.create! valid_attributes
           put :update, params: { id: log_campaign.to_param, log_campaign: invalid_attributes }, session: valid_session
-          expect(assigns(:log_campaign)).to eq(log_campaign)
+          expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'edit' template" do
