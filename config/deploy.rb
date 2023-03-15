@@ -19,11 +19,11 @@ set :deploy_to, '/var/www/sindan-production'
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, '3.1.3'
+set :rbenv_ruby, '3.2.1'
 
 # Set the node version
 set :nodenv_type, :system
-set :nodenv_node, '18.12.1'
+set :nodenv_node, '18.14.1'
 set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
 set :nodenv_map_bins, %w{node npm}
 

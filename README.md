@@ -5,8 +5,8 @@
 * Simple Dashboard
 
 ## Requirements
-* Ruby 3.1.3 (ref: [.ruby-version](.ruby-version) )
-* Node.js 18.12.1 (ref: [.node-version](.node-version) )
+* Ruby 3.2.1 (ref: [.ruby-version](.ruby-version) )
+* Node.js 18.14.1 (ref: [.node-version](.node-version) )
 * MySQL
 
 ## Getting Started
