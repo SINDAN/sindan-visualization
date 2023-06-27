@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '7.0.4.3'
+gem 'rails', '7.0.5.1'
 
 gem 'mysql2'
 
@@ -16,7 +16,7 @@ gem 'slim-rails'
 gem 'jbuilder'
 
 gem 'kaminari'
-gem 'ransack'
+gem 'ransack', '~> 3.0'
 gem 'breadcrumbs_on_rails'
 
 gem 'slack-notifier'
