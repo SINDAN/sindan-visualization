@@ -79,7 +79,7 @@ class IgnoreErrorResultsController < ApplicationController
   def destroy
     @ignore_error_result.destroy
     respond_to do |format|
-      format.html { redirect_to ignore_error_results_url, notice: 'Ignore error result was successfully destroyed.' }
+      format.html { redirect_to ignore_error_results_url, status: :see_other, notice: 'Ignore error result was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
