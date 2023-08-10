@@ -121,7 +121,7 @@ class LogCampaignsController < ApplicationController
   def destroy
     @log_campaign.destroy
     respond_to do |format|
-      format.html { redirect_to log_campaigns_url, notice: 'Log campaign was successfully destroyed.' }
+      format.html { redirect_to log_campaigns_url, status: :see_other, notice: 'Log campaign was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
