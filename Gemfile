@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '7.0.6'
+gem 'rails', '7.0.7'
 
 gem 'mysql2'
 
@@ -70,6 +70,5 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'capybara'
   gem "selenium-webdriver"
-  gem "webdrivers"
   gem 'factory_bot_rails'
 end

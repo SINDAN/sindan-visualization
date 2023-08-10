@@ -67,7 +67,7 @@ class DiagnosisLogsController < ApplicationController
   def destroy
     @diagnosis_log.destroy
     respond_to do |format|
-      format.html { redirect_to diagnosis_logs_url, notice: 'Diagnosis log was successfully destroyed.' }
+      format.html { redirect_to diagnosis_logs_url, status: :see_other, notice: 'Diagnosis log was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
