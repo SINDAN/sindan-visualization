@@ -989,10 +989,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@rails/ujs@7.0.7-2":
-  version "7.0.7-2"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.7-2.tgz#009bbed10e7d2fdc278a26441dc7457615b616d6"
-  integrity sha512-7/qRnEfs1kKAUoRHqUNPfGqcqJ5h3CmC2APP+l4flyK61kaOQmGbNSeiukmDQAAAhCBVqAdYbwFNnkNMTPSsHg==
+"@rails/ujs@7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.8.tgz#59853367d0827b3955d2c4bedfd5eba4a79d3422"
+  integrity sha512-tOQQBVH8LsUpGXqDnk+kaOGVsgZ8maHAhEiw3Git3p88q+c0Slgu47HuDnL6sVxeCfz24zbq7dOjsVYDiTpDIA==
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
