@@ -15,7 +15,7 @@ gem "slim-rails"
 gem "jbuilder"
 
 gem "kaminari"
-gem "ransack", "~> 3.0"
+gem "ransack"
 gem "breadcrumbs_on_rails"
 
 gem "slack-notifier"
