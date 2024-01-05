@@ -8,7 +8,7 @@ class IgnoreErrorResult < ApplicationRecord
 
   concerning :IgnoreLogTypes do
     included do
-      serialize :ignore_log_types, Array
+      serialize :ignore_log_types, type: Array
 
       def self.ignore_log_types_by_ssid(ssid)
         self.ssid_by(ssid).first.try(:ignore_log_types)
