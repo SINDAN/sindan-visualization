@@ -1,8 +1,8 @@
 // bootstrap
 @import "~bootstrap/scss/bootstrap";
 
-// bootstrap-datetimepicker
-//@import "~eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build";
+// @eonasdan/tempus-dominus
+@import '~@eonasdan/tempus-dominus/src/scss/tempus-dominus';
 
 body {
     padding-top: 70px;

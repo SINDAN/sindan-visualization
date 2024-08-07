@@ -1,13 +1,19 @@
-import "eonasdan-bootstrap-datetimepicker";
+import { TempusDominus } from '@eonasdan/tempus-dominus';
 
 $(function () {
-    var datetime_format = 'YYYY-MM-DDTHH:mm:ssZ'
+    var datetime_format = 'yyyy/MM/dd HH:mm'
 
-    $('#datetime_from').datetimepicker({
-        format: datetime_format
+    new TempusDominus(document.getElementById('datetime_from_group'), {
+        localization: {
+	    format: datetime_format
+	},
+	promptTimeOnDateChange: true
     });
 
-    $('#datetime_to').datetimepicker({
-        format: datetime_format
+    new TempusDominus(document.getElementById('datetime_to_group'), {
+        localization: {
+	    format: datetime_format
+	},
+	promptTimeOnDateChange: true
     });
 });
