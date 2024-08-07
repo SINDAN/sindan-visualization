@@ -12,12 +12,12 @@
       .row.mb-3
         = f.label :datetime, class: "control-label col-sm-2"
         .col-sm-4
-          .input-group.date#datetime_from
+          .input-group.date#datetime_from_group
             = f.text_field :datetime_from, value: @datetime_from, class: "form-control"
             span.input-group-text
               i.fa.fa-calendar
         .col-sm-4
-          .input-group.date#datetime_to
+          .input-group.date#datetime_to_group
             = f.text_field :datetime_to, value: @datetime_to, class: "form-control"
             span.input-group-text
               i.fa.fa-calendar
