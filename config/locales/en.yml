@@ -20,7 +20,7 @@ en:
     - Fri
     - Sat
     abbr_month_names:
-    - 
+    -
     - Jan
     - Feb
     - Mar
@@ -46,7 +46,7 @@ en:
       long: "%B %d, %Y"
       short: "%b %d"
     month_names:
-    - 
+    -
     - January
     - February
     - March
@@ -60,9 +60,9 @@ en:
     - November
     - December
     order:
-    - :year
-    - :month
-    - :day
+    - year
+    - month
+    - day
   datetime:
     distance_in_words:
       about_x_hours:
@@ -103,7 +103,7 @@ en:
         one: "%{count} year"
         other: "%{count} years"
     prompts:
-      second: Second
+      second: Seconds
       minute: Minute
       hour: Hour
       day: Day
@@ -131,6 +131,7 @@ en:
       not_an_integer: must be an integer
       odd: must be odd
       other_than: must be other than %{count}
+      password_too_long: is too long
       present: must be blank
       required: must exist
       taken: has already been taken
@@ -160,6 +161,7 @@ en:
       format:
         delimiter: ","
         format: "%u%n"
+        negative_format: "-%u%n"
         precision: 2
         separator: "."
         significant: false
@@ -199,6 +201,7 @@ en:
           mb: MB
           pb: PB
           tb: TB
+          zb: ZB
     percentage:
       format:
         delimiter: ''
