@@ -24,7 +24,7 @@ module.exports = {
     filename: "[name].js",
     sourceMapFilename: "[file].map",
     chunkFormat: "module",
-    path: path.resolve(__dirname, "..", "..", "app/assets/builds"),
+    path: path.resolve(__dirname, "app/assets/builds"),
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
@@ -62,9 +62,9 @@ module.exports = {
     // Add additional file types
     extensions: ['.js', '.jsx', '.scss', '.css'],
     alias: {
-      '@js': path.resolve(__dirname, '..', '..', 'app/frontend', 'javascripts'),
-      '@components': path.resolve(__dirname, '..', '..', 'app/frontend', 'javascripts', 'components'),
-      '@css': path.resolve(__dirname, '..', '..', 'app/frontend', 'stylesheets')
+      '@js': path.resolve(__dirname, 'app/frontend', 'javascripts'),
+      '@components': path.resolve(__dirname, 'app/frontend', 'javascripts', 'components'),
+      '@css': path.resolve(__dirname, 'app/frontend', 'stylesheets')
     }
   }
 }
