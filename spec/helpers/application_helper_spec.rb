@@ -10,7 +10,7 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe ApplicationHelper, :type => :helper do
+RSpec.describe ApplicationHelper, type: :helper do
   describe "nl2br" do
     it "replace line break to br tag" do
       str = "hoge\nhoge"
