@@ -1,7 +1,7 @@
 class DiagnosisLog < ApplicationRecord
   belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid, touch: true
 
-  enum result: {
+  enum :result, {
          fail: 0,
          success: 1,
          information: 10,
