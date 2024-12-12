@@ -29,7 +29,7 @@ test:
   database: sindan_test
   username: <%= ENV['SINDAN_DATABASE_USERNAME_DEV'] %>
   password: <%= ENV['SINDAN_DATABASE_PASSWORD_DEV'] %>
-  host: <%= ENV['SINDAN_DATABASE_DATABASE_HOSTNAME'] %> # for CI
+  host: <%= ENV['SINDAN_DATABASE_HOSTNAME'] %> # for CI
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
