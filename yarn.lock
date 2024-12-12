@@ -932,11 +932,6 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@rails/ujs@7.1.500":
-  version "7.1.500"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.1.500.tgz#84bb037b6a823ec7fb7782a2ac03452deb505128"
-  integrity sha512-PfPtQrxFOn55RlJ4ygXkcIHFkoPO1JMTRJcSdPb0EavcSZ3Ekl9ujAAPrrqj2zKwkbe0pGGR79RJhnUr5ngQjw==
-
 "@types/eslint-scope@^3.7.7":
   version "3.7.7"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.7.tgz#3108bd5f18b0cdb277c867b3dd449c9ed7079ac5"
@@ -1159,6 +1154,13 @@ ajv@^8.0.0, ajv@^8.9.0:
     fast-uri "^3.0.1"
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
+
+alt-ujs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/alt-ujs/-/alt-ujs-1.0.0.tgz#a11a340a568550eac9e7373830d7e6b1d5f38d39"
+  integrity sha512-rUWRXofJJ0wmTfB9KM2yZWHLI+FmAjszC6dzXulK0gfH//gUBZQeQ453yu1A27Oa+kS8Udmm2el67cv747GvGw==
+  dependencies:
+    urijs "^1.19.11"
 
 ansis@1.5.2:
   version "1.5.2"
@@ -2098,6 +2100,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+urijs@^1.19.11:
+  version "1.19.11"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.11.tgz#204b0d6b605ae80bea54bea39280cdb7c9f923cc"
+  integrity sha512-HXgFDgDommxn5/bIv0cnQZsPhHDA90NPHD6+c/v21U5+Sx5hoP8+dP9IZXBU1gIfvdRfhG8cel9QNPeionfcCQ==
 
 util-deprecate@^1.0.2:
   version "1.0.2"

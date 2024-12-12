@@ -10,7 +10,7 @@
     "@eonasdan/tempus-dominus": "^6.9.10",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@popperjs/core": "^2.9.2",
-    "@rails/ujs": "7.1.500",
+    "alt-ujs": "^1.0.0",
     "babel-loader": "^9.0.0",
     "bootstrap": "^5.0.1",
     "css-loader": "^7.0.0",
