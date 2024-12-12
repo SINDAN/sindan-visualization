@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: mysql
-  password:
-  socket: <%= ENV.fetch("MYSQL_SOCKET") { '/tmp/mysql.sock' } %>
+  socket: <%= ENV['MYSQL_SOCKET'] %>
 
 development:
   <<: *default
   database: sindan_development
+  username: <%= ENV['SINDAN_DATABASE_USERNAME_DEV'] %>
+  password: <%= ENV['SINDAN_DATABASE_PASSWORD_DEV'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,6 +27,9 @@ development:
 test:
   <<: *default
   database: sindan_test
+  username: <%= ENV['SINDAN_DATABASE_USERNAME_DEV'] %>
+  password: <%= ENV['SINDAN_DATABASE_PASSWORD_DEV'] %>
+  host: <%= ENV['SINDAN_DATABASE_DATABASE_HOSTNAME'] %> # for CI
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -51,5 +54,5 @@ test:
 production:
   <<: *default
   database: sindan_production
-  username: sindan
-  password: <%= ENV['SINDAN_VISUALIZATION_DATABASE_PASSWORD'] %>
+  username: <%= ENV['SINDAN_DATABASE_USERNAME'] %>
+  password: <%= ENV['SINDAN_DATABASE_PASSWORD'] %>

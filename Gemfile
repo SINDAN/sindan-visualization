@@ -8,6 +8,8 @@ gem "puma", ">= 5.0"
 
 gem "devise"
 
+gem "dotenv-rails"
+
 gem "sprockets-rails"
 gem "jsbundling-rails"
 
