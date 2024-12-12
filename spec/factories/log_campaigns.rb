@@ -8,5 +8,4 @@ FactoryBot.define do
     version { "MyString" }
     occurred_at { "2015-08-01 01:15:59" }
   end
-
 end

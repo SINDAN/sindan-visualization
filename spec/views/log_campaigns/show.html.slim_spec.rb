@@ -3,33 +3,33 @@ require 'rails_helper'
 RSpec.describe "log_campaigns/show", type: :view do
   before(:each) do
     @log_campaign = assign(:log_campaign, LogCampaign.create!(
-      :log_campaign_uuid => "Log Campaign Uuid",
-      :ssid => "SSID",
-      :network_type => "NetworkType",
-      :mac_addr => "Mac Addr",
-      :os => "Os",
-      :version => "Version",
-      :occurred_at => "2015-07-24 19:24:42",
+      log_campaign_uuid: "Log Campaign Uuid",
+      ssid: "SSID",
+      network_type: "NetworkType",
+      mac_addr: "Mac Addr",
+      os: "Os",
+      version: "Version",
+      occurred_at: "2015-07-24 19:24:42",
     ))
 
     assign(:diagnosis_logs, [
       DiagnosisLog.create!(
-        :layer => "Layer",
-        :log_group => "Log Group",
-        :log_type => "Log Type",
-        :target => "Target",
-        :result => :success,
-        :detail => "Detail",
-        :occurred_at => "2015-07-24 19:24:42",
+        layer: "Layer",
+        log_group: "Log Group",
+        log_type: "Log Type",
+        target: "Target",
+        result: :success,
+        detail: "Detail",
+        occurred_at: "2015-07-24 19:24:42",
       ),
       DiagnosisLog.create!(
-        :layer => "Layer",
-        :log_group => "Log Group",
-        :log_type => "Log Type",
-        :target => "Target",
-        :result => :fail,
-        :detail => "Detail",
-        :occurred_at => "2015-07-24 19:24:42",
+        layer: "Layer",
+        log_group: "Log Group",
+        log_type: "Log Type",
+        target: "Target",
+        result: :fail,
+        detail: "Detail",
+        occurred_at: "2015-07-24 19:24:42",
       )
     ])
   end

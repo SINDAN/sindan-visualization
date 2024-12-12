@@ -24,7 +24,6 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe IgnoreErrorResultsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # IgnoreErrorResult. As you add validations to IgnoreErrorResult, be sure to
   # adjust the attributes here as well.
@@ -55,7 +54,7 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
     describe "GET #show" do
       it "returns a success response" do
         ignore_error_result = IgnoreErrorResult.create! valid_attributes
-        get :show, params: {id: ignore_error_result.to_param}, session: valid_session
+        get :show, params: { id: ignore_error_result.to_param }, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -70,7 +69,7 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
     describe "GET #edit" do
       it "returns a success response" do
         ignore_error_result = IgnoreErrorResult.create! valid_attributes
-        get :edit, params: {id: ignore_error_result.to_param}, session: valid_session
+        get :edit, params: { id: ignore_error_result.to_param }, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -79,24 +78,24 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
       context "with valid params" do
         it "creates a new IgnoreErrorResult" do
           expect {
-            post :create, params: {ignore_error_result: valid_attributes}, session: valid_session
+            post :create, params: { ignore_error_result: valid_attributes }, session: valid_session
           }.to change(IgnoreErrorResult, :count).by(1)
         end
 
         it "redirects to the created ignore_error_result" do
-          post :create, params: {ignore_error_result: valid_attributes}, session: valid_session
+          post :create, params: { ignore_error_result: valid_attributes }, session: valid_session
           expect(response).to redirect_to(IgnoreErrorResult.last)
         end
       end
 
       context "with invalid params" do
         it "returns a response with 422 response (i.e. to display the 'new' template)" do
-          post :create, params: {ignore_error_result: invalid_attributes}, session: valid_session
+          post :create, params: { ignore_error_result: invalid_attributes }, session: valid_session
           expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'new' template" do
-          post :create, params: {ignore_error_result: invalid_attributes}, session: valid_session
+          post :create, params: { ignore_error_result: invalid_attributes }, session: valid_session
           expect(response).to render_template("new")
         end
       end
@@ -110,14 +109,14 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
 
         it "updates the requested ignore_error_result" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: new_attributes}, session: valid_session
+          put :update, params: { id: ignore_error_result.to_param, ignore_error_result: new_attributes }, session: valid_session
           ignore_error_result.reload
           expect(ignore_error_result.ssid).to eq new_attributes[:ssid]
         end
 
         it "redirects to the ignore_error_result" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: new_attributes}, session: valid_session
+          put :update, params: { id: ignore_error_result.to_param, ignore_error_result: new_attributes }, session: valid_session
           expect(response).to redirect_to(ignore_error_result)
         end
       end
@@ -125,13 +124,13 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
       context "with invalid params" do
         it "returns a response with 422 response (i.e. to display the 'edit' template)" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: invalid_attributes}, session: valid_session
+          put :update, params: { id: ignore_error_result.to_param, ignore_error_result: invalid_attributes }, session: valid_session
           expect(response).to have_http_status(422)
         end
 
         it "re-renders the 'edit' template" do
           ignore_error_result = IgnoreErrorResult.create! valid_attributes
-          put :update, params: {id: ignore_error_result.to_param, ignore_error_result: invalid_attributes}, session: valid_session
+          put :update, params: { id: ignore_error_result.to_param, ignore_error_result: invalid_attributes }, session: valid_session
           expect(response).to render_template("edit")
         end
       end
@@ -141,13 +140,13 @@ RSpec.describe IgnoreErrorResultsController, type: :controller do
       it "destroys the requested ignore_error_result" do
         ignore_error_result = IgnoreErrorResult.create! valid_attributes
         expect {
-          delete :destroy, params: {id: ignore_error_result.to_param}, session: valid_session
+          delete :destroy, params: { id: ignore_error_result.to_param }, session: valid_session
         }.to change(IgnoreErrorResult, :count).by(-1)
       end
 
       it "redirects to the ignore_error_results list" do
         ignore_error_result = IgnoreErrorResult.create! valid_attributes
-        delete :destroy, params: {id: ignore_error_result.to_param}, session: valid_session
+        delete :destroy, params: { id: ignore_error_result.to_param }, session: valid_session
         expect(response).to redirect_to(ignore_error_results_url)
       end
     end
