@@ -13,36 +13,36 @@ class LogCampaign < ApplicationRecord
     ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
 
     if self.diagnosis_logs.fail.where(log_type: ignore_log_types).count > 0
-      return 'warning'
+      return "warning"
     end
 
     if self.diagnosis_logs.fail.count > 0
-      return 'fail'
+      return "fail"
     end
 
     if self.diagnosis_logs.success.count > 0
-      return 'success'
+      return "success"
     end
 
-    return 'information'
+    "information"
   end
 
   def result_label
     ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.ssid)
 
     if self.diagnosis_logs.fail.where(log_type: ignore_log_types).count > 0
-      return 'table-warning'
+      return "table-warning"
     end
 
     if self.diagnosis_logs.fail.count > 0
-      return 'table-danger'
+      return "table-danger"
     end
 
     if self.diagnosis_logs.success.count > 0
-      return 'table-success'
+      return "table-success"
     end
 
-    return ''
+    ""
   end
 
   def self.ssid_list

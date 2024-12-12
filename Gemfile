@@ -1,12 +1,14 @@
 source "https://rubygems.org"
 
-gem "rails", "7.1.5"
+gem "rails", "7.2.2.1"
 
 gem "mysql2"
 
 gem "puma", ">= 5.0"
 
 gem "devise"
+
+gem "dotenv-rails"
 
 gem "sprockets-rails"
 gem "jsbundling-rails"
@@ -39,7 +41,13 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 # Use Capistrano for deployment

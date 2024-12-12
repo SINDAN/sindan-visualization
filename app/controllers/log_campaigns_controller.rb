@@ -1,8 +1,9 @@
 # coding: utf-8
+
 class LogCampaignsController < ApplicationController
   before_action :authenticate_user!
 
-  before_action :set_log_campaign, only: [:show, :all, :log, :error, :edit, :update, :destroy]
+  before_action :set_log_campaign, only: [ :show, :all, :log, :error, :edit, :update, :destroy ]
 
   # GET /log_campaigns
   # GET /log_campaigns.json
@@ -93,7 +94,7 @@ class LogCampaignsController < ApplicationController
 
     respond_to do |format|
       if @log_campaign.save
-        format.html { redirect_to @log_campaign, notice: 'Log campaign was successfully created.' }
+        format.html { redirect_to @log_campaign, notice: "Log campaign was successfully created." }
         format.json { render :show, status: :created, location: @log_campaign }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -107,7 +108,7 @@ class LogCampaignsController < ApplicationController
   def update
     respond_to do |format|
       if @log_campaign.update(log_campaign_params)
-        format.html { redirect_to @log_campaign, notice: 'Log campaign was successfully updated.' }
+        format.html { redirect_to @log_campaign, notice: "Log campaign was successfully updated." }
         format.json { render :show, status: :ok, location: @log_campaign }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -121,7 +122,7 @@ class LogCampaignsController < ApplicationController
   def destroy
     @log_campaign.destroy
     respond_to do |format|
-      format.html { redirect_to log_campaigns_url, status: :see_other, notice: 'Log campaign was successfully destroyed.' }
+      format.html { redirect_to log_campaigns_url, status: :see_other, notice: "Log campaign was successfully destroyed." }
       format.json { head :no_content }
     end
   end

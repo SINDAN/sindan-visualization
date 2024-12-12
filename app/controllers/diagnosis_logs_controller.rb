@@ -1,7 +1,7 @@
 class DiagnosisLogsController < ApplicationController
   before_action :authenticate_user!
 
-  before_action :set_diagnosis_log, only: [:show, :edit, :update, :destroy]
+  before_action :set_diagnosis_log, only: [ :show, :edit, :update, :destroy ]
 
   # GET /diagnosis_logs
   # GET /diagnosis_logs.json
@@ -39,7 +39,7 @@ class DiagnosisLogsController < ApplicationController
 
     respond_to do |format|
       if @diagnosis_log.save
-        format.html { redirect_to @diagnosis_log, notice: 'Diagnosis log was successfully created.' }
+        format.html { redirect_to @diagnosis_log, notice: "Diagnosis log was successfully created." }
         format.json { render :show, status: :created, location: @diagnosis_log }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class DiagnosisLogsController < ApplicationController
   def update
     respond_to do |format|
       if @diagnosis_log.update(diagnosis_log_params)
-        format.html { redirect_to @diagnosis_log, notice: 'Diagnosis log was successfully updated.' }
+        format.html { redirect_to @diagnosis_log, notice: "Diagnosis log was successfully updated." }
         format.json { render :show, status: :ok, location: @diagnosis_log }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -67,7 +67,7 @@ class DiagnosisLogsController < ApplicationController
   def destroy
     @diagnosis_log.destroy
     respond_to do |format|
-      format.html { redirect_to diagnosis_logs_url, status: :see_other, notice: 'Diagnosis log was successfully destroyed.' }
+      format.html { redirect_to diagnosis_logs_url, status: :see_other, notice: "Diagnosis log was successfully destroyed." }
       format.json { head :no_content }
     end
   end

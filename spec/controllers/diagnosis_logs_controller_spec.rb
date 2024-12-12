@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe DiagnosisLogsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # DiagnosisLog. As you add validations to DiagnosisLog, be sure to
   # adjust the attributes here as well.
@@ -43,14 +42,14 @@ RSpec.describe DiagnosisLogsController, type: :controller do
       it "assigns all diagnosis_logs as @diagnosis_logs" do
         diagnosis_log = DiagnosisLog.create! valid_attributes
         get :index, params: {}, session: valid_session
-        expect(assigns(:diagnosis_logs)).to eq([diagnosis_log])
+        expect(assigns(:diagnosis_logs)).to eq([ diagnosis_log ])
       end
 
       context "with date param" do
         it "assigns all diagnosis_logs as @diagnosis_logs" do
           diagnosis_log = DiagnosisLog.create!(occurred_at: '2015-07-31 19:24:42')
           get :index, params: { date: '20150731' }, session: valid_session
-          expect(assigns(:diagnosis_logs)).to eq([diagnosis_log])
+          expect(assigns(:diagnosis_logs)).to eq([ diagnosis_log ])
         end
 
         it "assigns no diagnosis_logs as @diagnosis_logs" do
@@ -64,7 +63,7 @@ RSpec.describe DiagnosisLogsController, type: :controller do
     describe "GET #show" do
       it "assigns the requested diagnosis_log as @diagnosis_log" do
         diagnosis_log = DiagnosisLog.create! valid_attributes
-        get :show, params: {:id => diagnosis_log.to_param}, session: valid_session
+        get :show, params: { id: diagnosis_log.to_param }, session: valid_session
         expect(assigns(:diagnosis_log)).to eq(diagnosis_log)
       end
     end
@@ -146,7 +145,7 @@ RSpec.describe DiagnosisLogsController, type: :controller do
       context "with invalid params" do
         it "returns a response with 422 response (i.e. to display the 'edit' template)" do
           diagnosis_log = DiagnosisLog.create! valid_attributes
-          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: invalid_attributes}, session: valid_session
+          put :update, params: { id: diagnosis_log.to_param, diagnosis_log: invalid_attributes }, session: valid_session
           expect(response).to have_http_status(422)
         end
 

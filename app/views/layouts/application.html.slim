@@ -9,7 +9,7 @@ html
 
     = stylesheet_link_tag 'application'
     = javascript_include_tag yield(:js_entrypoint).blank? ? 'application' : yield(:js_entrypoint), type: "module"
-    = content_for :header
+    = content_for :head
 
   body
     header

@@ -29,7 +29,7 @@ RSpec.describe IgnoreErrorResult, type: :model do
       before(:each) do
         @ignore_error_result = IgnoreErrorResult.create(
           ssid: 'SSID',
-          ignore_log_types: ["v4http_srv", "v6trans_aaaa_namesrv"],
+          ignore_log_types: [ "v4http_srv", "v6trans_aaaa_namesrv" ],
         )
       end
 

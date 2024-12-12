@@ -1,22 +1,22 @@
 class DiagnosisLog < ApplicationRecord
   belongs_to :log_campaign, foreign_key: :log_campaign_uuid, primary_key: :log_campaign_uuid, touch: true
 
-  enum result: {
+  enum :result, {
          fail: 0,
          success: 1,
-         information: 10,
+         information: 10
        }
 
   cattr_reader :layer_defs
   @@layer_defs = {
-    hardware: 'ハードウェア層',
-    datalink: 'データリンク層',
-    interface: 'インタフェース設定層',
-    localnet: 'ローカルネットワーク層',
-    globalnet: 'グローバルネットワーク層',
-    dns: '名前解決層',
-    web: 'ウェブアプリケーション層',
-    app: 'アプリケーション層',
+    hardware: "ハードウェア層",
+    datalink: "データリンク層",
+    interface: "インタフェース設定層",
+    localnet: "ローカルネットワーク層",
+    globalnet: "グローバルネットワーク層",
+    dns: "名前解決層",
+    web: "ウェブアプリケーション層",
+    app: "アプリケーション層"
   }
 
   cattr_reader :log_type_defs
@@ -28,7 +28,7 @@ class DiagnosisLog < ApplicationRecord
     "v6autoconf", "ra_prefixes", "ra_flags", "v4ifconf", "v6ifconf",
     "v4nameservers", "v4routers", "v4autoconf", "v4addr", "netmask",
     "v6lladdr", "rate", "channel", "ifstatus", "ssid",
-    "iftype", "rssi", "bssid", "noise", "ifmtu",
+    "iftype", "rssi", "bssid", "noise", "ifmtu"
   ]
 
   default_scope { order(occurred_at: :desc) }
@@ -57,24 +57,24 @@ class DiagnosisLog < ApplicationRecord
 
   def result_label
     if self.result.nil?
-      return ''
+      return ""
     end
 
     ignore_log_types = IgnoreErrorResult.ignore_log_types_by_ssid(self.log_campaign.try(:ssid)) || Array.new
 
     if ignore_log_types.include?(self.log_type)
-      return 'table-warning'
+      return "table-warning"
     end
 
     if self.fail?
-      return 'table-danger'
+      return "table-danger"
     end
 
     if self.success?
       return "table-success"
     end
 
-    return  ""
+    ""
   end
 
   def log
@@ -82,14 +82,14 @@ class DiagnosisLog < ApplicationRecord
   end
 
   def self.date_list
-    return []
-    #Rails.cache.fetch("date_list") do
+    []
+    # Rails.cache.fetch("date_list") do
     #  DiagnosisLog.occurred_after(DateTime.now - 10.days).pluck(:occurred_at).map{ |occurred_at| occurred_at.to_date.to_s unless occurred_at.blank? }.uniq
-    #end
+    # end
   end
 
   # for ransacker
   ransacker :occurred_at do
-    Arel.sql('date(occurred_at)')
+    Arel.sql("date(occurred_at)")
   end
 end

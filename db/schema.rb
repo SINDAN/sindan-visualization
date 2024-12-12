@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2020_09_29_043200) do
+ActiveRecord::Schema[7.2].define(version: 2020_09_29_043200) do
   create_table "diagnosis_logs", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "layer"
     t.string "log_type"
@@ -67,5 +67,4 @@ ActiveRecord::Schema[7.1].define(version: 2020_09_29_043200) do
     t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
 end

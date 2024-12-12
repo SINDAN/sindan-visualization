@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe LogCampaignsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # LogCampaign. As you add validations to LogCampaign, be sure to
   # adjust the attributes here as well.
@@ -43,7 +42,7 @@ RSpec.describe LogCampaignsController, type: :controller do
       it "assigns all log_campaigns as @log_campaigns" do
         log_campaign = LogCampaign.create! valid_attributes
         get :index, params: {}, session: valid_session
-        expect(assigns(:log_campaigns)).to eq([log_campaign])
+        expect(assigns(:log_campaigns)).to eq([ log_campaign ])
       end
     end
 
@@ -51,7 +50,7 @@ RSpec.describe LogCampaignsController, type: :controller do
       it "assigns all log_campaigns as @log_campaigns" do
         log_campaign = LogCampaign.create! valid_attributes
         get :search, params: {}, session: valid_session
-        expect(assigns(:log_campaigns)).to eq([log_campaign])
+        expect(assigns(:log_campaigns)).to eq([ log_campaign ])
       end
     end
 
@@ -76,7 +75,7 @@ RSpec.describe LogCampaignsController, type: :controller do
 
       it "assigns the requested diagnosis_logs as @diagnosis_logs" do
         get :all, params: { id: @log_campaign.to_param }, session: valid_session
-        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+        expect(assigns(:diagnosis_logs)).to eq([ @diagnosis_log ])
       end
     end
 
@@ -93,7 +92,7 @@ RSpec.describe LogCampaignsController, type: :controller do
 
       it "assigns the requested diagnosis_logs as @diagnosis_logs" do
         get :log, params: { id: @log_campaign.to_param }, session: valid_session
-        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+        expect(assigns(:diagnosis_logs)).to eq([ @diagnosis_log ])
       end
     end
 
@@ -110,7 +109,7 @@ RSpec.describe LogCampaignsController, type: :controller do
 
       it "assigns the requested diagnosis_logs as @diagnosis_logs" do
         get :error, params: { id: @log_campaign.to_param }, session: valid_session
-        expect(assigns(:diagnosis_logs)).to eq([@diagnosis_log])
+        expect(assigns(:diagnosis_logs)).to eq([ @diagnosis_log ])
       end
     end
 
