@@ -15,12 +15,12 @@
           .input-group.date#datetime_from_group
             = f.text_field :datetime_from, value: @datetime_from, class: "form-control"
             span.input-group-text
-              i.fa.fa-calendar
+              i.far.fa-calendar-days
         .col-sm-4
           .input-group.date#datetime_to_group
             = f.text_field :datetime_to, value: @datetime_to, class: "form-control"
             span.input-group-text
-              i.fa.fa-calendar
+              i.far.fa-calendar-days
       .row
         .col-sm-10.ms-auto
           = f.submit t('views.log_campaigns.search.search_button'), name: nil, class: "btn btn-primary"

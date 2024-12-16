@@ -16,7 +16,7 @@ html
       nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         .container
           a.navbar-brand href="#{root_path}"
-            span.fa.fa-heartbeat.me-1
+            span.fas.fa-heart-pulse.me-1
             | #{t('common.site_title')}
           button.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
             span.navbar-toggler-icon
@@ -58,11 +58,11 @@ html
               - else
                 li.nav-item
                   a.nav-link href="#{search_log_campaigns_path}" title="#{t('views.log_campaigns.search.title')}"
-                    i.fa.fa-search.me-1
+                    i.fas.fa-search.me-1
                     | #{t('views.log_campaigns.search.title')}
                 li.nav-item.dropdown
                   a.nav-link.dropdown-toggle href="#" data-bs-toggle="dropdown"
-                    i.fa.fa-user.me-1
+                    i.far.fa-user.me-1
                     | #{current_user.login} 
                   ul.dropdown-menu
                     li
