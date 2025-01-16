@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module SindanVisualization
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     Rails.application.config.active_record.belongs_to_required_by_default = false
     Rails.application.config.active_record.default_column_serializer = YAML
@@ -40,9 +40,6 @@ module SindanVisualization
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.time_zone = "Tokyo"
-
-    # assets
-    config.generators.assets = false
 
     # Don't generate system test files.
     config.generators.system_tests = nil
