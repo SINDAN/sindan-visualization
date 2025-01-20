@@ -92,6 +92,6 @@ class IgnoreErrorResultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ignore_error_result_params
-      params.require(:ignore_error_result).permit(:ssid, ignore_log_types: [])
+      params.expect(ignore_error_result: [ :ssid, ignore_log_types: [] ])
     end
 end
