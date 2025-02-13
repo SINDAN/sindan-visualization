@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "7.2.2.1"
+gem "rails", "8.0.1"
 
 gem "mysql2"
 
@@ -10,7 +10,7 @@ gem "devise"
 
 gem "dotenv-rails"
 
-gem "sprockets-rails"
+gem "propshaft"
 gem "jsbundling-rails"
 
 gem "slim-rails"
@@ -22,12 +22,7 @@ gem "breadcrumbs_on_rails"
 
 gem "slack-notifier"
 
-# Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
 gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
