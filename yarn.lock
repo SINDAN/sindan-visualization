@@ -1156,9 +1156,9 @@ ajv@^8.0.0, ajv@^8.9.0:
     require-from-string "^2.0.2"
 
 alt-ujs@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/alt-ujs/-/alt-ujs-1.0.1.tgz#70162b7e05ec50e00ea449c37e6750a322d94974"
-  integrity sha512-JeeEHQ1Aig12xdDv0yDL/KcF+Q6Avl5DndkfdU0PE6cBS+zWFxmh2kE/IxQzGgJPxHfS09EO513XD24q/4Gw1w==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/alt-ujs/-/alt-ujs-1.1.1.tgz#0d2b491b6f66e1c4f90f218aeda3be46870de222"
+  integrity sha512-37E0SJS2ECZTQmEZpQnBoayGV5Hl1twl7u7DR5z9jdSLRh12Be9bCc7tWDtv2jTXOQbRxrj2DH5cyKUV8KTSUA==
   dependencies:
     urijs "^1.19.11"
 
