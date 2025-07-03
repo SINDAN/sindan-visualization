@@ -15,7 +15,6 @@ class DiagnosisLog < ApplicationRecord
     localnet: "ローカルネットワーク層",
     globalnet: "グローバルネットワーク層",
     dns: "名前解決層",
-    web: "ウェブアプリケーション層",
     app: "アプリケーション層"
   }
 
