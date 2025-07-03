@@ -6,8 +6,10 @@ RSpec.describe "log_campaigns/edit", type: :view do
       log_campaign_uuid: "MyString",
       ssid: "Ssid",
       network_type: "NetworkType",
+      hostname: "MyString",
       mac_addr: "MyString",
       os: "MyString",
+      version: "MyString",
       occurred_at: "2015-07-24 19:24:42",
     ))
   end
@@ -21,6 +23,8 @@ RSpec.describe "log_campaigns/edit", type: :view do
       assert_select "input#log_campaign_ssid[name=?]", "log_campaign[ssid]"
 
       assert_select "input#log_campaign_network_type[name=?]", "log_campaign[network_type]"
+
+      assert_select "input#log_campaign_hostname[name=?]", "log_campaign[hostname]"
 
       assert_select "input#log_campaign_mac_addr[name=?]", "log_campaign[mac_addr]"
 

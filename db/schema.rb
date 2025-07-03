@@ -44,6 +44,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_054121) do
     t.string "ssid"
     t.string "version"
     t.string "network_type"
+    t.string "hostname"
     t.index ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid"
     t.index ["occurred_at"], name: "index_log_campaigns_on_occurred_at"
     t.index ["ssid"], name: "index_log_campaigns_on_ssid"
