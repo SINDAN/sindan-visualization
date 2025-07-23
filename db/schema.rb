@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_25_054121) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_23_052553) do
   create_table "diagnosis_logs", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "layer"
     t.string "log_type"
@@ -44,6 +44,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_054121) do
     t.string "ssid"
     t.string "version"
     t.string "network_type"
+    t.string "hostname"
+    t.index ["hostname"], name: "index_log_campaigns_on_hostname"
     t.index ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid"
     t.index ["occurred_at"], name: "index_log_campaigns_on_occurred_at"
     t.index ["ssid"], name: "index_log_campaigns_on_ssid"

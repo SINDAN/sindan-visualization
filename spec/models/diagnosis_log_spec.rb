@@ -48,20 +48,20 @@ RSpec.describe DiagnosisLog, type: :model do
   context "Layer label" do
     before(:each) do
       @diagnosis_log = DiagnosisLog.new(
-        layer: :web
+        layer: :app
       )
     end
 
     it "replace label with value of layer" do
-      @diagnosis_log.layer = :web
+      @diagnosis_log.layer = :app
 
-      expect(@diagnosis_log.layer_label).to eq("ウェブアプリケーション層")
+      expect(@diagnosis_log.layer_label).to eq("アプリケーション層")
     end
 
     it "is not plane value with value of layer" do
-      @diagnosis_log.layer = :web
+      @diagnosis_log.layer = :app
 
-      expect(@diagnosis_log.layer_label).not_to eq("web")
+      expect(@diagnosis_log.layer_label).not_to eq("app")
     end
 
     it "not replace label with invalid value of layer" do
@@ -73,15 +73,15 @@ RSpec.describe DiagnosisLog, type: :model do
 
   context "Layer label for args" do
     it "replace label with value of layer" do
-      layer_label = DiagnosisLog.layer_label('web')
+      layer_label = DiagnosisLog.layer_label('app')
 
-      expect(layer_label).to eq("ウェブアプリケーション層")
+      expect(layer_label).to eq("アプリケーション層")
     end
 
     it "is not plane value with value of layer" do
-      layer_label = DiagnosisLog.layer_label('web')
+      layer_label = DiagnosisLog.layer_label('app')
 
-      expect(layer_label).not_to eq("web")
+      expect(layer_label).not_to eq("app")
     end
 
     it "not replace label with invalid value of layer" do
