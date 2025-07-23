@@ -80,6 +80,7 @@ en:
         log_campaign_uuid: "Campaign UUID"
         ssid: "SSID"
         network_type: "Network Type"
+        hostname: "Hostname"
         mac_addr: "MAC Address"
         os: "OS"
         version: "Client Version"
