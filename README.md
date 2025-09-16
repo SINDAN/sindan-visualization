@@ -15,30 +15,30 @@
 
 * Configure database.yml
 
-    ```
+    ```sh
     cp config/database.yml.example config/database.yml
     ```
 
 * Installation
 
     ```sh
-    $ bundle install
-    $ bundle exec rails db:migrate
-    $ bundle exec rails db:seed
+    bundle install
+    bundle exec rails db:migrate
+    bundle exec rails db:seed
     ```
 
     ```sh
-    $ yarn install
+    yarn install
     ```
 
 * Development environment
 
     ```sh
-    $ bundle exec bin/dev
+    bundle exec bin/dev
     ```
 
 * Testing
 
     ```sh
-    $ bundle exec rails spec
+    bundle exec rails spec
     ```
