@@ -42,8 +42,8 @@ class DiagnosisLogsController < ApplicationController
         format.html { redirect_to @diagnosis_log, notice: "Diagnosis log was successfully created." }
         format.json { render :show, status: :created, location: @diagnosis_log }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @diagnosis_log.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @diagnosis_log.errors, status: :unprocessable_content }
       end
     end
   end
@@ -56,8 +56,8 @@ class DiagnosisLogsController < ApplicationController
         format.html { redirect_to @diagnosis_log, notice: "Diagnosis log was successfully updated." }
         format.json { render :show, status: :ok, location: @diagnosis_log }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @diagnosis_log.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @diagnosis_log.errors, status: :unprocessable_content }
       end
     end
   end
