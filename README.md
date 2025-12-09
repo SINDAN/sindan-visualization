@@ -28,7 +28,7 @@
     ```
 
     ```sh
-    yarn install
+    npm install
     ```
 
 * Development environment
