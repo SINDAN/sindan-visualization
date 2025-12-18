@@ -5,7 +5,7 @@
 * Simple Dashboard
 
 ## Requirements
-* Ruby 3.4.7 (ref: [.ruby-version](.ruby-version) )
+* Ruby 3.4.8 (ref: [.ruby-version](.ruby-version) )
 * Node.js 24.11.0 (ref: [.node-version](.node-version) )
 * MySQL
 
