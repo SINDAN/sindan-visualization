@@ -107,6 +107,7 @@ ja:
       not_an_integer: は整数で入力してください
       odd: は奇数にしてください
       other_than: は%{count}以外の値にしてください
+      password_too_long: が長すぎます
       present: は入力しないでください
       required: を入力してください
       taken: はすでに存在します
@@ -128,6 +129,7 @@ ja:
       format:
         delimiter: ","
         format: "%n%u"
+        negative_format: "-%u%n"
         precision: 0
         separator: "."
         significant: false
@@ -165,6 +167,7 @@ ja:
           mb: MB
           pb: PB
           tb: TB
+          zb: ZB
     percentage:
       format:
         delimiter: ''

@@ -10,41 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_23_052553) do
+ActiveRecord::Schema[8.1].define(version: 2025_07_23_052553) do
   create_table "diagnosis_logs", id: :integer, charset: "utf8mb3", force: :cascade do |t|
-    t.string "layer"
-    t.string "log_type"
-    t.integer "result"
-    t.text "detail"
-    t.datetime "occurred_at", precision: nil
     t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+    t.text "detail"
+    t.string "layer"
     t.string "log_campaign_uuid", limit: 38
     t.string "log_group"
+    t.string "log_type"
+    t.datetime "occurred_at", precision: nil
+    t.integer "result"
     t.string "target"
+    t.datetime "updated_at", precision: nil
     t.index ["log_campaign_uuid"], name: "index_diagnosis_logs_on_log_campaign_uuid"
     t.index ["occurred_at"], name: "index_diagnosis_logs_on_occurred_at"
     t.index ["result"], name: "index_diagnosis_logs_on_result"
   end
 
   create_table "ignore_error_results", charset: "utf8mb3", force: :cascade do |t|
-    t.string "ssid"
-    t.text "ignore_log_types"
     t.datetime "created_at", precision: nil, null: false
+    t.text "ignore_log_types"
+    t.string "ssid"
     t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "log_campaigns", id: :integer, charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", precision: nil
+    t.string "hostname"
     t.string "log_campaign_uuid", limit: 38
     t.string "mac_addr"
-    t.string "os"
-    t.datetime "occurred_at", precision: nil
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.string "ssid"
-    t.string "version"
     t.string "network_type"
-    t.string "hostname"
+    t.datetime "occurred_at", precision: nil
+    t.string "os"
+    t.string "ssid"
+    t.datetime "updated_at", precision: nil
+    t.string "version"
     t.index ["hostname"], name: "index_log_campaigns_on_hostname"
     t.index ["log_campaign_uuid"], name: "index_log_campaigns_on_log_campaign_uuid"
     t.index ["occurred_at"], name: "index_log_campaigns_on_occurred_at"
@@ -52,27 +52,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_052553) do
   end
 
   create_table "map_images", charset: "utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.string "file"
-    t.text "remarks"
     t.datetime "created_at", null: false
+    t.string "file"
+    t.string "name"
+    t.text "remarks"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_map_images_on_name", unique: true
   end
 
   create_table "users", id: :integer, charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "current_sign_in_at", precision: nil
+    t.string "current_sign_in_ip"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at", precision: nil
     t.datetime "last_sign_in_at", precision: nil
-    t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "login", null: false
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "reset_password_sent_at", precision: nil
+    t.string "reset_password_token"
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login"], name: "index_users_on_login", unique: true
