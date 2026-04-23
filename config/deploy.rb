@@ -19,7 +19,7 @@ set :deploy_to, "/var/www/sindan-production"
 
 # Set the ruby version
 set :rbenv_type, :system
-set :rbenv_ruby, "4.0.2"
+set :rbenv_ruby, "4.0.3"
 
 # server alias
 set :sindan, ""
