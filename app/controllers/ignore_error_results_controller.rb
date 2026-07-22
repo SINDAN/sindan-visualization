@@ -87,7 +87,7 @@ class IgnoreErrorResultsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ignore_error_result
-      @ignore_error_result = IgnoreErrorResult.find(params[:id])
+      @ignore_error_result = IgnoreErrorResult.find(params.expect(:id))
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
