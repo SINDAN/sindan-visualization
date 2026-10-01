@@ -11,7 +11,7 @@
     "alt-ujs": "^1.0.0",
     "bootstrap": "^5.0.1",
     "jquery": "^4.0.0",
-    "moment": "^2.29.2",
+    "moment": "^2.31.0",
     "sass": "^1.53.0"
   },
   "devDependencies": {
