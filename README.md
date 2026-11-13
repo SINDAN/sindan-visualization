@@ -6,7 +6,7 @@
 
 ## Requirements
 * Ruby 4.0.9 (ref: [.ruby-version](.ruby-version) )
-* Node.js 24.22.1 (ref: [.node-version](.node-version) )
+* Node.js 26.13.1 (ref: [.node-version](.node-version) )
 * MySQL
 
 ## Getting Started
